@@ -14,9 +14,9 @@ export default function Home({ allPostsData }) {
       </Head>
       <section className={utilStyles.headingMd}>
         <p>
-          Hey 👋 I am a practical web developer, with a focus on frontend,
-          interfaces, tooling, collaboration and code quality. If you want to
-          talk web dev (or dog training), hit me up.
+          Hey 👋 I'm Alex Spieslechner. Practical web developer, with a focus on
+          frontend, interfaces, tooling, collaboration and code quality. If you
+          want to talk web dev (or dog training), hit me up.
         </p>
       </section>
 

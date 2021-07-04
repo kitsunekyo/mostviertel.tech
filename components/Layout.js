@@ -4,18 +4,15 @@ import styles from "./Layout.module.css";
 import utilStyles from "../styles/utils.module.css";
 import Link from "next/link";
 
-const name = "Alex Spieslechner";
-export const siteTitle = "Next.js Sample Website";
+const name = "mostviertel.tech";
+export const siteTitle = "mostviertel.tech";
 
 export default function Layout({ children, home }) {
   return (
     <div className={styles.container}>
       <Head>
         <link rel="icon" href="/favicon.ico" />
-        <meta
-          name="description"
-          content="Learn how to build a personal website using Next.js"
-        />
+        <meta name="description" content="mostviertel.tech blog" />
         <meta
           property="og:image"
           content={`https://og-image.vercel.app/${encodeURI(
