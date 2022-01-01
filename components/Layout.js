@@ -1,7 +1,5 @@
 import Head from "next/head";
 import Image from "next/image";
-import styles from "./Layout.module.css";
-import utilStyles from "../styles/utils.module.css";
 import Link from "next/link";
 
 const name = "mostviertel.tech";
@@ -9,7 +7,7 @@ export const siteTitle = "mostviertel.tech";
 
 export default function Layout({ children, home }) {
   return (
-    <div className={styles.container}>
+    <div>
       <Head>
         <link rel="icon" href="/favicon.ico" />
         <meta name="description" content="mostviertel.tech blog" />
@@ -22,44 +20,24 @@ export default function Layout({ children, home }) {
         <meta name="og:title" content={siteTitle} />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
-      <header className={styles.header}>
-        {home ? (
-          <>
-            <Image
-              priority
-              src="/images/profile.jpg"
-              className={utilStyles.borderCircle}
-              height={144}
-              width={144}
-              alt={name}
-            />
-            <h1 className={utilStyles.heading2Xl}>{name}</h1>
-          </>
-        ) : (
-          <>
-            <Link href="/">
-              <a>
-                <Image
-                  priority
-                  src="/images/profile.jpg"
-                  className={utilStyles.borderCircle}
-                  height={108}
-                  width={108}
-                  alt={name}
-                />
-              </a>
-            </Link>
-            <h2 className={utilStyles.headingLg}>
-              <Link href="/">
-                <a className={utilStyles.colorInherit}>{name}</a>
-              </Link>
-            </h2>
-          </>
-        )}
+      <header className="border-b border-gray-200 p-4">
+        <div className="flex items-center mx-auto" style={{ maxWidth: "60ch" }}>
+          <Link href="/">
+            <a>
+              <div className="text-lg font-bold">mostviertel.tech</div>
+            </a>
+          </Link>
+        </div>
       </header>
-      <main>{children}</main>
+
+      <main className="p-4">
+        <div className="mx-auto" style={{ maxWidth: "60ch" }}>
+          {children}
+        </div>
+      </main>
+
       {!home && (
-        <div className={styles.backToHome}>
+        <div>
           <Link href="/">
             <a>← Back to home</a>
           </Link>
