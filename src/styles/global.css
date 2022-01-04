@@ -17,7 +17,6 @@ div#__next {
   display: flex;
   flex-direction: column;
   min-height: 100%;
-  background-color: hsl(0, 100%, 100%);
 }
 
 html {
@@ -85,7 +84,7 @@ ul {
 
 .button {
   --animation-speed: 0.1s;
-  @apply border-2 border-black rounded-md px-4 py-2 font-medium bg-white;
+  @apply border-2 border-black rounded-md px-4 py-2 font-medium bg-white text-black;
   box-shadow: var(--shadow-hard);
   transition: box-shadow var(--animation-speed) ease-in-out,
     transform var(--animation-speed) ease-in-out;
@@ -117,6 +116,6 @@ ul {
 }
 
 .contained {
-  @apply mx-auto p-4;
+  @apply mx-auto;
   max-width: 60ch;
 }

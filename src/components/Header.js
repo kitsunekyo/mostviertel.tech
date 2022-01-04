@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Button } from "src/components/Button";
 
 export const Header = ({ onMenuClicked }) => (
-  <header className="border-b border-gray-300">
+  <header className="border-b border-gray-300 p-6">
     <div className="flex items-center contained">
       <Link href="/">
         <a>
@@ -19,11 +19,13 @@ export const Header = ({ onMenuClicked }) => (
           <a>Uses</a>
         </Link>
         <Link href="mailto:alexander.spieslechner@gmail.com" passHref>
-          <Button>Contact Me</Button>
+          <a>
+            <Button>Contact Me</Button>
+          </a>
         </Link>
       </nav>
 
-      <div className="ml-auto">
+      <div className="ml-auto md:hidden">
         {/* menu icon */}
         <button onClick={onMenuClicked}>
           <svg

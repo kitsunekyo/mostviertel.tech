@@ -12,7 +12,7 @@ export default function Home({ posts }) {
         <title>{siteTitle}</title>
       </Head>
 
-      <section className="py-12 text-center contained">
+      <section className="py-16 px-6 text-center contained">
         <Avatar />
         <p className="text-base font-light max-w-md mx-auto">
           Hey 👋 I&apos;m Alex Spieslechner. Practical web developer, with a
@@ -21,7 +21,7 @@ export default function Home({ posts }) {
         </p>
       </section>
 
-      <section className="bg-gradient py-12 px-4">
+      <section className="bg-gradient py-12 px-6">
         <div className="contained">
           <h2 className="text-white">Latest Blog Posts</h2>
           <PostGrid posts={posts} />
