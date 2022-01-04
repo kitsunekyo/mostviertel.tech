@@ -5,27 +5,30 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "lint": "next lint"
   },
   "dependencies": {
+    "@next/eslint-plugin-next": "^12.0.7",
     "@next/mdx": "^12.0.7",
+    "autoprefixer": "^10.4.1",
     "classnames": "^2.3.1",
     "date-fns": "^2.19.0",
+    "eslint": "^8.6.0",
+    "eslint-config-next": "^12.0.7",
+    "eslint-plugin-react": "^7.28.0",
     "gray-matter": "^4.0.2",
     "next": "^12.0.7",
     "next-mdx-remote": "^3.0.8",
+    "postcss": "^8.4.5",
+    "postcss-import": "^14.0.2",
+    "postcss-nesting": "^10.1.0",
     "prettier": "^2.3.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "remark": "^13.0.0",
     "remark-highlight.js": "^6.0.0",
-    "remark-html": "^13.0.1"
-  },
-  "devDependencies": {
-    "autoprefixer": "^10.4.1",
-    "postcss": "^8.4.5",
-    "postcss-import": "^14.0.2",
-    "postcss-nesting": "^10.1.0",
+    "remark-html": "^13.0.1",
     "tailwindcss": "^3.0.8"
   }
 }

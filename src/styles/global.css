@@ -53,6 +53,10 @@ h3 {
   @apply text-xl;
 }
 
+a {
+  transition: color 0.2s ease;
+}
+
 a:hover {
   @apply text-orange-600;
 }
@@ -81,7 +85,7 @@ ul {
 
 .button {
   --animation-speed: 0.1s;
-  @apply border-2 border-black rounded-md px-4 py-2 font-medium bg-white mb-2;
+  @apply border-2 border-black rounded-md px-4 py-2 font-medium bg-white;
   box-shadow: var(--shadow-hard);
   transition: box-shadow var(--animation-speed) ease-in-out,
     transform var(--animation-speed) ease-in-out;
@@ -110,4 +114,9 @@ ul {
   );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+.contained {
+  @apply mx-auto p-4;
+  max-width: 60ch;
 }

@@ -1,20 +1,19 @@
-import { Head } from "next/document";
-
 import { getPosts } from "src/lib/blog";
-import Layout from "src/components/Layout";
+import { Layout } from "src/components/Layout";
+import { PostGrid } from "src/components/PostGrid";
 
 export default function Blog({ posts }) {
   return (
     <Layout>
-      <h1>Blog</h1>
-      {posts.map((post) => (
-        <div key={post.title}>{post.title}</div>
-      ))}
+      <div className="contained">
+        <h1>Blog</h1>
+        <PostGrid posts={posts} />
+      </div>
     </Layout>
   );
 }
 
-export async function getStaticProps({ params }) {
+export async function getStaticProps() {
   const posts = await getPosts();
 
   return {

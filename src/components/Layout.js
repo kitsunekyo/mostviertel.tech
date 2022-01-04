@@ -1,13 +1,10 @@
 import Head from "next/head";
-import Image from "next/image";
-import Link from "next/link";
 
-import { Button } from "./Button";
+import { Header } from "./Header";
 
-const name = "mostviertel.tech";
 export const siteTitle = "mostviertel.tech";
 
-export default function Layout({ children, home }) {
+export const Layout = ({ children }) => {
   return (
     <>
       <Head>
@@ -23,31 +20,9 @@ export default function Layout({ children, home }) {
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
 
-      <header className="p-4 bg-gradient border-b-4 border-white">
-        <div className="flex items-center mx-auto" style={{ maxWidth: "60ch" }}>
-          <Link href="/">
-            <a>
-              <div className="font-semibold text-white">mostviertel.tech</div>
-            </a>
-          </Link>
-        </div>
-      </header>
+      <Header />
 
-      <main className="p-4 pb-20 flex-grow bg-gray-50">
-        <div className="mx-auto" style={{ maxWidth: "60ch" }}>
-          {children}
-
-          {!home && (
-            <div className="mt-3">
-              <Link href="/">
-                <Button>
-                  <a>← Back to home</a>
-                </Button>
-              </Link>
-            </div>
-          )}
-        </div>
-      </main>
+      <main className="flex-grow bg-gray-50">{children}</main>
     </>
   );
-}
+};

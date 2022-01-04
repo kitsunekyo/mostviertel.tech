@@ -20,6 +20,7 @@ export function getPost(path) {
     date: data.date,
     excerpt: data.excerpt || null,
     ogImage: data.ogImage || null,
+    image: data.image || null,
     content,
   };
 }

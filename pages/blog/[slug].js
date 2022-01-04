@@ -1,17 +1,44 @@
+import Image from "next/image";
+import Head from "next/head";
+import Link from "next/link";
 import { serialize } from "next-mdx-remote/serialize";
 import { MDXRemote } from "next-mdx-remote";
 
 import { getPosts, getPost } from "src/lib/blog";
-import Layout from "src/components/Layout";
+import { Date } from "src/components/Date";
+import { Button } from "src/components/Button";
+import { Layout } from "src/components/Layout";
 
 export default function BlogPost({ post }) {
   return (
     <Layout>
-      <h1>{post.title}</h1>
-      <div>
+      <Head>
+        <title>mostviertel.tech | {post.title}</title>
+      </Head>
+      <div className="contained">
+        {post.image && (
+          <Image
+            src={post.image}
+            height={300}
+            width={1024}
+            objectFit="cover"
+            alt=""
+          />
+        )}
+        <h1>{post.title}</h1>
         <Date dateString={post.date} />
+        <br />
+
+        <MDXRemote {...post.mdxSource} />
+
+        <div className="mt-3">
+          <Link href="/" passHref>
+            <Button>
+              <a>← Back to home</a>
+            </Button>
+          </Link>
+        </div>
       </div>
-      <MDXRemote {...post.mdxSource} />
     </Layout>
   );
 }
