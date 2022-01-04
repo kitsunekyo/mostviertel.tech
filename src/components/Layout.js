@@ -9,7 +9,7 @@ export const siteTitle = "mostviertel.tech";
 
 export default function Layout({ children, home }) {
   return (
-    <div>
+    <>
       <Head>
         <link rel="icon" href="/favicon.ico" />
         <meta name="description" content="mostviertel.tech blog" />
@@ -23,7 +23,7 @@ export default function Layout({ children, home }) {
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
 
-      <header className="p-4 bg-gradient">
+      <header className="p-4 bg-gradient border-b-4 border-white">
         <div className="flex items-center mx-auto" style={{ maxWidth: "60ch" }}>
           <Link href="/">
             <a>
@@ -33,7 +33,7 @@ export default function Layout({ children, home }) {
         </div>
       </header>
 
-      <main className="p-4">
+      <main className="p-4 pb-20 flex-grow bg-gray-50">
         <div className="mx-auto" style={{ maxWidth: "60ch" }}>
           {children}
 
@@ -48,6 +48,6 @@ export default function Layout({ children, home }) {
           )}
         </div>
       </main>
-    </div>
+    </>
   );
 }

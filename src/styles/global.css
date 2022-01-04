@@ -5,35 +5,19 @@
 @tailwind utilities;
 
 :root {
-  --outline-size: 0px;
-  --outline-color: #000;
   --shadow-hard: 4px 4px 0 0 rgb(0 0 0 / 89%);
 }
 
+html,
+body {
+  height: 100%;
+}
+
 div#__next {
-  min-height: calc(100vh - 2 * var(--outline-size));
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
   background-color: hsl(0, 100%, 100%);
-}
-
-body:after,
-body:before {
-  content: "";
-  will-change: top left;
-  backface-visibility: hidden;
-  position: fixed;
-  left: 0;
-  width: 100%;
-  height: var(--outline-size);
-  background: var(--outline-color);
-  z-index: 20000;
-}
-
-body:after {
-  bottom: 0;
-}
-
-body:before {
-  top: 0;
 }
 
 html {
@@ -41,10 +25,8 @@ html {
 }
 
 body {
-  padding: var(--outline-size);
   font-family: "PlusJakartaSans", sans-serif;
   line-height: 1.6;
-  background-color: var(--outline-color);
   color: #333;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -72,7 +54,7 @@ h3 {
 }
 
 a:hover {
-  @apply text-green-600;
+  @apply text-orange-600;
 }
 
 blockquote {
