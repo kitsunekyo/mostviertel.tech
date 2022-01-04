@@ -51,8 +51,10 @@ export const PostGrid = ({ posts }) => {
                   <div className="text-xs text-gray-400">
                     <Date dateString={date} />
                   </div>
-                  <h3 className="text-base m-0">{title}</h3>
-                  {excerpt && <p className="m-0 text-sm">{excerpt}</p>}
+                  <h3 className="text-base mb-2 mt-0">{title}</h3>
+                  {excerpt && (
+                    <p className="m-0 text-sm text-black">{excerpt}</p>
+                  )}
                 </div>
               </Card>
             </a>

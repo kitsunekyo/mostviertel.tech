@@ -1,17 +1,21 @@
 import Link from "next/link";
 
 import { Button } from "src/components/Button";
+import { Dots } from "src/components/Dots";
 
 export const Header = ({ onMenuClicked }) => (
   <header className="border-b border-gray-300 p-6">
     <div className="flex items-center contained">
       <Link href="/">
         <a>
-          <div className="font-semibold">mostviertel.tech</div>
+          <div className="flex items-center gap-2">
+            <div className="font-semibold">mostviertel.tech</div>
+            <Dots size={20} fill="rgb(255, 75, 10)" />
+          </div>
         </a>
       </Link>
 
-      <nav className="ml-auto items-center gap-4 text-sm hidden md:flex">
+      <nav className="ml-auto font-medium items-center gap-8 text-sm hidden md:flex">
         <Link href="/blog">
           <a>Blog</a>
         </Link>

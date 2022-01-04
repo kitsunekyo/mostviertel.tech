@@ -1,9 +1,12 @@
 import Head from "next/head";
+import Link from "next/link";
 
 import { getPosts } from "src/lib/blog";
 import { Layout, siteTitle } from "src/components/Layout";
 import { Avatar } from "src/components/Avatar";
+import { Button } from "src/components/Button";
 import { PostGrid } from "src/components/PostGrid";
+import { Dots } from "src/components/Dots";
 
 export default function Home({ posts }) {
   return (
@@ -12,19 +15,40 @@ export default function Home({ posts }) {
         <title>{siteTitle}</title>
       </Head>
 
-      <section className="py-16 px-6 text-center contained">
-        <Avatar />
-        <p className="text-base font-light max-w-md mx-auto">
-          Hey 👋 I&apos;m Alex Spieslechner. Practical web developer, with a
-          focus on frontend, interfaces, tooling, collaboration and code
-          quality. If you want to talk web dev (or dog training), hit me up.
-        </p>
+      <section className="py-16 px-6">
+        <div className="contained">
+          <Avatar />
+          <h1 className="font-extrabold text-4xl md:text-6xl mt-4 mb-4 relative w-fit">
+            <div className="absolute bottom-0 right-0 -z-10 opacity-50 translate-x-3/4">
+              <Dots fill="rgb(255, 75, 10)" />
+            </div>
+            Hey, I&apos;m Alex
+          </h1>
+          <div className="text-xl text-gray-500 leading-9">
+            <p>
+              Practical web developer, with a focus on frontend, developer
+              experience, collaboration and code quality.
+            </p>
+            <p>If you want to talk web dev (or dog training), hit me up.</p>
+          </div>
+        </div>
       </section>
 
       <section className="bg-gradient py-24 px-6">
         <div className="contained">
-          <h2 className="text-white mt-0">Latest Blog Posts</h2>
+          <h2 className="text-white mt-0 relative w-fit">
+            <div className="absolute bottom-0 right-0 opacity-30 translate-x-3/4">
+              <Dots size={30} fill="rgb(255, 255, 255)" />
+            </div>
+            My last Posts
+          </h2>
+
           <PostGrid posts={posts} />
+          <Link href="/blog" passHref>
+            <a>
+              <Button className="mt-6">More Articles</Button>
+            </a>
+          </Link>
         </div>
       </section>
     </Layout>

@@ -7,7 +7,7 @@ export const Avatar = () => {
       className="border-2 border-black inline-block rounded-md overflow-hidden"
       style={{ lineHeight: 0, boxShadow: "var(--shadow-hard)" }}
     >
-      <Image src="/images/profile.jpg" height={200} width={200} alt="alex" />
+      <Image src="/images/profile.jpg" height={130} width={130} alt="alex" />
     </div>
   );
 };

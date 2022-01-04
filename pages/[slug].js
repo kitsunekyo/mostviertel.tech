@@ -7,7 +7,7 @@ import { getPages, getPage } from "src/lib/page";
 
 export default function Page({ page }) {
   return (
-    <Layout>
+    <Layout ogTitle={page.title}>
       <Head>
         <title>mostviertel.tech | {page.title}</title>
       </Head>

@@ -11,11 +11,11 @@ import { Layout } from "src/components/Layout";
 
 export default function BlogPost({ post }) {
   return (
-    <Layout>
+    <Layout ogTitle={`mostviertel.tech | ${post.title}`} ogImage={post.image}>
       <Head>
         <title>mostviertel.tech | {post.title}</title>
       </Head>
-      <div className="contained">
+      <div className="contained px-6">
         {post.image && (
           <Image
             src={post.image}

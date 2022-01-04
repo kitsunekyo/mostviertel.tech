@@ -5,9 +5,11 @@ import { PostGrid } from "src/components/PostGrid";
 export default function Blog({ posts }) {
   return (
     <Layout>
-      <div className="contained">
-        <h1>Blog</h1>
-        <PostGrid posts={posts} />
+      <div className="p-6 pb-48 bg-gradient h-full">
+        <div className="contained">
+          <h1 className="text-white">Blog</h1>
+          <PostGrid posts={posts} />
+        </div>
       </div>
     </Layout>
   );
