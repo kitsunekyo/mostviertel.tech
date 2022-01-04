@@ -1,5 +1,7 @@
 import Head from "next/head";
 import Link from "next/link";
+import Image from "next/image";
+import { motion } from "framer-motion";
 
 import { getPosts } from "src/lib/blog";
 import { Layout, siteTitle } from "src/components/Layout";
@@ -7,7 +9,6 @@ import { Avatar } from "src/components/Avatar";
 import { Button } from "src/components/Button";
 import { PostGrid } from "src/components/PostGrid";
 import { Dots } from "src/components/Dots";
-import Image from "next/image";
 
 const techIcons = [
   "ts",
@@ -20,6 +21,26 @@ const techIcons = [
   "xd",
 ];
 
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.2,
+    },
+  },
+};
+
+const animationVariants = {
+  hidden: {
+    opacity: 0,
+    y: 20,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+  },
+};
+
 export default function Home({ posts }) {
   return (
     <Layout home>
@@ -28,22 +49,35 @@ export default function Home({ posts }) {
       </Head>
 
       <section className="py-16 px-6">
-        <div className="contained">
-          <Avatar />
-          <h1 className="font-extrabold text-4xl md:text-6xl mt-4 mb-4 relative w-fit">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="contained"
+        >
+          <motion.div variants={animationVariants}>
+            <Avatar />
+          </motion.div>
+          <motion.h1
+            variants={animationVariants}
+            className="font-extrabold text-4xl md:text-6xl mt-4 mb-4 relative w-fit"
+          >
             <div className="absolute bottom-0 right-0 -z-10 opacity-50 translate-x-3/4">
               <Dots fill="rgb(255, 75, 10)" />
             </div>
             Hey, I&apos;m Alex
-          </h1>
-          <div className="text-xl text-gray-500 leading-9">
+          </motion.h1>
+          <motion.div
+            variants={animationVariants}
+            className="text-xl text-gray-500 leading-9"
+          >
             <p>
               Practical web developer, with a focus on frontend, developer
               experience, collaboration and code quality.
             </p>
             <p>If you want to talk web dev (or dog training), hit me up.</p>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </section>
 
       <section className="py-12 px-6 border-t border-gray-200">
