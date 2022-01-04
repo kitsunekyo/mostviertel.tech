@@ -10,16 +10,12 @@ import { Button } from "src/components/Button";
 import { PostGrid } from "src/components/PostGrid";
 import { Dots } from "src/components/Dots";
 
-const techIcons = [
-  "ts",
-  "react",
-  "redux",
-  "jest",
-  "aws",
-  "azure",
-  "docker",
-  "xd",
-];
+import reactImage from "public/images/home/react.png";
+import reduxImage from "public/images/home/redux.png";
+import jestImage from "public/images/home/jest.png";
+import awsImage from "public/images/home/aws.png";
+import azureImage from "public/images/home/azure.png";
+import dockerImage from "public/images/home/docker.png";
 
 const containerVariants = {
   hidden: {},
@@ -82,21 +78,7 @@ export default function Home({ posts }) {
 
       <section className="py-12 px-6 border-t border-gray-200">
         <div className="contained">
-          <div className="flex gap-4 items-center flex-wrap">
-            {techIcons.map((icon) => (
-              <div
-                className="inline-block rounded-md overflow-hidden hover:-translate-y-2 transition-transform"
-                key={icon}
-              >
-                <Image
-                  src={`/images/home/${icon}.png`}
-                  height="70"
-                  width="70"
-                  alt={`${icon} icon`}
-                />
-              </div>
-            ))}
-          </div>
+          <TechIcons />
         </div>
       </section>
 
@@ -130,3 +112,62 @@ export async function getStaticProps() {
     },
   };
 }
+
+const TechIcons = () => (
+  <div className="flex gap-4 items-center flex-wrap justify-center">
+    <div className="inline-block rounded-md overflow-hidden hover:-translate-y-2 transition-transform">
+      <Image
+        src={reactImage}
+        height="70"
+        width="70"
+        alt={`react icon`}
+        placeholder="blur"
+      />
+    </div>
+    <div className="inline-block rounded-md overflow-hidden hover:-translate-y-2 transition-transform">
+      <Image
+        src={reduxImage}
+        height="70"
+        width="70"
+        alt={`redux icon`}
+        placeholder="blur"
+      />
+    </div>
+    <div className="inline-block rounded-md overflow-hidden hover:-translate-y-2 transition-transform">
+      <Image
+        src={jestImage}
+        height="70"
+        width="70"
+        alt={`jest icon`}
+        placeholder="blur"
+      />
+    </div>
+    <div className="inline-block rounded-md overflow-hidden hover:-translate-y-2 transition-transform">
+      <Image
+        src={awsImage}
+        height="70"
+        width="70"
+        alt={`aws icon`}
+        placeholder="blur"
+      />
+    </div>
+    <div className="inline-block rounded-md overflow-hidden hover:-translate-y-2 transition-transform">
+      <Image
+        src={azureImage}
+        height="70"
+        width="70"
+        alt={`azure icon`}
+        placeholder="blur"
+      />
+    </div>
+    <div className="inline-block rounded-md overflow-hidden hover:-translate-y-2 transition-transform">
+      <Image
+        src={dockerImage}
+        height="70"
+        width="70"
+        alt={`docker icon`}
+        placeholder="blur"
+      />
+    </div>
+  </div>
+);
