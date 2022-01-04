@@ -1,10 +1,10 @@
 import Head from "next/head";
 import { serialize } from "next-mdx-remote/serialize";
 import { MDXRemote } from "next-mdx-remote";
-import remarkPrism from "remark-prism";
 
 import { Layout } from "src/components/Layout";
 import { getPages, getPage } from "src/lib/page";
+import { mdxOptions } from "src/mdx.config";
 
 export default function Page({ page }) {
   return (
@@ -31,7 +31,7 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
   const page = await getPage(params.slug);
   const mdxSource = await serialize(page.content, {
-    mdxOptions: { remarkPlugins: [remarkPrism] },
+    mdxOptions,
   });
 
   return {
