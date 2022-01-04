@@ -1,0 +1,16 @@
+## CORS
+
+Back on S3 head to the Permissions tab. We need to grant access to our frontend to accesss the bucket. In the CORS section allow GET, POST and PUT requests from our frontend url.
+
+We'll also expose two headers (make them accessible for the browser), because we'll need them later.
+
+```json
+[
+  {
+    "AllowedHeaders": ["*"],
+    "AllowedMethods": ["GET", "POST", "PUT"],
+    "AllowedOrigins": ["http://localhost:8080"],
+    "ExposeHeaders": ["Location", "ETag"]
+  }
+]
+```

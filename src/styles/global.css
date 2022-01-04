@@ -60,17 +60,31 @@ a:hover {
   @apply text-orange-600;
 }
 
+code:not([class*="language-"]) {
+  @apply font-mono text-xs rounded-sm inline-block bg-gray-100 text-red-600 border border-gray-300;
+  padding: 0.1em 0.5em;
+  margin: 0 0.2em;
+  box-shadow: 0 1px 0px rgba(0, 0, 0, 0.2), 0 0 0 2px #fff inset;
+}
+
+pre:not([class*="language-"]) {
+  @apply rounded-md overflow-hidden;
+  box-shadow: var(--shadow-hard);
+}
+
 blockquote {
   @apply block pl-4 my-6 text-gray-500 text-lg border-l-2 border-l-black;
 }
 
-code {
-  @apply font-mono text-xs rounded-sm inline-block px-1 bg-gray-300 text-red-600;
-}
-
-pre {
-  @apply rounded-md overflow-hidden;
+kbd {
+  font-size: 0.75rem;
+  display: inline-block;
+  border: 1px solid black;
+  border-radius: 4px;
+  padding: 0.1em 0.5em;
+  margin: 0 0.5em 0 0.2em;
   box-shadow: var(--shadow-hard);
+  background-color: #f7f7f7;
 }
 
 p,

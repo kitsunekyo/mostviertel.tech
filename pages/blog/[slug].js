@@ -3,6 +3,7 @@ import Head from "next/head";
 import Link from "next/link";
 import { serialize } from "next-mdx-remote/serialize";
 import { MDXRemote } from "next-mdx-remote";
+import remarkPrism from "remark-prism";
 
 import { getPosts, getPost } from "src/lib/blog";
 import { Date } from "src/components/Date";
@@ -54,7 +55,9 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }) {
   const post = await getPost(params.slug);
-  const mdxSource = await serialize(post.content);
+  const mdxSource = await serialize(post.content, {
+    mdxOptions: { remarkPlugins: [remarkPrism] },
+  });
 
   return {
     props: {
