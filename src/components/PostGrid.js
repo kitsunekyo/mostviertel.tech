@@ -41,12 +41,12 @@ export const PostGrid = ({ posts }) => {
         <motion.div key={slug} variants={itemVariants}>
           <Link href={`/blog/${slug}`}>
             <a>
-              <Card key={slug}>
-                <div className="h-24 bg-gray-200 overflow-hidden relative">
-                  {image ? (
+              <Card key={slug} className="h-full">
+                {image ? (
+                  <div className="h-24 bg-gray-200 overflow-hidden relative">
                     <Image src={image} layout="fill" objectFit="cover" alt="" />
-                  ) : null}
-                </div>
+                  </div>
+                ) : null}
                 <div className="px-6 py-4">
                   <div className="text-xs text-gray-400">
                     <Date dateString={date} />

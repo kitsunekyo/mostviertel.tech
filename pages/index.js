@@ -21,9 +21,9 @@ export default function Home({ posts }) {
         </p>
       </section>
 
-      <section className="bg-gradient py-12 px-6">
+      <section className="bg-gradient py-24 px-6">
         <div className="contained">
-          <h2 className="text-white">Latest Blog Posts</h2>
+          <h2 className="text-white mt-0">Latest Blog Posts</h2>
           <PostGrid posts={posts} />
         </div>
       </section>
