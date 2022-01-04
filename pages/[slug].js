@@ -12,8 +12,10 @@ export default function Page({ page }) {
       <Head>
         <title>mostviertel.tech | {page.title}</title>
       </Head>
-      <div className="contained px-6">
-        <MDXRemote {...page.mdxSource} />
+      <div className="px-6">
+        <div className="contained">
+          <MDXRemote {...page.mdxSource} />
+        </div>
       </div>
     </Layout>
   );
