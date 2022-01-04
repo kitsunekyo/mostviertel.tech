@@ -21,7 +21,7 @@ export default function BlogPost({ post }) {
           <Image
             src={post.image}
             height={300}
-            width={1024}
+            width={800}
             objectFit="cover"
             alt=""
           />

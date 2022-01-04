@@ -7,6 +7,18 @@ import { Avatar } from "src/components/Avatar";
 import { Button } from "src/components/Button";
 import { PostGrid } from "src/components/PostGrid";
 import { Dots } from "src/components/Dots";
+import Image from "next/image";
+
+const techIcons = [
+  "ts",
+  "react",
+  "redux",
+  "jest",
+  "aws",
+  "azure",
+  "docker",
+  "xd",
+];
 
 export default function Home({ posts }) {
   return (
@@ -30,6 +42,22 @@ export default function Home({ posts }) {
               experience, collaboration and code quality.
             </p>
             <p>If you want to talk web dev (or dog training), hit me up.</p>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-12 px-6 border-t border-gray-200">
+        <div className="contained">
+          <div className="flex gap-4 items-center flex-wrap">
+            {techIcons.map((icon) => (
+              <Image
+                key={icon}
+                src={`/images/home/${icon}.png`}
+                height="70"
+                width="70"
+                alt={`${icon} icon`}
+              />
+            ))}
           </div>
         </div>
       </section>
