@@ -1,0 +1,12 @@
+.button {
+  --animation-speed: 0.1s;
+  @apply border-2 border-black rounded-md px-4 py-2 font-medium bg-white text-black;
+  box-shadow: var(--shadow-hard);
+  transition: box-shadow var(--animation-speed) ease-in-out,
+    transform var(--animation-speed) ease-in-out;
+
+  &:hover {
+    box-shadow: 0 0 0 0 rgb(0 0 0 / 0%);
+    transform: translate(4px, 4px);
+  }
+}
