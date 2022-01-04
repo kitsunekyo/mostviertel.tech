@@ -31,11 +31,11 @@ export default function BlogPost({ post }) {
 
         <MDXRemote {...post.mdxSource} />
 
-        <div className="mt-3">
+        <div className="py-12">
           <Link href="/" passHref>
-            <Button>
-              <a>← Back to home</a>
-            </Button>
+            <a>
+              <Button>← Back to home</Button>
+            </a>
           </Link>
         </div>
       </div>
@@ -45,7 +45,6 @@ export default function BlogPost({ post }) {
 
 export async function getStaticPaths() {
   const posts = await getPosts();
-
   const paths = posts.map((post) => ({
     params: { slug: post.slug },
   }));
