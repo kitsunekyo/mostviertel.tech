@@ -5,35 +5,19 @@
 @tailwind utilities;
 
 :root {
-  --outline-size: 0px;
-  --outline-color: #000;
   --shadow-hard: 4px 4px 0 0 rgb(0 0 0 / 89%);
 }
 
+html,
+body {
+  height: 100%;
+}
+
 div#__next {
-  min-height: calc(100vh - 2 * var(--outline-size));
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
   background-color: hsl(0, 100%, 100%);
-}
-
-body:after,
-body:before {
-  content: "";
-  will-change: top left;
-  backface-visibility: hidden;
-  position: fixed;
-  left: 0;
-  width: 100%;
-  height: var(--outline-size);
-  background: var(--outline-color);
-  z-index: 20000;
-}
-
-body:after {
-  bottom: 0;
-}
-
-body:before {
-  top: 0;
 }
 
 html {
@@ -41,10 +25,8 @@ html {
 }
 
 body {
-  padding: var(--outline-size);
   font-family: "PlusJakartaSans", sans-serif;
   line-height: 1.6;
-  background-color: var(--outline-color);
   color: #333;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -71,8 +53,12 @@ h3 {
   @apply text-xl;
 }
 
+a {
+  transition: color 0.2s ease;
+}
+
 a:hover {
-  @apply text-green-600;
+  @apply text-orange-600;
 }
 
 blockquote {
@@ -99,7 +85,7 @@ ul {
 
 .button {
   --animation-speed: 0.1s;
-  @apply border-2 border-black rounded-md px-4 py-2 font-medium bg-white mb-2;
+  @apply border-2 border-black rounded-md px-4 py-2 font-medium bg-white;
   box-shadow: var(--shadow-hard);
   transition: box-shadow var(--animation-speed) ease-in-out,
     transform var(--animation-speed) ease-in-out;
@@ -128,4 +114,9 @@ ul {
   );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+.contained {
+  @apply mx-auto p-4;
+  max-width: 60ch;
 }

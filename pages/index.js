@@ -1,63 +1,42 @@
 import Head from "next/head";
-import Link from "next/link";
 
-import Layout, { siteTitle } from "../components/Layout";
-import Date from "../components/Date";
-import { getSortedPostsData } from "../lib/posts";
-import { Button } from "../components/Button";
-import { Card } from "../components/Card";
-import { Avatar } from "../components/Avatar";
+import { getPosts } from "src/lib/blog";
+import { Layout, siteTitle } from "src/components/Layout";
+import { Avatar } from "src/components/Avatar";
+import { PostGrid } from "src/components/PostGrid";
 
-export default function Home({ allPostsData }) {
+export default function Home({ posts }) {
   return (
     <Layout home>
       <Head>
         <title>{siteTitle}</title>
       </Head>
 
-      <section className="my-6">
-        <div className="flex items-center">
-          <div className="pr-4">
-            <Avatar />
-          </div>
-          <blockquote>
-            Hey 👋 I'm Alex Spieslechner. Practical web developer, with a focus
-            on frontend, interfaces, tooling, collaboration and code quality. If
-            you want to talk web dev (or dog training), hit me up.
-          </blockquote>
-        </div>
-        <Link href="mailto:alexander.spieslechner@gmail.com">
-          <Button>Contact Me</Button>
-        </Link>
+      <section className="py-12 text-center contained">
+        <Avatar />
+        <p className="text-base font-light max-w-md mx-auto">
+          Hey 👋 I&apos;m Alex Spieslechner. Practical web developer, with a
+          focus on frontend, interfaces, tooling, collaboration and code
+          quality. If you want to talk web dev (or dog training), hit me up.
+        </p>
       </section>
 
-      <section>
-        <Card className="mt-8">
-          <h2 className="m-0">Blog</h2>
-          <ul>
-            {allPostsData.map(({ id, date, title }) => (
-              <li key={id}>
-                <Link href={`/posts/${id}`}>
-                  <a>{title}</a>
-                </Link>
-                <br />
-                <small>
-                  <Date dateString={date} />
-                </small>
-              </li>
-            ))}
-          </ul>
-        </Card>
+      <section className="bg-gradient py-12 px-4">
+        <div className="contained">
+          <h2 className="text-white">Latest Blog Posts</h2>
+          <PostGrid posts={posts} />
+        </div>
       </section>
     </Layout>
   );
 }
 
 export async function getStaticProps() {
-  const allPostsData = getSortedPostsData();
+  const posts = getPosts().slice(0, 5);
+
   return {
     props: {
-      allPostsData,
+      posts,
     },
   };
 }
