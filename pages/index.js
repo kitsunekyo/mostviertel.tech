@@ -50,13 +50,17 @@ export default function Home({ posts }) {
         <div className="contained">
           <div className="flex gap-4 items-center flex-wrap">
             {techIcons.map((icon) => (
-              <Image
+              <div
+                className="inline-block rounded-md overflow-hidden hover:-translate-y-2 transition-transform"
                 key={icon}
-                src={`/images/home/${icon}.png`}
-                height="70"
-                width="70"
-                alt={`${icon} icon`}
-              />
+              >
+                <Image
+                  src={`/images/home/${icon}.png`}
+                  height="70"
+                  width="70"
+                  alt={`${icon} icon`}
+                />
+              </div>
             ))}
           </div>
         </div>
