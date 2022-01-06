@@ -17,7 +17,7 @@ export const Drawer = ({ isOpen, onClose }) => (
           }}
           exit="hidden"
           transition={{ duration: 0.3 }}
-          className="fixed inset-0"
+          className="fixed inset-0 z-20"
           style={{ background: "hsla(0, 0%, 0%, 0.8)" }}
         />
         {/* drawer */}
@@ -31,7 +31,7 @@ export const Drawer = ({ isOpen, onClose }) => (
           }
           exit={{ opacity: 0, translateX: "100%" }}
           transition={{ duration: 0.3, delay: 0.2 }}
-          className="fixed inset-0 bg-white"
+          className="fixed inset-0 bg-white z-20"
           style={{ left: "2rem" }}
         >
           <div className="p-4">
