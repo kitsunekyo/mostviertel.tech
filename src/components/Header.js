@@ -4,7 +4,7 @@ import { Button } from "src/components/Button";
 import { Dots } from "src/components/Dots";
 
 export const Header = ({ onMenuClicked }) => (
-  <header className="border-b border-gray-300 p-6">
+  <header className="border-b border-gray-300 p-6 sticky top-0 bg-white z-10">
     <div className="flex items-center contained">
       <Link href="/">
         <a>

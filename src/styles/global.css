@@ -14,12 +14,6 @@ body {
   height: 100%;
 }
 
-div#__next {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
 html {
   font-size: calc(1.125 * 100%);
 }
