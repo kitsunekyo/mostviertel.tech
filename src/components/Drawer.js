@@ -40,7 +40,7 @@ export const Drawer = ({ isOpen, onClose }) => (
               <button
                 onClick={onClose}
                 className="ml-auto"
-                name="close sidebar"
+                aria-label="close sidebar"
               >
                 <CloseIcon />
               </button>
