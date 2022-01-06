@@ -8,7 +8,7 @@ import { mdxOptions } from "src/mdx.config";
 
 export default function Page({ page }) {
   return (
-    <Layout ogTitle={page.title}>
+    <Layout ogTitle={page.title} metaDescription={page.description}>
       <Head>
         <title>mostviertel.tech | {page.title}</title>
       </Head>

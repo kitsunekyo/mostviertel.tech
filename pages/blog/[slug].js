@@ -12,7 +12,11 @@ import { Layout } from "src/components/Layout";
 
 export default function BlogPost({ post }) {
   return (
-    <Layout ogTitle={`mostviertel.tech | ${post.title}`} ogImage={post.image}>
+    <Layout
+      ogTitle={`mostviertel.tech | ${post.title}`}
+      ogImage={post.image}
+      metaDescription={post.description}
+    >
       <Head>
         <title>mostviertel.tech | {post.title}</title>
       </Head>

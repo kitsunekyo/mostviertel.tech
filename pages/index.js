@@ -40,7 +40,10 @@ const animationVariants = {
 
 export default function Home({ posts }) {
   return (
-    <Layout home>
+    <Layout
+      home
+      metaDescription="Alex Spieslechner. Practical web developer in the mostviertel area. With a focus on frontend, developer experience, collaboration and code quality."
+    >
       <Head>
         <title>{siteTitle}</title>
       </Head>
