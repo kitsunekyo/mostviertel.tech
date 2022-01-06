@@ -31,7 +31,7 @@ export const Header = ({ onMenuClicked }) => (
 
       <div className="ml-auto md:hidden">
         {/* menu icon */}
-        <button onClick={onMenuClicked}>
+        <button onClick={onMenuClicked} name="open sidebar">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-6 w-6"

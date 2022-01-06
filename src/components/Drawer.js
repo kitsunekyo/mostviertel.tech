@@ -37,7 +37,11 @@ export const Drawer = ({ isOpen, onClose }) => (
           <div className="p-4">
             {/* close button */}
             <div className="flex">
-              <button onClick={onClose} className="ml-auto">
+              <button
+                onClick={onClose}
+                className="ml-auto"
+                name="close sidebar"
+              >
                 <CloseIcon />
               </button>
             </div>
