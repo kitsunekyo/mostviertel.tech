@@ -10,6 +10,7 @@ import { Button } from "src/components/Button";
 import { PostGrid } from "src/components/PostGrid";
 import { Dots } from "src/components/Dots";
 
+import tsImage from "public/images/home/ts.png";
 import reactImage from "public/images/home/react.png";
 import reduxImage from "public/images/home/redux.png";
 import jestImage from "public/images/home/jest.png";
@@ -115,6 +116,15 @@ export async function getStaticProps() {
 
 const TechIcons = () => (
   <div className="flex gap-4 items-center flex-wrap justify-center">
+    <div className="inline-block rounded-md overflow-hidden hover:-translate-y-2 transition-transform">
+      <Image
+        src={tsImage}
+        height="70"
+        width="70"
+        alt={`typescript icon`}
+        placeholder="blur"
+      />
+    </div>
     <div className="inline-block rounded-md overflow-hidden hover:-translate-y-2 transition-transform">
       <Image
         src={reactImage}
