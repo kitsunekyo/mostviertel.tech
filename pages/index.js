@@ -42,6 +42,7 @@ export default function Home({ posts }) {
   return (
     <Layout
       home
+      ogImage="/images/profile.jpg"
       metaDescription="Alex Spieslechner. Practical web developer in the mostviertel area. With a focus on frontend, developer experience, collaboration and code quality."
     >
       <Head>
