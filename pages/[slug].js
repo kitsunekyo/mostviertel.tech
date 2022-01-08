@@ -1,10 +1,17 @@
 import Head from "next/head";
+import Image from "next/image";
 import { serialize } from "next-mdx-remote/serialize";
 import { MDXRemote } from "next-mdx-remote";
 
 import { Layout } from "src/components/Layout";
 import { getPages, getPage } from "src/lib/page";
 import { mdxOptions } from "src/mdx.config";
+
+const components = {
+  // disabled as alt is set automatically through markdown
+  // eslint-disable-next-line jsx-a11y/alt-text
+  img: (props) => <Image {...props} layout="responsive" loading="lazy" />,
+};
 
 export default function Page({ page }) {
   return (
@@ -14,7 +21,7 @@ export default function Page({ page }) {
       </Head>
       <div className="px-6 pb-12">
         <div className="contained">
-          <MDXRemote {...page.mdxSource} />
+          <MDXRemote {...page.mdxSource} components={components} />
         </div>
       </div>
     </Layout>

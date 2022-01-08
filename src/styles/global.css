@@ -59,7 +59,7 @@ a:hover {
   overflow: hidden;
 }
 
-.content a {
+a {
   @apply text-orange-600;
   &:hover {
     @apply underline;

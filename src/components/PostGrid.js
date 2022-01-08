@@ -40,7 +40,7 @@ export const PostGrid = ({ posts }) => {
       {posts.map(({ slug, date, title, excerpt, image }) => (
         <motion.div key={slug} variants={itemVariants}>
           <Link href={`/blog/${slug}`}>
-            <a>
+            <a className="text-inherit hover:no-underline">
               <Card key={slug} className="h-full">
                 {image ? (
                   <div className="h-24 bg-gray-200 overflow-hidden relative">

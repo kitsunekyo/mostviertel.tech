@@ -7,7 +7,7 @@ export const Header = ({ onMenuClicked }) => (
   <header className="border-b border-gray-300 p-6 sticky top-0 bg-white z-10">
     <div className="flex items-center contained">
       <Link href="/">
-        <a>
+        <a className="text-inherit hover:text-inherit hover:no-underline">
           <div className="flex items-center gap-2">
             <div className="font-semibold">mostviertel.tech</div>
             <Dots size={20} fill="rgb(255, 75, 10)" />
@@ -17,13 +17,17 @@ export const Header = ({ onMenuClicked }) => (
 
       <nav className="ml-auto font-medium items-center gap-8 text-sm hidden md:flex">
         <Link href="/blog">
-          <a>Blog</a>
+          <a className="text-inherit hover:text-inherit hover:no-underline">
+            Blog
+          </a>
         </Link>
         <Link href="/uses">
-          <a>Uses</a>
+          <a className="text-inherit hover:text-inherit hover:no-underline">
+            Uses
+          </a>
         </Link>
         <Link href="mailto:alexander.spieslechner@gmail.com" passHref>
-          <a>
+          <a className="text-inherit hover:text-inherit hover:no-underline">
             <Button>Contact Me</Button>
           </a>
         </Link>

@@ -10,6 +10,12 @@ import { Date } from "src/components/Date";
 import { Button } from "src/components/Button";
 import { Layout } from "src/components/Layout";
 
+const components = {
+  // disabled as alt is set automatically through markdown
+  // eslint-disable-next-line jsx-a11y/alt-text
+  img: (props) => <Image {...props} layout="responsive" loading="lazy" />,
+};
+
 export default function BlogPost({ post }) {
   return (
     <Layout
@@ -34,7 +40,7 @@ export default function BlogPost({ post }) {
         <Date dateString={post.date} />
         <br />
 
-        <MDXRemote {...post.mdxSource} />
+        <MDXRemote {...post.mdxSource} components={components} />
 
         <div className="py-12">
           <Link href="/" passHref>
