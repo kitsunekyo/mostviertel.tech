@@ -1,0 +1,23 @@
+---
+title: "Stop using node-sass"
+excerpt: "If you are still using node-sass, you should REALLY switch to dart-sass"
+date: "2022-01-08"
+tags: shorts
+---
+
+Something that bothers me since forever is that I keep seeing new tutorials popping up, telling developers to install and use `node-sass` in their projects.
+For the longest time `node-sass` was the go-to package for transpiling sass, so what changed?
+
+We developers tend to be lazy. We sometimes forget that we should read the `readme` files of the open source packages we use in our projects, from time to time.
+
+Lets head over to [node-sass on npm](https://www.npmjs.com/package/node-sass) and check what we find there.
+
+> Warning: LibSass and Node Sass are deprecated. While they will continue to receive maintenance releases indefinitely, there are no plans to add additional features or compatibility with any new CSS or Sass features. Projects that still use it should move onto Dart Sass.
+
+Big oopsie. 🤦‍♂️ The package officially states (since Oct, 2020) that we should't use this package anymore. It even gives us a link to the [sass blog article](https://sass-lang.com/blog/libsass-is-deprecated).
+Turns out we would be missing out on a ton of new features, if we used `node-sass`. By using `dart-sass` we make sure that we get access to the newest sass language features.
+In most build setups you can just install `dart-sass` as a drop-in replacement. If you're using `vite` and co, you most likely dont have to worry about this anyway.
+
+If you're using open source packages, make sure you at least read their `readme` files. And drop them a 💵 dollar or two, if you profit from their work.
+
+> PS: `@import` in sass is discouraged too, use `@use` instead. [source](https://sass-lang.com/documentation/at-rules/import)
