@@ -67,9 +67,8 @@ a:hover {
 }
 
 code:not([class*="language-"]) {
-  @apply font-mono text-xs whitespace-nowrap rounded-sm inline-block bg-gray-100 text-red-600 border border-gray-300 overflow-x-scroll;
+  @apply font-mono text-xs rounded-sm bg-gray-100 text-red-600 border border-gray-300 max-w-full overflow-x-scroll whitespace-nowrap inline-block align-middle;
   padding: 0.1em 0.5em;
-  margin: 0 0.2em;
   box-shadow: 0 1px 0px rgba(0, 0, 0, 0.2), 0 0 0 2px #fff inset;
 }
 
