@@ -12,9 +12,9 @@ import { Layout } from "src/components/Layout";
 import { Tags } from "src/components/Tags";
 
 const components = {
-  // disabled as alt is set automatically through markdown
-  // eslint-disable-next-line jsx-a11y/alt-text
   img: (props) => (
+    // disabled as alt is set automatically through markdown
+    // eslint-disable-next-line jsx-a11y/alt-text
     <Image
       {...props}
       layout="responsive"
