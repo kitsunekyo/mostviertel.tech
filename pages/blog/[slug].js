@@ -9,11 +9,19 @@ import { getPosts, getPost } from "src/lib/blog";
 import { Date } from "src/components/Date";
 import { Button } from "src/components/Button";
 import { Layout } from "src/components/Layout";
+import { Tags } from "src/components/Tags";
 
 const components = {
   // disabled as alt is set automatically through markdown
   // eslint-disable-next-line jsx-a11y/alt-text
-  img: (props) => <Image {...props} layout="responsive" loading="lazy" />,
+  img: (props) => (
+    <Image
+      {...props}
+      layout="responsive"
+      loading="lazy"
+      className="rounded-md"
+    />
+  ),
 };
 
 export default function BlogPost({ post }) {
@@ -37,8 +45,15 @@ export default function BlogPost({ post }) {
           />
         )}
         <h1>{post.title}</h1>
-        <Date dateString={post.date} />
-        <br />
+        {/* post meta */}
+        <div className="text-sm text-gray-500">
+          <Date dateString={post.date} />
+          {post.tags.length > 0 && (
+            <div className="flex gap-2 items-center">
+              Tags: <Tags tags={post.tags} />
+            </div>
+          )}
+        </div>
 
         <div className="content">
           <MDXRemote {...post.mdxSource} components={components} />

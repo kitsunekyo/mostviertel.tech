@@ -22,6 +22,7 @@ export function getPost(path) {
     ogImage: data.ogImage || null,
     image: data.image || null,
     content,
+    tags: data.tags ? data.tags.split(",").map((t) => t.trim()) : [],
   };
 }
 
