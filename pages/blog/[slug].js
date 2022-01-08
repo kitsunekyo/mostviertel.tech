@@ -40,7 +40,9 @@ export default function BlogPost({ post }) {
         <Date dateString={post.date} />
         <br />
 
-        <MDXRemote {...post.mdxSource} components={components} />
+        <div className="content">
+          <MDXRemote {...post.mdxSource} components={components} />
+        </div>
 
         <div className="py-12">
           <Link href="/" passHref>

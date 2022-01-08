@@ -20,7 +20,7 @@ export default function Page({ page }) {
         <title>mostviertel.tech | {page.title}</title>
       </Head>
       <div className="px-6 pb-12">
-        <div className="contained">
+        <div className="contained content">
           <MDXRemote {...page.mdxSource} components={components} />
         </div>
       </div>
