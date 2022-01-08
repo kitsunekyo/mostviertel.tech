@@ -47,20 +47,13 @@ h3 {
   @apply text-xl;
 }
 
-a {
-  transition: color 0.2s ease;
-}
-
-a:hover {
-  @apply text-orange-600;
-}
-
 .content {
   overflow: hidden;
 }
 
 a {
   @apply text-orange-600;
+  transition: color 0.2s ease;
   &:hover {
     @apply underline;
   }
@@ -99,4 +92,8 @@ ul {
 
 ul {
   @apply my-6 list-disc pl-4;
+}
+
+li > ul {
+  margin: 0;
 }
