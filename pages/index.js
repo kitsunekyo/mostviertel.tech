@@ -63,8 +63,8 @@ export default function Home({ posts }) {
             variants={animationVariants}
             className="font-extrabold text-4xl md:text-6xl mt-4 mb-4 relative w-fit"
           >
-            <div className="absolute bottom-0 right-0 -z-10 opacity-50 translate-x-3/4">
-              <Dots fill="rgb(255, 75, 10)" />
+            <div className="absolute bottom-0 right-0 -z-10 opacity-50 translate-x-full -translate-y-1">
+              <Dots fill="rgb(255, 75, 10)" size={40} />
             </div>
             Hey, I&apos;m Alex
           </motion.h1>
