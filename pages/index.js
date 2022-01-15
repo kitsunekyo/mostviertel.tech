@@ -17,6 +17,7 @@ import jestImage from "public/images/home/jest.png";
 import awsImage from "public/images/home/aws.png";
 import azureImage from "public/images/home/azure.png";
 import dockerImage from "public/images/home/docker.png";
+import { useCheatcode } from "src/hooks/useCheatcode";
 
 const containerVariants = {
   hidden: {},
@@ -39,6 +40,8 @@ const animationVariants = {
 };
 
 export default function Home({ posts }) {
+  useCheatcode();
+
   return (
     <Layout
       home
