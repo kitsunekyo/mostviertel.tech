@@ -34,37 +34,39 @@ export default function BlogPost({ post }) {
       <Head>
         <title>mostviertel.tech | {post.title}</title>
       </Head>
-      <div className="contained px-6">
-        {post.image && (
-          <Image
-            src={post.image}
-            height={300}
-            width={800}
-            objectFit="cover"
-            alt=""
-          />
-        )}
-        <h1>{post.title}</h1>
-        {/* post meta */}
-        <div className="text-sm text-gray-500">
-          <Date dateString={post.date} />
-          {post.tags.length > 0 && (
-            <div className="flex gap-2 items-center">
-              Tags: <Tags tags={post.tags} />
-            </div>
+      <div className="px-6">
+        <div className="contained">
+          {post.image && (
+            <Image
+              src={post.image}
+              height={300}
+              width={800}
+              objectFit="cover"
+              alt=""
+            />
           )}
-        </div>
+          <h1>{post.title}</h1>
+          {/* post meta */}
+          <div className="text-sm text-gray-500">
+            <Date dateString={post.date} />
+            {post.tags.length > 0 && (
+              <div className="flex gap-2 items-center">
+                Tags: <Tags tags={post.tags} />
+              </div>
+            )}
+          </div>
 
-        <div className="content">
-          <MDXRemote {...post.mdxSource} components={components} />
-        </div>
+          <div className="content">
+            <MDXRemote {...post.mdxSource} components={components} />
+          </div>
 
-        <div className="py-12">
-          <Link href="/" passHref>
-            <a>
-              <Button>← Back to home</Button>
-            </a>
-          </Link>
+          <div className="py-12">
+            <Link href="/" passHref>
+              <a>
+                <Button>← Back to home</Button>
+              </a>
+            </Link>
+          </div>
         </div>
       </div>
     </Layout>
