@@ -1,0 +1,62 @@
+---
+title: "Use git ssh with multiple accounts"
+date: "2022-02-09"
+tags: git
+---
+
+What if your workingplace requires you to use a custom github account, using your company email, but you also want to participate in OSS with your personal account from the same machine?
+
+On your machine you will typically have a single ssh key file, that is automatically used when pushing and pulling from github, as soon as you clone it with the ssh url like `git@github.com:mycompany/my-repo.git`. Typical ssh authentication as you probably know it.
+
+But if you try to add the same ssh key to both your personal AND your company account, github with throw an error, saying you cant use your key multiple times. So what can we do?
+
+First create a new ssh-key for your organization.
+
+```bash
+ssh-keygen -t rsa -C "name@company.org"
+```
+
+When prompted, give it a custom name like `id_rsa_company`.
+
+Add the contents of the `.pub` file to your company github profile (Settings > SSH > Add), then add the new identity to your ssh-agent
+
+```bash
+ssh-add ~/.ssh/id_rsa_company
+```
+
+Now create a `.ssh/config` file in your home directory, and add the following lines:
+
+```
+Host github.com
+    HostName github.com
+    IdentityFile ~/.ssh/id_rsa
+    IdentitiesOnly yes
+
+# If my github organization is called mycompany
+Host github.com-mycompany
+    HostName github.com
+    IdentityFile ~/.ssh/id_rsa_company
+    IdentitiesOnly yes
+```
+
+Whenever we `clone`, `push`, or `pull` with these hosts (like github.com-mycompany), our terminal will use the correct ssh key.
+
+All you need to do now is amend the remote url to use the correct hostname. We can use some domain trickery for this.
+
+If your company repo url normally looks like this `git@github.com:mycompany/my-repo.git` we just need to replace the `github.com` with `github.com-mycompany`. It will resolve just fine, and the correct ssh key will be used automagically.
+
+To update the remote url, you can use the `git remote set-url` command.
+
+```bash
+git remote set-url origin git@github.com-mycompany:mycompany/my-repo.git
+```
+
+To make sure you commit with the right email / username set your user config to the correct email / username.
+
+```bash
+# in the company repo
+git config user.email "user@company.org"
+git config user.name "Company User"
+```
+
+You can now safely push and pull from your company repo, and your personal repos without any password prompts, and work with two different accounts.
