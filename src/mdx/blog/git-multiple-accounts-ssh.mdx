@@ -1,13 +1,13 @@
 ---
 title: "Use git ssh with multiple accounts"
-excerpt: "What if your workingplace requires you to use a custom github account, using your company email, but you also want to participate in OSS with your personal account from the same machine?"
+excerpt: "What if you already have a personal github account for your sideprojects and open source work, but also need a separate account for your work projects?"
 date: "2022-02-09"
 tags: git
 ---
 
-What if your workingplace requires you to use a custom github account, using your company email, but you also want to participate in OSS with your personal account from the same machine?
+What if you already have a personal github account for your sideprojects and open source work, but also need a separate account for your work projects?
 
-On your machine you will typically have a single ssh key file, that is automatically used when pushing and pulling from github, as soon as you clone it with the ssh url like `git@github.com:mycompany/my-repo.git`. Typical ssh authentication as you probably know it.
+If you've worked with github before you will most likely already have an ssh key file named `~/.ssh/id_rsa` and a public key file `~/.ssh/id_rsa.pub`. This key is automatically used when pushing and pulling to and from github, if you clone it with the ssh url like `git@github.com:mycompany/my-repo.git`.
 
 But if you try to add the same ssh key to both your personal AND your company account, github with throw an error, saying you cant use your key multiple times. So what can we do?
 
@@ -33,7 +33,7 @@ Host github.com
     IdentityFile ~/.ssh/id_rsa
     IdentitiesOnly yes
 
-# If my github organization is called mycompany
+# If my company github organization is called mycompany
 Host github.com-mycompany
     HostName github.com
     IdentityFile ~/.ssh/id_rsa_company
