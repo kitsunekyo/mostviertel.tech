@@ -1,14 +1,14 @@
 import { getPosts } from "src/lib/blog";
 import { Layout } from "src/components/Layout";
-import { PostGrid } from "src/components/PostGrid";
+import { PostList } from "src/components/PostList";
 
 export default function Blog({ posts }) {
   return (
     <Layout>
-      <div className="p-6 pb-48 bg-gradient h-full">
+      <div className="p-6 pb-48 h-full">
         <div className="contained">
-          <h1 className="text-white">Blog</h1>
-          <PostGrid posts={posts} />
+          <h1>Blog</h1>
+          <PostList posts={posts} />
         </div>
       </div>
     </Layout>

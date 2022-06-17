@@ -4,13 +4,13 @@ import { Button } from "src/components/Button";
 import { Dots } from "src/components/Dots";
 
 export const Header = ({ onMenuClicked }) => (
-  <header className="border-b border-gray-300 p-6 sticky top-0 bg-white z-10">
+  <header className="p-6 sticky top-0 bg-gradient z-10">
     <div className="flex items-center contained">
       <Link href="/">
         <a className="text-inherit hover:text-inherit hover:no-underline">
           <div className="flex items-center gap-2">
-            <div className="font-semibold">mostviertel.tech</div>
-            <Dots size={20} fill="rgb(255, 75, 10)" />
+            <div className="font-semibold text-white">mostviertel.tech</div>
+            <Dots size={20} fill="rgb(255, 255, 255)" />
           </div>
         </a>
       </Link>
@@ -19,11 +19,6 @@ export const Header = ({ onMenuClicked }) => (
         <Link href="/blog">
           <a className="text-inherit hover:text-inherit hover:no-underline">
             Blog
-          </a>
-        </Link>
-        <Link href="/uses">
-          <a className="text-inherit hover:text-inherit hover:no-underline">
-            Uses
           </a>
         </Link>
         <Link href="mailto:alexander.spieslechner@gmail.com" passHref>

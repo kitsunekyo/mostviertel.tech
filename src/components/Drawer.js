@@ -49,9 +49,6 @@ export const Drawer = ({ isOpen, onClose }) => (
               <Link href="/blog">
                 <a className="p-4 w-full text-center">Blog</a>
               </Link>
-              <Link href="/uses">
-                <a className="p-4 w-full text-center">Uses</a>
-              </Link>
               <Link href="mailto:alexander.spieslechner@gmail.com" passHref>
                 <a>
                   <Button className="mt-6">Contact Me</Button>

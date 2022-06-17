@@ -40,7 +40,7 @@ h1 {
 }
 
 h2 {
-  @apply text-2xl;
+  @apply text-xl;
 }
 
 h3 {
