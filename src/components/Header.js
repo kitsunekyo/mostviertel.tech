@@ -1,16 +1,22 @@
 import Link from "next/link";
 
 import { Button } from "src/components/Button";
-import { Dots } from "src/components/Dots";
 
 export const Header = ({ onMenuClicked }) => (
-  <header className="p-6 sticky top-0 bg-gradient z-10">
+  <header className="px-6 py-3 sticky top-0 bg-gray-800 z-10">
     <div className="flex items-center contained">
       <Link href="/">
         <a className="text-inherit hover:text-inherit hover:no-underline">
           <div className="flex items-center gap-2">
-            <div className="font-semibold text-white">mostviertel.tech</div>
-            <Dots size={20} fill="rgb(255, 255, 255)" />
+            <div
+              className="font-bold text-lg bg-gradient-to-br from-orange-600 to-yellow-100"
+              style={{
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+              }}
+            >
+              mostviertel.tech
+            </div>
           </div>
         </a>
       </Link>
@@ -33,7 +39,7 @@ export const Header = ({ onMenuClicked }) => (
         <button onClick={onMenuClicked} aria-label="open sidebar">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6"
+            className="h-6 w-6 text-white"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
