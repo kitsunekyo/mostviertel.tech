@@ -6,13 +6,20 @@ import Link from "next/link";
 import Error from "next/error";
 import classNames from "classnames";
 
-export default function Blog({ totalPosts, posts }) {
+function usePagination(data, page) {
+  const perPage = 5;
+  const pages = Math.ceil(data.length / perPage);
+  const paginatedData =
+    page > pages ? [] : data.slice(perPage * (page - 1), perPage * page);
+
+  return { paginatedData, pages };
+}
+
+export default function Blog({ posts }) {
   const router = useRouter();
   const { page = 1 } = router.query;
 
-  const postsPerPage = 5;
-  const pages = Math.ceil(totalPosts / postsPerPage);
-  const pagePosts = page > pages ? [] : posts.slice(page - 1, postsPerPage);
+  const { paginatedData: pagePosts, pages } = usePagination(posts, page);
 
   if (page > pages) {
     return <Error statusCode={404} />;
@@ -25,7 +32,7 @@ export default function Blog({ totalPosts, posts }) {
           <h1 className="text-2xl mt-4">
             Blog{" "}
             <small className="text-sm font-normal text-gray-400 ml-2">
-              {totalPosts} total posts
+              {posts.length} total posts
             </small>
           </h1>
           <PostList posts={pagePosts} />
@@ -37,11 +44,10 @@ export default function Blog({ totalPosts, posts }) {
 }
 
 export const getStaticProps = async () => {
-  const { posts, totalPosts } = await getPosts();
+  const posts = await getPosts();
   return {
     props: {
       posts,
-      totalPosts,
     },
   };
 };

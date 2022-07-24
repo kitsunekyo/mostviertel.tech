@@ -28,11 +28,10 @@ export function getPost(path) {
 
 export function getPosts() {
   const slugs = getPostsSlugs();
-  const totalPosts = slugs.length;
 
   const posts = slugs
     .map((path) => getPost(path))
     .sort((post1, post2) => (post1.date > post2.date ? -1 : 1));
 
-  return { posts, totalPosts };
+  return posts;
 }

@@ -3,7 +3,6 @@
 
 @tailwind base;
 @tailwind components;
-@tailwind utilities;
 
 :root {
   --shadow-hard: 4px 4px 0 0 rgb(0 0 0 / 89%);
@@ -47,8 +46,8 @@ h3 {
   @apply text-xl;
 }
 
-a {
-  transition: color 0.2s ease;
+.link {
+  @apply transition-colors border-dotted border-b border-orange-600;
   &:hover {
     @apply text-orange-600;
   }
@@ -58,8 +57,9 @@ a {
   overflow: hidden;
 
   a {
+    @apply transition-colors border-dotted border-b border-orange-600;
     &:hover {
-      @apply underline;
+      @apply text-orange-600;
     }
   }
 
@@ -102,3 +102,5 @@ a {
     margin: 0;
   }
 }
+
+@tailwind utilities;

@@ -3,13 +3,12 @@ import Link from "next/link";
 
 import { getPosts } from "src/lib/blog";
 import { Layout, siteTitle } from "src/components/Layout";
-import { Button } from "src/components/Button";
 import { PostList } from "src/components/PostList";
 
 import { useCheatcode } from "src/hooks/useCheatcode";
 import Image from "next/image";
 
-export default function Home({ posts }) {
+export default function Home({ recentPosts }) {
   useCheatcode();
 
   return (
@@ -79,25 +78,25 @@ export default function Home({ posts }) {
           <ul className="flex flex-col gap-2 text-lg text-gray-500">
             <li>
               <Link href="https://discord.com/invite/reactiflux">
-                <a className="flex items-center gap-4">
+                <a className="inline-flex items-center gap-4">
                   <div>→ </div>
-                  <div>Reactiflux</div>
+                  <div className="link">Reactiflux</div>
                 </a>
               </Link>
             </li>
             <li>
               <Link href="https://kentcdodds.com/discord">
-                <a className="flex items-center gap-4">
+                <a className="inline-flex items-center gap-4">
                   <div>→ </div>
-                  <div>Kent C. Dodds Community Discord</div>
+                  <div className="link">Kent C. Dodds Community Discord</div>
                 </a>
               </Link>
             </li>
             <li>
               <Link href="https://discord.com/invite/aYVNktYeEB">
-                <a className="flex items-center gap-4">
+                <a className="inline-flex items-center gap-4">
                   <div>→ </div>
-                  <div>Vite Land</div>
+                  <div className="link">Vite Land</div>
                 </a>
               </Link>
             </li>
@@ -119,14 +118,10 @@ export default function Home({ posts }) {
             </span>
             i write articles
           </h2>
-
-          <PostList posts={posts} />
-
           <Link href="/blog" passHref>
-            <a>
-              <Button className="mt-6">More Articles →</Button>
-            </a>
+            <a className="link text-sm">go to blog →</a>
           </Link>
+          <PostList posts={recentPosts} />
         </div>
       </section>
     </Layout>
@@ -134,11 +129,11 @@ export default function Home({ posts }) {
 }
 
 export async function getStaticProps() {
-  const { posts } = getPosts();
+  const posts = getPosts();
 
   return {
     props: {
-      posts: posts.slice(0, 3),
+      recentPosts: posts.slice(0, 3),
     },
   };
 }
