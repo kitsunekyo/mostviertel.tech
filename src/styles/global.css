@@ -33,7 +33,7 @@ body {
 }
 
 .content {
-  overflow: hidden;
+  @apply overflow-hidden;
 
   h1,
   h2,
@@ -61,6 +61,10 @@ body {
     &:hover {
       @apply text-orange-600;
     }
+  }
+
+  code {
+    @apply text-sm;
   }
 
   code:not([class*="language-"]) {
