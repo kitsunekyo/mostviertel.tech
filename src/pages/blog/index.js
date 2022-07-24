@@ -20,7 +20,7 @@ export default function Blog({ totalPosts, posts }) {
 
   return (
     <Layout>
-      <div className="p-6 pb-48">
+      <div className="p-6">
         <div className="contained">
           <h1 className="text-2xl mt-4">
             Blog{" "}
@@ -50,7 +50,7 @@ function Pagination({ pages }) {
   const router = useRouter();
 
   return (
-    <div className="flex items-center text-sm border-t border-gray-100 py-4 justify-end">
+    <div className="flex items-center text-sm border-t border-gray-100 pt-6 justify-end">
       <div className="mr-2">Pages: </div>
       <div className="flex item-center gap-2">
         {Array.from(Array(pages), (_, i) => i + 1).map((p) => (
