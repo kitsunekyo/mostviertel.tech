@@ -8,7 +8,7 @@ const withMDX = require("@next/mdx")({
 module.exports = withMDX({
   pageExtensions: ["js", "jsx", "md", "mdx"],
   images: {
-    domains: ["placehold.it"],
+    domains: ["placehold.it", "raw.githubusercontent.com"],
   },
   i18n: {
     locales: ["en"],
