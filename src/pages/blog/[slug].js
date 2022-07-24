@@ -34,7 +34,7 @@ export default function BlogPost({ post }) {
       <Head>
         <title>mostviertel.tech | {post.title}</title>
       </Head>
-      <article className="px-6">
+      <article className="px-6 py-6">
         <div className="contained">
           {post.image && (
             <Image
