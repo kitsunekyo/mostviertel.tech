@@ -16,7 +16,7 @@ export const PostList = ({ posts }) => {
               </div>
             ) : null}
             <div className="py-4">
-              <Link key={slug} href={`/blog/${slug}`}>
+              <Link href={`/blog/${slug}`}>
                 <a>
                   <h3 className="text-base my-0">{title}</h3>
                 </a>
@@ -26,7 +26,7 @@ export const PostList = ({ posts }) => {
               </div>
               {excerpt && <p className="my-2 text-sm">{excerpt}</p>}
               {tags.length > 0 && <Tags tags={tags} />}
-              <Link key={slug} href={`/blog/${slug}`}>
+              <Link href={`/blog/${slug}`}>
                 <a className="text-sm">Read more →</a>
               </Link>
             </div>

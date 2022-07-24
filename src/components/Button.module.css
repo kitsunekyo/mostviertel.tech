@@ -1,6 +1,6 @@
 .button {
   --animation-speed: 0.1s;
-  @apply border-2 border-black rounded-md px-4 py-2 font-medium bg-white text-black;
+  @apply border-2 border-black rounded-md px-2 h-10 font-medium bg-white text-black;
   box-shadow: var(--shadow-hard);
   transition: box-shadow var(--animation-speed) ease-in-out,
     transform var(--animation-speed) ease-in-out;

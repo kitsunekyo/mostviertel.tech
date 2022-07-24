@@ -74,7 +74,7 @@ export default function BlogPost({ post }) {
 }
 
 export async function getStaticPaths() {
-  const posts = await getPosts();
+  const { posts } = await getPosts();
   const paths = posts.map((post) => ({
     params: { slug: post.slug },
   }));
