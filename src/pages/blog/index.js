@@ -56,14 +56,14 @@ function Pagination({ pages }) {
   const router = useRouter();
 
   return (
-    <div className="flex items-center text-sm border-t border-gray-100 pt-6 justify-end">
+    <div className="flex items-center text-xs border-t border-gray-100 pt-6">
       <div className="mr-2">Pages: </div>
       <div className="flex item-center gap-2">
         {Array.from(Array(pages), (_, i) => i + 1).map((p) => (
           <Link key={p} href={`?page=${p}`}>
             <a
               className={classNames(
-                "bg-gray-100 rounded hover:bg-gray-100 flex items-center justify-center h-6 w-6",
+                "bg-gray-50 rounded hover:bg-gray-100 flex items-center justify-center h-6 w-6",
                 {
                   "font-bold text-orange-500":
                     router.asPath === `/blog?page=${p}` ||
