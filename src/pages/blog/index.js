@@ -22,7 +22,12 @@ export default function Blog({ totalPosts, posts }) {
     <Layout>
       <div className="p-6 pb-48">
         <div className="contained">
-          <h1 className="text-2xl mt-4">Blog</h1>
+          <h1 className="text-2xl mt-4">
+            Blog{" "}
+            <small className="text-sm font-normal text-gray-400 ml-2">
+              {totalPosts} total posts
+            </small>
+          </h1>
           <PostList posts={pagePosts} />
           <Pagination pages={pages} />
         </div>
