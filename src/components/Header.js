@@ -26,19 +26,19 @@ export const Header = ({ onMenuClicked }) => (
 
       <nav className="ml-auto font-medium items-center gap-8 text-sm hidden md:flex">
         <Link href="/blog">
-          <a className="text-inherit text-xs">Blog</a>
+          <a className="text-inherit text-xs">blog</a>
         </Link>
         <Link href="mailto:alexander.spieslechner@gmail.com" passHref>
-          <a className="text-inherit text-xs">Contact Me</a>
+          <a className="text-inherit text-xs">contact me</a>
         </Link>
       </nav>
 
-      <div className="ml-auto md:hidden">
+      <div className="ml-auto md:hidden flex items-center">
         {/* menu icon */}
         <button onClick={onMenuClicked} aria-label="open sidebar">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6 text-white"
+            className="h-6 w-6"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"

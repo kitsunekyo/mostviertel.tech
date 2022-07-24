@@ -47,12 +47,10 @@ export const Drawer = ({ isOpen, onClose }) => (
             </div>
             <nav className="items-center gap-2 text-base flex flex-col pt-20 font-medium">
               <Link href="/blog">
-                <a className="p-4 w-full text-center">Blog</a>
+                <a className="p-4 w-full text-center">blog</a>
               </Link>
               <Link href="mailto:alexander.spieslechner@gmail.com" passHref>
-                <a>
-                  <Button className="mt-6">Contact Me</Button>
-                </a>
+                <a>contact me</a>
               </Link>
             </nav>
           </div>
