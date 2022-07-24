@@ -34,7 +34,7 @@ export default function BlogPost({ post }) {
       <Head>
         <title>mostviertel.tech | {post.title}</title>
       </Head>
-      <div className="px-6">
+      <article className="px-6">
         <div className="contained">
           {post.image && (
             <Image
@@ -68,7 +68,7 @@ export default function BlogPost({ post }) {
             </Link>
           </div>
         </div>
-      </div>
+      </article>
     </Layout>
   );
 }
