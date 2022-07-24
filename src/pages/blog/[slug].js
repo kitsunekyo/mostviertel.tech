@@ -45,7 +45,7 @@ export default function BlogPost({ post }) {
               alt=""
             />
           )}
-          <h1>{post.title}</h1>
+          <h1 className="text-2xl font-extrabold mt-8 mb-6">{post.title}</h1>
           {/* post meta */}
           <div className="text-sm text-gray-500">
             <Date dateString={post.date} />

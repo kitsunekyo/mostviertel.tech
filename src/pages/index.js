@@ -23,7 +23,9 @@ export default function Home({ recentPosts }) {
 
       <section className="py-10 px-6">
         <div className="contained">
-          <h1 className="text-2xl font-extrabold">servus, i&apos;m alex 👋</h1>
+          <h1 className="text-2xl font-extrabold mt-8 mb-4">
+            servus, i&apos;m alex 👋
+          </h1>
           <p className="text-lg text-gray-500">
             i&apos;m a frontend developer from the mostviertel area, currently
             working at{" "}
@@ -40,38 +42,7 @@ export default function Home({ recentPosts }) {
 
       <section className="py-10 px-6">
         <div className="contained">
-          <h2 className="mt-0 text-xl font-extrabold">
-            <span
-              className="bg-gradient-to-r from-orange-500 to-amber-500 pr-2"
-              style={{
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-              }}
-            >
-              #
-            </span>
-            find me on github{" "}
-          </h2>
-          <p className="text-lg text-gray-500">
-            <a
-              href="https://github.com/kitsunekyo"
-              className="flex items-center gap-2"
-            >
-              github.com/kitsunekyo
-              <Image
-                src="/images/GitHub-Mark-64px.png"
-                height={32}
-                width={32}
-                alt="github"
-              />
-            </a>
-          </p>
-        </div>
-      </section>
-
-      <section className="py-10 px-6">
-        <div className="contained">
-          <h2 className="mt-0 text-xl font-extrabold">
+          <h2 className="text-xl font-extrabold mb-4">
             <span
               className="bg-gradient-to-r from-orange-500 to-amber-500 pr-2"
               style={{
@@ -117,7 +88,7 @@ export default function Home({ recentPosts }) {
 
       <section className="py-10 px-6">
         <div className="contained">
-          <h2 className="mt-0 text-xl font-extrabold">
+          <h2 className="text-xl font-extrabold mb-4">
             <span
               className="bg-gradient-to-r from-orange-500 to-amber-500 pr-2"
               style={{
@@ -127,12 +98,45 @@ export default function Home({ recentPosts }) {
             >
               #
             </span>
-            i write articles
+            i like oss{" "}
+          </h2>
+          <p className="text-lg text-gray-500">
+            <a
+              href="https://github.com/kitsunekyo"
+              className="flex items-center gap-2"
+            >
+              github.com/kitsunekyo
+              <Image
+                src="/images/GitHub-Mark-64px.png"
+                height={32}
+                width={32}
+                alt="github"
+              />
+            </a>
+          </p>
+        </div>
+      </section>
+
+      <section className="py-10 px-6">
+        <div className="contained">
+          <h2 className="text-xl font-extrabold mb-4">
+            <span
+              className="bg-gradient-to-r from-orange-500 to-amber-500 pr-2"
+              style={{
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+              }}
+            >
+              #
+            </span>
+            i write about webdev
           </h2>
           <Link href="/blog" passHref>
             <a className="link text-sm">go to blog →</a>
           </Link>
-          <PostList posts={recentPosts} />
+          <div className="mt-4">
+            <PostList posts={recentPosts} />
+          </div>
         </div>
       </section>
     </Layout>

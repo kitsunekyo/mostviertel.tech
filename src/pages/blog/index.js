@@ -29,7 +29,7 @@ export default function Blog({ posts }) {
     <Layout>
       <div className="p-6">
         <div className="contained">
-          <h1 className="text-2xl mt-4">
+          <h1 className="text-2xl font-extrabold mt-8 mb-6">
             Blog{" "}
             <small className="text-sm font-normal text-gray-400 ml-2">
               {posts.length} total posts

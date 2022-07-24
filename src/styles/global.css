@@ -25,27 +25,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-h1,
-h2,
-h3,
-h4 {
-  @apply font-semibold;
-  margin-top: 2em;
-  margin-bottom: 1em;
-}
-
-h1 {
-  @apply text-4xl font-extrabold;
-}
-
-h2 {
-  @apply text-xl;
-}
-
-h3 {
-  @apply text-xl;
-}
-
 .link {
   @apply transition-colors border-dotted border-b border-orange-600;
   &:hover {
@@ -55,6 +34,27 @@ h3 {
 
 .content {
   overflow: hidden;
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-semibold;
+    margin-top: 2em;
+    margin-bottom: 1em;
+  }
+
+  h1 {
+    @apply text-4xl font-extrabold;
+  }
+
+  h2 {
+    @apply text-xl;
+  }
+
+  h3 {
+    @apply text-xl;
+  }
 
   a {
     @apply transition-colors border-dotted border-b border-orange-600;
