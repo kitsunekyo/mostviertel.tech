@@ -24,9 +24,9 @@ export default function Home({ posts }) {
 
       <section className="py-10 px-6">
         <div className="contained">
-          <h1 className="text-2xl font-extrabold">servus, i'm alex 👋</h1>
+          <h1 className="text-2xl font-extrabold">servus, i&apos;m alex 👋</h1>
           <p className="text-lg text-gray-500">
-            i'm a frontend developer from the mostviertel area. currently
+            i&apos;m a frontend developer from the mostviertel area. currently
             working at the umdaschgroup-ventures as a lead developer.
           </p>
         </div>

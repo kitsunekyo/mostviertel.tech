@@ -1,7 +1,5 @@
 import Link from "next/link";
 
-import { Button } from "src/components/Button";
-
 export const Header = ({ onMenuClicked }) => (
   <header className="px-6 py-3 sticky top-0 z-10 border-b border-gray-200 bg-white backdrop-blur bg-opacity-80">
     <div className="flex items-center contained">

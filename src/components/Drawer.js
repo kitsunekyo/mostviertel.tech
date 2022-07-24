@@ -1,8 +1,6 @@
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 
-import { Button } from "./Button";
-
 export const Drawer = ({ isOpen, onClose }) => (
   <AnimatePresence>
     {isOpen && (
