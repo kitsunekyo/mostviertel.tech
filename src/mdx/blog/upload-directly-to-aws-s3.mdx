@@ -16,7 +16,7 @@ Traditionally, when uploading files in a single page app, you'd upload files dir
 
 But passing files to our backend, just so that it can send them to cloud storage isn't the most efficient. How about allowing our frontend users to directly upload to our cloud storage?
 
-You'll probably scream SECURITY!! right now, but there's a pattern called the "valet key pattern", that makes it not only secure but also extremely efficient.
+You might shout SECURITY!! right now, but there's a pattern called the "valet key pattern", that makes it not only secure but also extremely efficient.
 
 > Our example will use Amazon AWS S3's "presigned url" feature, but the other cloud providers have pretty much identical features. eg. Azure Blob Storage has "shared access signatures".
 

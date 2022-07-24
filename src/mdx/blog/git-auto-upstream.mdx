@@ -4,10 +4,11 @@ date: "2021-03-14"
 tags: git, shorts
 ---
 
-By default, when creating a new branch with `git checkout -b mybranch` you cant immediately push via the cli.
-You'll be required to set the default upstream branch, ie. tell git what remote branch you want to push to from this local one.
+After creating a new branch with `git switch -c mybranch` you cant immediately push to a remote.
+If you try to do that, git will yell at you, telling you you need to configure an upstream branch.
+ie. tell git what remote branch you want to push to from this local one.
 
-To automatically infer the upstram branch, configure `push.default`. [checkout the official docs](https://git-scm.com/docs/git-config#Documentation/git-config.txt-pushdefault) to learn more.
+To automatically infer the upstram branch without the manual step, configure `push.default`. [checkout the official docs](https://git-scm.com/docs/git-config#Documentation/git-config.txt-pushdefault) to learn more.
 
 ```bash
 git config --global push.default current

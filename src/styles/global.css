@@ -79,7 +79,7 @@ body {
   }
 
   blockquote {
-    @apply block pl-4 my-6 text-gray-500 text-lg border-l-2 border-l-black;
+    @apply block pl-4 my-6 text-gray-500 italic border-l-2 border-l-orange-600;
   }
 
   kbd {

@@ -1,11 +1,13 @@
 ---
 title: "Use git ssh with multiple accounts"
-excerpt: "What if you already have a personal github account for your sideprojects and open source work, but also need a separate account for your work projects?"
+excerpt: "The default ssh keys are usually configured for one account. I'll show you how you can manage multiple ssh keys for multiple accounts on github."
 date: "2022-02-09"
 tags: git
 ---
 
-What if you already have a personal github account for your sideprojects and open source work, but also need a separate account for your work projects?
+> note that github recommends having a single account for both work and personal projects. this workaround is only in case your employer is weird like that. [read more](https://github.community/t/using-one-account-for-all-your-projects/10197)
+
+What if you already have a personal github account for your sideprojects and open source work, but your employer requires you to have a separate account for your work projects?
 
 If you've worked with github before you will most likely already have an ssh key file named `~/.ssh/id_rsa` and a public key file `~/.ssh/id_rsa.pub`. This key is automatically used when pushing and pulling to and from github, if you clone it with the ssh url like `git@github.com:mycompany/my-repo.git`.
 
