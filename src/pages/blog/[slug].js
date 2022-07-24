@@ -61,9 +61,9 @@ export default function BlogPost({ post }) {
           </div>
 
           <div className="py-12">
-            <Link href="/" passHref>
+            <Link href="/blog" passHref>
               <a>
-                <Button>← Back to home</Button>
+                <Button>← back to all posts</Button>
               </a>
             </Link>
           </div>
