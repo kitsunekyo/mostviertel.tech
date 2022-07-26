@@ -26,7 +26,7 @@ body {
 }
 
 .link {
-  @apply transition-colors border-dotted border-b border-orange-600;
+  @apply transition-colors decoration-dotted underline decoration-orange-600;
   &:hover {
     @apply text-orange-600;
   }
@@ -57,7 +57,7 @@ body {
   }
 
   a {
-    @apply transition-colors border-dotted border-b border-orange-600;
+    @apply transition-colors decoration-dotted underline decoration-orange-600;
     &:hover {
       @apply text-orange-600;
     }
