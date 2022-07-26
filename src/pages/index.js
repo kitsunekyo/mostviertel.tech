@@ -59,24 +59,26 @@ export default function Home({ recentPosts }) {
         <title>{siteTitle}</title>
       </Head>
 
-      <section className="py-10 px-6">
+      <div className="py-10 px-6">
         <div className="contained">
-          <h1 className="text-2xl font-extrabold mt-8 mb-4">
-            servus, i&apos;m alex 👋
-          </h1>
-          <p className="text-lg text-gray-500">
-            i&apos;m a frontend developer from the mostviertel area, currently
-            working at{" "}
-            <a href="https://umdaschgroup-ventures.com/" className="link">
-              umdaschgroup-ventures
-            </a>{" "}
-            as a lead developer.
-          </p>
-          <div className="mt-8">
-            <TechIcons />
+          <div className="rounded-xl from-orange-100 to-amber-50 bg-gradient-to-tr min-h-[400px] p-10 flex flex-col justify-end">
+            <h1 className="text-2xl md:text-4xl font-extrabold mt-8 mb-4">
+              servus, i&apos;m alex 👋
+            </h1>
+            <p className="text-lg text-gray-500">
+              i&apos;m a frontend developer from the mostviertel area, currently
+              working at{" "}
+              <a href="https://umdaschgroup-ventures.com/" className="link">
+                umdaschgroup-ventures
+              </a>{" "}
+              as a lead developer.
+            </p>
+            <div className="mt-8">
+              <TechIcons />
+            </div>
           </div>
         </div>
-      </section>
+      </div>
 
       <section className="py-10 px-6">
         <div className="contained">
