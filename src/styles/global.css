@@ -49,11 +49,11 @@ body {
   }
 
   h2 {
-    @apply text-xl;
+    @apply text-lg;
   }
 
   h3 {
-    @apply text-xl;
+    @apply text-base;
   }
 
   a {
