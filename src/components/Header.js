@@ -5,7 +5,7 @@ export const Header = ({ onMenuClicked }) => (
     <div className="flex items-center contained">
       <Link href="/">
         <a className="text-inherit hover:text-inherit hover:no-underline">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 h-[50px]">
             <div className="font-extrabold text-lg">
               <span
                 className="bg-gradient-to-br from-orange-500 to-amber-500"
