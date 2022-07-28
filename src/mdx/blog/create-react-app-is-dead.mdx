@@ -1,13 +1,12 @@
 ---
-title: "is create react app dead"
+title: "is create react app dead?"
 date: "2022-07-26"
 excerpt: "While create react app served us well, the react community no longer considers it a recommended solution."
 tags: react
 ---
 
 The product I currently work on at work is using ejected create react app v4 as its base.
-While this served the team, that initially started the project well, it no longer works for us,
-and we're currently evaluating other options.
+While this served the team, that initially started the project well, it has some issues.
 
 ## our issues with create react app
 
@@ -19,25 +18,23 @@ one of the biggest issues is that create react app does not have anyone working 
 
 we ran into a major issue with CRA5 and tailwindcss, and I created a fix PR for it. its a single line hotfix, but it hasn't been reviewed since Jan 2022. (thats over 6 months now)
 
-### customization is tricky
+### opinionated in the wrong places
 
 create react app is opinionated as hell, and I would argue a lot of the opinions are bad too.
 
-for example installing tailwind required CRACO, or ejecting up until CRA5
+- installing tailwind required CRACO\*, or ejecting up until CRA5
+- CRA5 makes it impossible to customize the postcss config, which is needed when using postcss plugins (like import)
+- CRA doesnt allow imports outside of `src`.  
+  this makes loading the `tailwind.config.js` to access theme config in TS a pain  
+  it also prevents us from typesharing in a typescript monorepo via `import type { MyType } from '@/backend'``
 
-> CRACO is a wrapper around cra that has its very own set if issues
+> \*CRACO is a wrapper around cra that has its very own set if issues
 
 ### stable, it is not
 
-no matter which create-react-app version you pick. whether its ejected or not. as your app grows, you will most likely run into compatibility issues, slow build speeds or generally broken tooling.
+no matter which create-react-app version you pick. whether its ejected or not. as your app grows, you will most likely run into compatibility issues, slow build speeds or generally broken tooling (like linting errors being swallowed).
 
 if you've ever ejected, you know how much nonsense is packed up in create react app. its mostly stuff that was once useful. but our tools have evolved since then and a lot of these things are no longer needed, or other tools simply do it better with less config.
-
-### client side only rendering is most likely not what you want
-
-one possible issue with create react app is the rendering flow itself. when a user loads your app, they will first see an empty screen, until all javascript is executed and run. this isnt the greatest UX and also really horrible for your SEO.
-
-we got really easy ways to provide SSR, SSG, and ISR with frameworks like nextjs, remix, astro and many others. so if SEO is of any concern, client side rendering is a nono.
 
 ### people are starting to move on
 
@@ -58,17 +55,17 @@ a lot of content creators and oss people have recently started to actively disco
 
 ## alternatives to create react app
 
-so what should we use instead?
+what should we use instead?
 
 ### vitejs
 
-i've already hinted at the new frameworks, but the closest thing we can have to create react app is [https://vitejs.dev/](https://vitejs.dev/)
+the closest thing we can have to create react app is [https://vitejs.dev/](https://vitejs.dev/)
 
-vite gives use the same clientside rendering flow that we get from create react app. but its way faster through esbuild, and allows customization through an extensive and active plugin ecosystem.
+vite is a "blazingly fast" and lightweight dev and build system, and it gives use the same clientside rendering flow that we are used to from create react app. it also allows easy customization through an extensive and active plugin ecosystem.
 
 ### nextjs
 
-while react is just a library, nextjs turns it into a full blown framework a la angular. (but without all the shitty parts)
+while react is just a library, nextjs turns it into a batteries-included framework a la angular. (but without all the shitty parts)
 
 when building a production grade app, nextjs will give you pretty much everything you might need. it comes with a built in router, a backend for frontend solution with api routes and a blazingly fast build system. the deployment story is also most likely the smoothest one out there, thanks to vercel.
 
@@ -76,10 +73,10 @@ you can pick whether you want SSR or SSG on a per-route-basis. so you can really
 
 ### remix, astro and the others
 
-we're blessed with options in react world. i havent tried any of these options yet. so i dont feel comfortable commenting on them.
+there's a ton of other react-based options out there. check them out on your own account. I havent used any of them in production yet, so I cant make a testiment to how they perform. but i've heard good things so far especially about Astro and Remix.
 
 ## what now?
 
-for any greenfield project, i'm 100% sold on nextjs. for any client-side only, or brownfield projects vite looks immensely promising, thanks to its simplicity.
+for any greenfield project, i'm 100% sold on nextjs. for any client-side only, or brownfield projects vite looks like the way to go, thanks to its simplicity.
 
-when it comes to our product, we dont want to move off `react-router` yet and rewrite all our views in nextjs' file router. so we're trying to migrate to vite for now, but its not as easy as we've hoped. i'll write another post going into details about all the hurdles we've hit when migrating to vite.
+when it comes to our product, we dont want to move off `react-router` and rewrite all our views in nextjs' file router yet. so we're trying to migrate to vite for now, but its not as easy as we've hoped. i'll write another post going into details about all the hurdles we've hit when migrating to vite.
