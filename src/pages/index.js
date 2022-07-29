@@ -50,17 +50,19 @@ export default function Home({ recentPosts }) {
   useCheatcode();
 
   return (
-    <Layout
-      home
-      ogImage="/images/profile.jpg"
-      metaDescription="Alex Spieslechner. Practical web developer in the mostviertel area. With a focus on frontend, developer experience, collaboration and code quality."
-    >
+    <Layout>
       <Head>
         <title>{siteTitle}</title>
+        <meta
+          name="description"
+          content="Alex Spieslechner. Practical web developer in the mostviertel area. With a focus on frontend, developer experience, collaboration and code quality."
+        />
+        <meta property="og:image" content="/images/profile.jpg" />
+        <meta name="og:title" content="mostviertel.tech" />
       </Head>
 
       <div className="py-10 px-6">
-        <div className="contained">
+        <div className="mx-auto max-w-[800px]">
           <div className="rounded-xl from-orange-100 to-amber-50 bg-gradient-to-tr min-h-[400px] p-10 flex flex-col justify-end">
             <h1 className="text-2xl md:text-4xl font-extrabold mt-8 mb-4">
               servus, i&apos;m alex 👋
@@ -81,7 +83,7 @@ export default function Home({ recentPosts }) {
       </div>
 
       <section className="py-10 px-6">
-        <div className="contained">
+        <div className="mx-auto max-w-[800px]">
           <h2 className="text-xl font-extrabold mb-4">
             <span
               className="bg-gradient-to-r from-orange-500 to-amber-500 pr-2"
@@ -127,7 +129,7 @@ export default function Home({ recentPosts }) {
       </section>
 
       <section className="py-10 px-6">
-        <div className="contained">
+        <div className="mx-auto max-w-[800px]">
           <h2 className="text-xl font-extrabold mb-4">
             <span
               className="bg-gradient-to-r from-orange-500 to-amber-500 pr-2"
@@ -158,7 +160,7 @@ export default function Home({ recentPosts }) {
       </section>
 
       <section className="py-10 px-6">
-        <div className="contained">
+        <div className="mx-auto max-w-[800px]">
           <h2 className="text-xl font-extrabold mb-4">
             <span
               className="bg-gradient-to-r from-orange-500 to-amber-500 pr-2"
@@ -181,7 +183,7 @@ export default function Home({ recentPosts }) {
       </section>
 
       <section className="py-10 px-6">
-        <div className="contained">
+        <div className="mx-auto max-w-[800px]">
           <h2 className="text-xl font-extrabold mb-4">
             <span
               className="bg-gradient-to-r from-orange-500 to-amber-500 pr-2"

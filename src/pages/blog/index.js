@@ -1,10 +1,11 @@
 import { getPosts } from "src/lib/blog";
-import { Layout } from "src/components/Layout";
+import { Layout, siteTitle } from "src/components/Layout";
 import { PostList } from "src/components/PostList";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import Error from "next/error";
 import classNames from "classnames";
+import Head from "next/head";
 
 function usePagination(data, page) {
   const perPage = 5;
@@ -27,8 +28,15 @@ export default function Blog({ posts }) {
 
   return (
     <Layout>
+      <Head>
+        <title>{siteTitle} - blog</title>
+        <meta
+          name="description"
+          content="I write about tech and development. Check out my articles."
+        />
+      </Head>
       <div className="p-6">
-        <div className="contained">
+        <div className="mx-auto max-w-[800px]">
           <h1 className="text-2xl font-extrabold mt-8 mb-6">
             Blog{" "}
             <small className="text-sm font-normal text-gray-400 ml-2">

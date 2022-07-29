@@ -8,7 +8,7 @@ import { mdxOptions } from "src/mdx.config";
 import { getPosts, getPost } from "src/lib/blog";
 import { Date } from "src/components/Date";
 import { Button } from "src/components/Button";
-import { Layout } from "src/components/Layout";
+import { Layout, siteTitle } from "src/components/Layout";
 import { Tags } from "src/components/Tags";
 
 const components = {
@@ -26,16 +26,17 @@ const components = {
 
 export default function BlogPost({ post }) {
   return (
-    <Layout
-      ogTitle={`mostviertel.tech | ${post.title}`}
-      ogImage={post.image}
-      metaDescription={post.description}
-    >
+    <Layout>
       <Head>
-        <title>mostviertel.tech | {post.title}</title>
+        <title>
+          {siteTitle} - {post.title}
+        </title>
+        <meta name="og:title" content={`${siteTitle} - ${post.title}`} />
+        <meta property="og:image" content={post.image} />
+        <meta name="description" content={post.excerpt} />
       </Head>
-      <article className="px-6 py-6">
-        <div className="contained">
+      <article className="px-6">
+        <div className="mx-auto max-w-[800px]">
           {post.image && (
             <Image
               src={post.image}

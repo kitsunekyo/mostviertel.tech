@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export const Header = ({ onMenuClicked }) => (
   <header className="px-6 py-3 sticky top-0 z-10 border-b border-gray-200 bg-white backdrop-blur bg-opacity-80">
-    <div className="flex items-center contained">
+    <div className="flex items-center mx-auto max-w-[800px]">
       <Link href="/">
         <a className="text-inherit hover:text-inherit hover:no-underline">
           <div className="flex items-center gap-2 h-[50px]">
