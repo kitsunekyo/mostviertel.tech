@@ -25,7 +25,7 @@ export const Layout = ({
 
       <Header onMenuClicked={() => setIsDrawerOpen(true)} />
 
-      <main className="flex-grow overflow-hidden">{children}</main>
+      <main className="overflow-x-hidden">{children}</main>
 
       <Drawer isOpen={isDrawerOpen} onClose={() => setIsDrawerOpen(false)} />
     </>
