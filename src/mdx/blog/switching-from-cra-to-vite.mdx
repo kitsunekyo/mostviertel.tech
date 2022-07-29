@@ -52,7 +52,7 @@ export default defineConfig(() => {
 
 > i had to use an `esbuild.logOverride`, since we got some linting errors about undefined `this` in esm, due to a third party package. you might not need that section.
 
-Then move `./public/index.html` to `./index.html` and replace the webpack placeholders `%PUBLIC_URL%`. We can now directly reference stuff in our codebase without placeholders.
+Then I moved `./public/index.html` to `./index.html` and replaced the webpack placeholders `%PUBLIC_URL%`. We can now directly reference stuff in our codebase without placeholders.
 
 ```html
 <!-- before -->
@@ -61,7 +61,7 @@ Then move `./public/index.html` to `./index.html` and replace the webpack placeh
 <link rel="manifest" href="/manifest.json" />
 ```
 
-Create new `npm` scripts, or replace your existing `npm` scripts in the `package.json`
+In `package.json` I replaced our existing `npm` scripts
 
 ```json
 // ./package.json
@@ -76,7 +76,7 @@ Create new `npm` scripts, or replace your existing `npm` scripts in the `package
 
 ## environment variables
 
-Ff you used environment variables correctly in create-react-app they will look something like this. Just replace the `REACT_APP_` prefix with `VITE_`.
+If you use environment variables correctly in create-react-app they will look something like this and live in an `.env` file. Here we just have to replace the `REACT_APP_` prefix with `VITE_`.
 
 ```conf
 # ./.env
@@ -88,7 +88,7 @@ VITE_API_URL=http://localhost:8088
 
 These variables are exposed on the special `import.meta.env` object in vite. There are also built in variables available. [https://vitejs.dev/guide/env-and-mode.html](https://vitejs.dev/guide/env-and-mode.html)
 
-You could now do a search and replace to replace `process.env.REACT_APP_` with `import.meta.VITE_`, but for our custom testing setup we need do something else. Jest does not have access to `import.meta` by default. In our case we just replace `REACT_APP_` with `VITE_`.
+We could now do a search and replace to replace `process.env.REACT_APP_` with `import.meta.VITE_`, but for our custom testing setup we need do something else. Jest does not have access to `import.meta` by default. In our case we just replace `REACT_APP_` with `VITE_`.
 To make the env variables available on `process.env` I used the `define` prop in `vite.config.js`
 
 ```js
@@ -163,7 +163,7 @@ export default defineConfig(({ mode }) => {
 
 ## typechecking and eslint
 
-create react app does a typecheck, and lints our files on every update. while vite works with typescript, it relies solely on the IDE for typechecking. i want feature parity for our migration, so lets get this back. we are also installing `eslint-config-react-app`, since this is built into CRA, but we wanna keep our virtual Dan Abramov telling us we're using hooks wrong.
+Create react app does a typecheck, and lints our files on every update. while vite works with typescript, it relies solely on the IDE for typechecking. i want feature parity for our migration, so lets get this back. we are also installing `eslint-config-react-app`, since this is built into CRA, but we wanna keep our virtual Dan Abramov telling us we're using hooks wrong.
 
 `yarn add vite-plugin-checker vite-plugin-eslint eslint-config-react-app`
 
@@ -204,7 +204,7 @@ export default defineConfig(({ mode }) => {
 });
 ```
 
-When you run `yarn start`, you should now get a running devserver, with fast-refresh, eslintchecks and typechecking.
+When we run `yarn start`, we should now get a running devserver, with fast-refresh, eslintchecks and typechecking.
 
 ## the issue with barrels
 
@@ -218,7 +218,7 @@ export { formatDate } from "./utils/formatDate";
 // ...20 more exports
 ```
 
-this allows you to group import from a single module
+This allows us to group import from a single module
 
 ```ts
 // without barrel
@@ -232,7 +232,7 @@ import { Spinner, Header, formatDate } from "src/common";
 
 That looks pretty clean, but lets think about what actually gets loaded and processed. If we import from a barrel, javascript will process the full `src/common/index.ts` file, which means it will import and process all 23 imports. Not just the 3 we have imported.
 
-If your app is full of barrels (like it was for us), this will be too much for the browser to load. With CRA webpack will resolve those imports for you and the browser only loads the full bundle. But Vite uses esbuild, which means the browser itself loads all invididual `.ts` and `.tsx` files invidually. There is a limit to how many files can be loaded at once, so your startup time will be super slow, and also on every code update the fast-refresh will reload a massive file graph, instead of just the changed file. For us this meant that a simple text change took up to 8 seconds to refresh. After removing all barrels, it only milliseconds for a fast-refresh.
+If your app is full of barrels (like ours), this will be too much for the browser to load at once. With CRA webpack will resolve those imports for you and the browser only loads the full bundle. But Vite uses esbuild, which means the browser itself loads all invididual `.ts` and `.tsx` files invidually. There is a limit to how many files can be loaded at once, so your startup time will be super slow, and also on every code update the fast-refresh will reload a massive file graph, instead of just the changed file. For us this meant that a simple text change took up to 8 seconds to refresh. After removing all barrels, it only milliseconds for a fast-refresh.
 
 I've talked to the vitejs devs in the community discord, and unfortunately there isnt a good solution (yet). Your best bet is to get rid of all barrels.
 
