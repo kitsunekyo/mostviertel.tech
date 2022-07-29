@@ -14,12 +14,11 @@ If you wanna check out Vite for yourself, [checkout the docs](https://vitejs.dev
 
 ## the start
 
-Our frontend codebase is not massive, but its also no tiny sideproject anymore. We're at around ~80k lines of code at the moment for just the components.
-We also started from a rather messy starting point because the project was an ejected create-react-app. If you didnt eject, especially the cleanup will be a lot easier for you.
+Our frontend codebase is not massive, but its also no tiny sideproject anymore. We're at around ~80k lines of code at the moment without configs. We also started from a rather interesting starting point, because the project was an ejected create-react-app v4.
 
-Here's some of the complications we faced with our old codebase
+Here's some of the complications we faced with the way our old build tooling was set up:
 
-- ejected cra4 -> the `package.json`s `dependencies` were full with deps from CRA
+- ejected cra4 -> the `package.json`s `dependencies` were filled with packages from CRA internals
 - incorrect usage of environment variables (not covered)
 - custom 3rd party scripts loaded via webpack html plugin (not covered: just add them to the index.html)
 - quite a lot of 3rd party npm packages like `react-select`, `react-calendar`, and `react-cookie-consent`
