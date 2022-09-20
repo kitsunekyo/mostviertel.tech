@@ -63,7 +63,7 @@ export default function Home({ recentPosts }) {
 
       <div className="py-10 px-6">
         <div className="mx-auto max-w-[800px]">
-          <div className="rounded-xl from-orange-100 to-amber-50 bg-gradient-to-tr min-h-[400px] p-10 flex flex-col justify-end">
+          <div className="rounded-xl from-orange-100 to-amber-50 bg-gradient-to-tr p-10 flex flex-col justify-end lg:-ml-10 lg:-mr-10">
             <h1 className="text-2xl md:text-4xl font-extrabold mt-8 mb-4">
               servus, i&apos;m alex 👋
             </h1>
@@ -94,37 +94,14 @@ export default function Home({ recentPosts }) {
             >
               #
             </span>
-            i help people in discord communities
+            i write about webdev
           </h2>
-          <ul className="flex flex-col gap-2 text-lg text-gray-500">
-            <li>
-              <a
-                href="https://discord.com/invite/reactiflux"
-                className="inline-flex items-center gap-4"
-              >
-                <div>→ </div>
-                <div className="link">Reactiflux</div>
-              </a>
-            </li>
-            <li>
-              <a
-                href="https://kentcdodds.com/discord"
-                className="inline-flex items-center gap-4"
-              >
-                <div>→ </div>
-                <div className="link">Kent C. Dodds Community Discord</div>
-              </a>
-            </li>
-            <li>
-              <a
-                href="https://discord.com/invite/aYVNktYeEB"
-                className="inline-flex items-center gap-4"
-              >
-                <div>→ </div>
-                <div className="link">Vite Land</div>
-              </a>
-            </li>
-          </ul>
+          <Link href="/blog" passHref>
+            <a className="link text-sm">go to blog →</a>
+          </Link>
+          <div className="mt-4">
+            <PostList posts={recentPosts} />
+          </div>
         </div>
       </section>
 
@@ -156,29 +133,6 @@ export default function Home({ recentPosts }) {
               />
             </a>
           </p>
-        </div>
-      </section>
-
-      <section className="py-10 px-6">
-        <div className="mx-auto max-w-[800px]">
-          <h2 className="text-xl font-extrabold mb-4">
-            <span
-              className="bg-gradient-to-r from-orange-500 to-amber-500 pr-2"
-              style={{
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-              }}
-            >
-              #
-            </span>
-            i write about webdev
-          </h2>
-          <Link href="/blog" passHref>
-            <a className="link text-sm">go to blog →</a>
-          </Link>
-          <div className="mt-4">
-            <PostList posts={recentPosts} />
-          </div>
         </div>
       </section>
 
