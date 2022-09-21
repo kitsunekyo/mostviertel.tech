@@ -7,6 +7,20 @@
   --shadow-hard: 4px 4px 0 0 rgb(0 0 0 / 89%);
 }
 
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  @apply bg-gray-200;
+}
+::-webkit-scrollbar-thumb {
+  @apply rounded-sm bg-gray-400;
+}
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-500;
+}
+
 html,
 body {
   height: 100%;
