@@ -78,7 +78,7 @@ function UserPage() {
 > I hope you know that you're basically just disabling type checks. Its like planting a bomb in your own codebase. So dont do this.
 
 In this contrived example it might not look like much of a problem, but imagine how much worse it gets if this is done in a multitude of layers of children of `UserPage`.
-You pretty much add conditionals and indirection whenever you want to access `user`. This bumps up cyclomatic complexity of all your components, which is a bad thing.
+You pretty much add conditionals and indirection whenever you want to access `user`. This bumps up cyclomatic complexity of all your components, which is a bad thing because it means your code is hard to reason about.
 
 > Read about [Cyclomatic Complexity](https://www.ibm.com/docs/en/raa/6.1?topic=metrics-cyclomatic-complexity) if you want to know more.
 
