@@ -1,19 +1,21 @@
 ---
 title: "dont overuse useSelector"
 date: "2022-09-24"
-excerpt: "useSelector is the goto solution for redux devs when they need some state from the store. I'll outline why I consider this a bad idea with an example codesandbox"
+excerpt: "For some reason react devs are really scared of prop-drilling. They reach for `useSelector` too often and too carelessly, without thinking of the negative impact on their codebase."
 tags: react, redux
 ---
 
-React devs are for some reason immensely scared of prop-drilling. So in a redux project they use `useSelector` to access store values whenever they can.
-`useSelector` is indeed a handy tool to access your store but (especially when using Typescript) this might make your code a lot harder to reason about. Lets check out why.
+A fews days ago i found a reddit thread where people posted about "bad habits of react developers".
+"Prop drilling" was mentioned a few times, which reminded me of a problem I just recently came across at work: overusing `useSelector` to avoid prop drilling.
 
-> Prop-drilling is a practice where you pass a data from component to component in a tree.
+For some reason react devs are really scared of prop-drilling. They reach for `useSelector` too often and too carelessly, without thinking of the negative impact on their codebase.
 
-In the below codesandbox I've made a tiny react-typescript + redux example that allows you to log in and visit a `UserPage` when you're logged in.
-The code in both `App.tsx` and `AppNoProps.tsx` provides the same user experience, but `AppNoProps.tsx` is a bit harder to reason about.
+> Prop-drilling is a practice where you pass a data from one component to another, further down the component-tree.
 
-> you might have to open the embed in codesandbox to get typescript working. for some reason it just shows `any` everywhere when embedded 🙄
+I've set up a tiny react-typescript + redux example in codesandbox, that allows you to log in and visit a `UserPage` when logged in.
+The code in `App.tsx` and `AppNoProps.tsx` is functionally identical. `AppNoProps.tsx` is using `useSelector` over prop drilling and I'll walk you through why I prefer the implementation of `App.tsx`.
+
+> you might have to open the codesandbox in a full window, to get typescript working. for some reason it shows `any` instead of the real types when embedded 🙄
 
 <iframe
   src="https://codesandbox.io/embed/propdrilling-vs-useselector-93f73y?fontsize=14&hidenavigation=1&theme=dark"
@@ -31,10 +33,9 @@ The code in both `App.tsx` and `AppNoProps.tsx` provides the same user experienc
 
 Lets dive into `AppNoProps.tsx`.
 
-If we hover over the `user` in `const user = useSelector(...)` in either `App` or `UserPage` we see that it is typed `User | null` in both components.
-Makes sense, because when we start the app and havent logged in yet, the `user` is `null`.
+If we hover over `user` in `const user = useSelector(...)` in either `App` or `UserPage` we see that it is typed `User | null`. This is the case whenever we use `useSelector`.
 
-But in `App` we only render `AuthenticatedApp` > `UserPage` if `user` is NOT `null` (truthy).
+But in `<App>` we only render `<AuthenticatedApp>` and its child `<UserPage>` if `user` is NOT `null` (truthy).
 
 ```jsx
 export function App() {
@@ -48,7 +49,9 @@ export function App() {
 }
 ```
 
-`UserPage` does not know this though. It will try to select from the store, and according to our store `user` can be `null`. So we have to sprinkle null-checks all over our code, while we are certain that `user` cannot be null in our current app. This is a big issue because rules of hooks state that hooks cannot be called conditionally, so inside every hook you will have to check the `user` for `null`. Thats one null-check per hook and another for the return.
+Even though `<UserPage>` is only rendered if `user` is not `null`, we have to do null-checks all over again in `<UserPage>`. The fact that we already checked `user` for `null` in `<App>` does not help us at all.
+
+Whenever we want to access the value of `user` we have to check for `null` again. That means adding `if` conditionals in every hook, and the `return` of our component.
 
 ```jsx
 function UserPage() {
@@ -74,19 +77,15 @@ function UserPage() {
 }
 ```
 
-> If you think about doing something crazy like a type assertion a la `const user = useSelector(...) as User`
-> I hope you know that you're basically just disabling type checks. Its like planting a bomb in your own codebase. So dont do this.
+> Please dont use a type assertion like `const user = useSelector(...) as User` as this just overrides/disables type checking.
 
-In this contrived example it might not look like much of a problem, but imagine how much worse it gets if this is done in a multitude of layers of children of `UserPage`.
-You pretty much add conditionals and indirection whenever you want to access `user`. This bumps up cyclomatic complexity of all your components, which is a bad thing because it means your code is hard to reason about.
+In our small example, a few `if` statements might not look like much of a problem, but dont forget that we have to repeat these checks for any children of `<UserPage>` too. All the redundant `if` statements and optional chaining increase our cyclomatic complexity and make the flow of our code hard to follow.
 
-> Read about [Cyclomatic Complexity](https://www.ibm.com/docs/en/raa/6.1?topic=metrics-cyclomatic-complexity) if you want to know more.
+> Read about [Cyclomatic Complexity](https://www.ibm.com/docs/en/raa/6.1?topic=metrics-cyclomatic-complexity).
 
 ## so whats the alternative?
 
-From `App` onwards down the component tree we know for sure that user is either `null` or `User`.
-
-We already have our check, so lets just pass `user` down the subtree of `AuthenticatedApp`.
+In `<App>` we already know for sure that user is either `null` or `User`, so by checking whether `user` is null, we can narrow its type further down the component tree. All we need to change is pass `user` down the subtree of `<AuthenticatedApp>`.
 
 ```jsx
 export function App() {
@@ -100,12 +99,11 @@ export function App() {
 }
 ```
 
-Hover over the `user` value in `<AuthenticatedApp user={user} />` and notice how it is not typed `User | null` but it is `User`. From here on out we can lean back and trust that we have `user` available to us.
+Hover over the `user` value in `<AuthenticatedApp user={user} />` and notice how it is typed as `User`. From here on out we can lean back and trust that we have `user` available.
 
-Here's where the only drawback comes into play. Our `AuthenticatedApp` gets a `user` prop, but it doesnt do anything with it except passing it on to `UserProp`.
-Prop-drilling gets a bad rep because devs really hate doing this for some reason. It certainly isn't perfect, but the data flow couldnt be more explicit. Just follow the component tree upward and you'll know where the data comes from.
+Here's where the only drawback comes into play. Our `<AuthenticatedApp>` needs to accept an additional `user` prop, even though it doesnt do anything with it except passing it on to `<UserProp>`.
 
-Lets check out the `UserPage` component to see what we've gained:
+Lets check out `<UserPage>` and see what we've gained:
 
 ```jsx
 function UserPage({ user }: { user: User }) {
@@ -113,10 +111,10 @@ function UserPage({ user }: { user: User }) {
 
   useEffect(() => {
     // do some react-external stuff with user
-    // 👍 no null-checks for user
+    // 👍 no null-checks needed
   }, [user]);
 
-  // 👍 only one clear return, because user cannot be null
+  // 👍 only one return path
   return (
     <div>
       <h1>hello {user.name}</h1>
@@ -126,9 +124,10 @@ function UserPage({ user }: { user: User }) {
 }
 ```
 
-No more null checks! Our `useEffect` can run without any conditional checks. We dont need an early return if `user` is null either.
-We have basically eliminated any need for null checks or optional chaining for the whole component tree below `AuthenticatedApp`.
+No more null checks! Our `useEffect` can run without any `if` statements and we dont need an early return if `user` is null either. We have basically eliminated any need for null checks or optional chaining for the whole component tree below `AuthenticatedApp`.
 
-In development any "best practice" and "antipattern" comes with tradeoffs, so it is on us to weigh the pros and cons and decide what works better for us.
+tldr: Use `useSelector` to select state from the store at the highest point you need it, narrow its type to remove `null` as possible value and pass it down as prop. Its basically "lifting state up" but for redux.
 
-I would pick simple, readable code over loads of `if`s and optional chaining any time, even if it means adding a few props more to components.
+Like with anything in development we need to weigh the pros and cons ourselves and make a decision that works for our specific codebase.
+
+That said, I would pick simple, readable code over loads of `if`s and optional chaining any time, even if it means adding a few more props to components.
