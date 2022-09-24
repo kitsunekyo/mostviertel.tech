@@ -129,6 +129,6 @@ function UserPage({ user }: { user: User }) {
 No more null checks! Our `useEffect` can run without any conditional checks. We dont need an early return if `user` is null either.
 We have basically eliminated any need for null checks or optional chaining for the whole component tree below `AuthenticatedApp`.
 
-Like anything in development, everything comes with tradeoffs so it is on us to weigh the pros and cons and decide what works better for us.
+In development any "best practice" and "antipattern" comes with tradeoffs, so it is on us to weigh the pros and cons and decide what works better for us.
 
-I would pick simple, readable code over loads of `if`s any time, even if it means adding a few more props.
+I would pick simple, readable code over loads of `if`s and optional chaining any time, even if it means adding a few props more to components.
