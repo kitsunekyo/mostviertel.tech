@@ -86,7 +86,7 @@ You pretty much add conditionals and indirection whenever you want to access `us
 
 From `App` onwards down the component tree we know for sure that user is either `null` or `User`.
 
-We already have our check, so lets just pass it down the subtree of `AuthenticatedApp`.
+We already have our check, so lets just pass `user` down the subtree of `AuthenticatedApp`.
 
 ```jsx
 export function App() {
