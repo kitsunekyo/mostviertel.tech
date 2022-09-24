@@ -1,0 +1,132 @@
+---
+title: "why using useSelector might be worse than prop-drilling"
+date: "2022-09-24"
+excerpt: "useSelector is the goto solution for redux devs when they need some state from the store. I'll outline why I consider this a bad idea with an example codesandbox"
+tags: react, redux
+---
+
+React devs are for some reason immensely scared of prop-drilling. So in a redux project they use `useSelector` to access store values whenever they can.
+`useSelector` is indeed a handy tool to access your store but (especially when using Typescript) this might make your code a lot harder to reason about. Lets check out why.
+
+> Prop-drilling is a practice where you pass a data from component to component in a tree.
+
+In the below codesandbox I've made a tiny react-typescript + redux example that allows you to log in and visit a `UserPage` when you're logged in.
+The code in both `App.tsx` and `AppNoProps.tsx` provides the same user experience, but `AppNoProps.tsx` is a bit harder to reason about.
+
+<iframe
+  src="https://codesandbox.io/embed/propdrilling-vs-useselector-93f73y?fontsize=14&hidenavigation=1&theme=dark"
+  style={{
+    width: "100%",
+    height: "500px",
+    border: 0,
+    borderRadius: "4px",
+    overflow: "hidden",
+  }}
+  title="propdrilling vs useSelector"
+  allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
+  sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+></iframe>
+
+Lets dive into `AppNoProps.tsx`.
+
+If we hover over the `user` in `const user = useSelector(...)` in either `App` or `UserPage` we see that it is typed `User | null` in both components.
+Makes sense, because when we start the app and havent logged in yet, the `user` is `null`.
+
+But in `App` we only render `AuthenticatedApp` > `UserPage` if `user` is NOT `null` (truthy).
+
+```jsx
+export function App() {
+  const user = useSelector((state: RootState) => state.user.value);
+
+  return (
+    <div className="App">
+      {user ? <AuthenticatedApp /> : <UnauthenticatedApp />}
+    </div>
+  );
+}
+```
+
+`UserPage` does not know this though. It will try to select from the store, and according to our store `user` can be `null`. So we have to sprinkle null-checks all over our code, while we are certain that `user` cannot be null in our current app. This is a big issue because rules of hooks state that hooks cannot be called conditionally, so inside every hook you will have to check the `user` for `null`. Thats one null-check per hook and another for the return.
+
+```jsx
+function UserPage() {
+  const dispatch = useDispatch();
+  const user = useSelector((state: RootState) => state.user.value); // User | null
+
+  useEffect(() => {
+    if (!user) return; // 💩 we have to handle the nullable user, -> rules of hooks
+    // do some react-external stuff with user
+  }, [user]);
+
+  // 💩 we know that user wont be null here, but we still have to handle it
+  if (!user) {
+    return null;
+  }
+
+  return (
+    <div>
+      <h1>hello {user.name}</h1>
+      <button onClick={() => dispatch(logout())}>logout</button>
+    </div>
+  );
+}
+```
+
+> If you think about doing something crazy like a type assertion a la `const user = useSelector(...) as User`
+> I hope you know that you're basically just disabling type checks. Its like planting a bomb in your own codebase. So dont do this.
+
+In this contrived example it might not look like much of a problem, but imagine how much worse it gets if this is done in a multitude of layers of children of `UserPage`.
+You pretty much add conditionals and indirection whenever you want to access `user`. This bumps up cyclomatic complexity of all your components, which is a bad thing.
+
+> Read about [Cyclomatic Complexity](https://www.ibm.com/docs/en/raa/6.1?topic=metrics-cyclomatic-complexity) if you want to know more.
+
+## so whats the alternative?
+
+From `App` onwards down the component tree we know for sure that user is either `null` or `User`.
+
+We already have our check, so lets just pass it down the subtree of `AuthenticatedApp`.
+
+```jsx
+export function App() {
+  const user = useSelector((state: RootState) => state.user.value);
+
+  return (
+    <div className="App">
+      {user ? <AuthenticatedApp user={user} /> : <UnauthenticatedApp />}
+    </div>
+  );
+}
+```
+
+Hover over the `user` value in `<AuthenticatedApp user={user} />` and notice how it is not typed `User | null` but it is `User`. From here on out we can lean back and trust that we have `user` available to us.
+
+Here's where the only drawback comes into play. Our `AuthenticatedApp` gets a `user` prop, but it doesnt do anything with it except passing it on to `UserProp`.
+Prop-drilling gets a bad rep because devs really hate doing this for some reason. It certainly isn't perfect, but the data flow couldnt be more explicit. Just follow the component tree upward and you'll know where the data comes from.
+
+Lets check out the `UserPage` component to see what we've gained:
+
+```jsx
+function UserPage({ user }: { user: User }) {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    // do some react-external stuff with user
+    // 👍 no null-checks for user
+  }, [user]);
+
+  // 👍 only one clear return, because user cannot be null
+  return (
+    <div>
+      <h1>hello {user.name}</h1>
+      <button onClick={() => dispatch(logout())}>logout</button>
+    </div>
+  );
+}
+```
+
+No more null checks! Our `useEffect` can run without any conditional checks. We dont need an early return if `user` is null either.
+We have basically eliminated any need for null checks or optional chaining for the whole component tree below `AuthenticatedApp`.
+
+Like anything in development, everything comes with tradeoffs so it is on us to weigh the pros and cons and decide what works better for us.
+
+I would pick simple, readable code over loads of `if`s any time, even if it means adding a few more props.
