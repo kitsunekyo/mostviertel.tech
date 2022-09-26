@@ -129,6 +129,8 @@ function UserPage({ user }: { user: User }) {
 No more null checks! Our `useEffect` can run without any conditional checks. We dont need an early return if `user` is null either.
 We have basically eliminated any need for null checks or optional chaining for the whole component tree below `AuthenticatedApp`.
 
+Depending on the distance between where you first need the `user` and the last leaf node where you also need the user, you might not prop-drill all the way. Lets say our App were more deeply nested like `App > AuthenticatedApp > Layout > SubLayout > UserPage > UserSettingsPage > UserForm`. In this case I might not prop-drill the `user` value from `<App>` all the way down to UserForm. Instead I would decide whats the closest ancestor of `<UserForm>` that needs `user` and user a combination of prop-drilling and composition from there. Here the closest ancestor would probably be `<UserPage>`. That way I dont need to drill through `<Layout>` and `<SubLayout>`, but I still reduce the number of null-checks in the `<UserPage>` tree.
+
 In development any "best practice" and "antipattern" comes with tradeoffs, so it is on us to weigh the pros and cons and decide what works better for us.
 
 I would pick simple, readable code over loads of `if`s and optional chaining any time, even if it means adding a few props more to components.
