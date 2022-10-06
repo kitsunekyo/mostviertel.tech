@@ -148,7 +148,7 @@ export default function Home({ recentPosts }) {
             >
               #
             </span>
-            what other say about me
+            what others say about me
           </h2>
           <div
             className="flex overflow-auto flex-nowrap"
