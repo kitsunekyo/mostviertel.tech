@@ -58,7 +58,7 @@ export default function Home({ recentPosts }) {
           content="Alex Spieslechner. Practical web developer in the mostviertel area. With a focus on frontend, developer experience, collaboration and code quality."
         />
         <meta property="og:image" content="/images/profile.jpg" />
-        <meta name="og:title" content="mostviertel.tech" />
+        <meta property="og:title" content="mostviertel.tech" />
       </Head>
 
       <div className="py-10 px-6">

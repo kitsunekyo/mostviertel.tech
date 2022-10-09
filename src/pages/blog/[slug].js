@@ -44,9 +44,9 @@ export default function BlogPost({ post }) {
         <title>
           {post.title} - {siteTitle}
         </title>
-        <meta name="og:title" content={`${siteTitle} - ${post.title}`} />
-        <meta name="og:type" content="website" />
-        <meta name="og:description" content={post.excerpt} />
+        <meta property="og:title" content={`${siteTitle} - ${post.title}`} />
+        <meta property="og:type" content="website" />
+        <meta property="og:description" content={post.excerpt} />
         <meta property="og:image" content={getOGImagePath(post)} />
         <meta name="description" content={post.excerpt} />
         <meta name="twitter:card" content="summary" />
