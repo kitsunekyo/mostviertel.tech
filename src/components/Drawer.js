@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 
 export const Drawer = ({ isOpen, onClose }) => (
@@ -48,8 +49,20 @@ export const Drawer = ({ isOpen, onClose }) => (
                 <a className="p-4 w-full text-center">blog</a>
               </Link>
               <Link href="mailto:alexander.spieslechner@gmail.com" passHref>
-                <a>contact me</a>
+                <a className="p-4 w-full text-center">contact me</a>
               </Link>
+              <a
+                href="https://github.com/kitsunekyo"
+                rel="nofollow"
+                className="p-4 w-full text-center leading-none"
+              >
+                <Image
+                  src="/icons/github.svg"
+                  alt="github icon"
+                  height={30}
+                  width={30}
+                />
+              </a>
             </nav>
           </div>
         </motion.div>

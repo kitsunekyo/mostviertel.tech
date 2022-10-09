@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export const Header = ({ onMenuClicked }) => (
   <header className="px-6 py-3 sticky top-0 z-10 border-b border-gray-200 bg-white backdrop-blur bg-opacity-80">
@@ -29,6 +30,18 @@ export const Header = ({ onMenuClicked }) => (
         <Link href="mailto:alexander.spieslechner@gmail.com" passHref>
           <a className="text-inherit text-xs">contact me</a>
         </Link>
+        <a
+          href="https://github.com/kitsunekyo"
+          rel="nofollow"
+          className="leading-none"
+        >
+          <Image
+            src="/icons/github.svg"
+            alt="github icon"
+            height={30}
+            width={30}
+          />
+        </a>
       </nav>
 
       <div className="ml-auto md:hidden flex items-center">
