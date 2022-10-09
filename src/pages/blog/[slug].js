@@ -29,7 +29,7 @@ export default function BlogPost({ post }) {
     <Layout>
       <Head>
         <title>
-          {siteTitle} - {post.title}
+          {post.title} - {siteTitle}
         </title>
         <meta name="og:title" content={`${siteTitle} - ${post.title}`} />
         <meta property="og:image" content={post.image} />
