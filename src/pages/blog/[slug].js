@@ -24,7 +24,20 @@ const components = {
   ),
 };
 
+function getOGImagePath(post) {
+  const ogImageUrl = new URL("https://og-image.mostviertel.tech/api");
+  ogImageUrl.searchParams.set("title", post.title);
+  ogImageUrl.searchParams.set("createdAt", post.date);
+  post.tags.forEach((tag) => {
+    ogImageUrl.searchParams.append("tags", tag);
+  });
+  const ogImage = post.image || ogImageUrl;
+  return ogImage;
+}
+
 export default function BlogPost({ post }) {
+  const ogImage = getOGImagePath(post);
+
   return (
     <Layout>
       <Head>
@@ -32,7 +45,7 @@ export default function BlogPost({ post }) {
           {post.title} - {siteTitle}
         </title>
         <meta name="og:title" content={`${siteTitle} - ${post.title}`} />
-        <meta property="og:image" content={post.image} />
+        <meta property="og:image" content={ogImage} />
         <meta name="description" content={post.excerpt} />
       </Head>
       <article className="px-6">
