@@ -45,8 +45,15 @@ export default function BlogPost({ post }) {
           {post.title} - {siteTitle}
         </title>
         <meta name="og:title" content={`${siteTitle} - ${post.title}`} />
+        <meta name="og:type" content="website" />
+        <meta name="og:description" content={post.excerpt} />
         <meta property="og:image" content={getOGImagePath(post)} />
         <meta name="description" content={post.excerpt} />
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:site" content="@HouseOfFoxes" />
+        <meta name="twitter:title" content={`${siteTitle} - ${post.title}`} />
+        <meta name="twitter:image" content={getOGImagePath(post)} />
+        <meta name="twitter:description" content={post.excerpt} />
       </Head>
       <article className="px-6">
         <div className="mx-auto max-w-[800px]">
