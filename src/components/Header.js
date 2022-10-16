@@ -2,8 +2,8 @@ import Link from "next/link";
 import Image from "next/image";
 
 export const Header = ({ onMenuClicked }) => (
-  <header className="px-6 py-3 sticky top-0 z-10 border-b border-gray-200 bg-white backdrop-blur bg-opacity-80">
-    <div className="flex items-center mx-auto max-w-[800px]">
+  <header className="px-6 py-3 sticky top-0 z-10 border-b border-gray-200 bg-white backdrop-blur bg-opacity-90">
+    <div className="flex items-center mx-auto max-w-[var(--width)]">
       <Link href="/">
         <a className="text-inherit hover:text-inherit hover:no-underline">
           <div className="flex items-center gap-2 h-[50px]">
@@ -23,12 +23,12 @@ export const Header = ({ onMenuClicked }) => (
         </a>
       </Link>
 
-      <nav className="ml-auto font-medium items-center gap-8 text-sm hidden md:flex">
+      <nav className="ml-auto font-medium items-center gap-8 text-xs hidden md:flex">
         <Link href="/blog">
-          <a className="text-inherit text-xs">blog</a>
+          <a>blog</a>
         </Link>
         <Link href="mailto:alexander.spieslechner@gmail.com" passHref>
-          <a className="text-inherit text-xs">contact me</a>
+          <a>contact me</a>
         </Link>
         <a
           href="https://github.com/kitsunekyo"

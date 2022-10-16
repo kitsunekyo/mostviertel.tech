@@ -59,116 +59,15 @@ export default function Home({ recentPosts }) {
         />
         <meta property="og:image" content="/images/profile.jpg" />
         <meta property="og:title" content="mostviertel.tech" />
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:site" content="@HouseOfFoxes" />
       </Head>
 
-      <div className="py-10 px-6">
-        <div className="mx-auto max-w-[800px]">
-          <div className="rounded-xl from-orange-100 to-amber-50 bg-gradient-to-tr p-10 flex flex-col justify-end lg:-ml-10 lg:-mr-10">
-            <h1 className="text-2xl md:text-4xl font-extrabold mt-8 mb-4">
-              servus, i&apos;m alex 👋
-            </h1>
-            <p className="text-lg text-gray-500">
-              i&apos;m a frontend developer from the mostviertel area, currently
-              working at{" "}
-              <a href="https://umdaschgroup-ventures.com/" className="link">
-                umdaschgroup-ventures
-              </a>{" "}
-              as a lead developer.
-            </p>
-            <div className="mt-8">
-              <TechIcons />
-            </div>
-          </div>
-        </div>
+      <div className="grid-layout">
+        <Hero />
+        <RecentBlogPosts posts={recentPosts} />
+        <Testimonials />
       </div>
-
-      <section className="py-10 px-6">
-        <div className="mx-auto max-w-[800px]">
-          <h2 className="text-xl font-extrabold mb-4">
-            <span
-              className="bg-gradient-to-r from-orange-500 to-amber-500 pr-2"
-              style={{
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-              }}
-            >
-              #
-            </span>
-            i write about webdev
-          </h2>
-          <Link href="/blog" passHref>
-            <a className="link text-sm">go to blog →</a>
-          </Link>
-          <div className="mt-4">
-            <PostList posts={recentPosts} />
-          </div>
-        </div>
-      </section>
-
-      <section className="py-10 px-6">
-        <div className="mx-auto max-w-[800px]">
-          <h2 className="text-xl font-extrabold mb-4">
-            <span
-              className="bg-gradient-to-r from-orange-500 to-amber-500 pr-2"
-              style={{
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-              }}
-            >
-              #
-            </span>
-            i like oss{" "}
-          </h2>
-          <p className="text-lg text-gray-500">
-            <a
-              href="https://github.com/kitsunekyo"
-              className="flex items-center gap-2"
-            >
-              github.com/kitsunekyo
-              <Image
-                src="/images/GitHub-Mark-64px.png"
-                height={32}
-                width={32}
-                alt="github"
-              />
-            </a>
-          </p>
-        </div>
-      </section>
-
-      <section className="py-10 px-6">
-        <div className="mx-auto max-w-[800px]">
-          <h2 className="text-xl font-extrabold mb-4">
-            <span
-              className="bg-gradient-to-r from-orange-500 to-amber-500 pr-2"
-              style={{
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-              }}
-            >
-              #
-            </span>
-            what others say about me
-          </h2>
-          <div
-            className="flex overflow-auto flex-nowrap"
-            style={{
-              scrollSnapType: "x mandatory",
-            }}
-          >
-            {testimonials.map((t) => (
-              <div key={t.name} className="w-full flex-none snap-center">
-                <h3>{t.name}</h3>
-                <small className="text-sm text-gray-400">{t.role}</small>
-                <p
-                  dangerouslySetInnerHTML={{ __html: t.text }}
-                  className="text-sm my-3"
-                ></p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
     </Layout>
   );
 }
@@ -181,6 +80,90 @@ export async function getStaticProps() {
       recentPosts: posts.slice(0, 3),
     },
   };
+}
+
+function Testimonials() {
+  return (
+    <section className="py-10">
+      <h2 className="text-xl font-extrabold mb-4">
+        <span
+          className="bg-gradient-to-r from-orange-500 to-amber-500 pr-2"
+          style={{
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+          }}
+        >
+          #
+        </span>
+        what others say about me
+      </h2>
+      <div
+        className="flex overflow-auto flex-nowrap"
+        style={{
+          scrollSnapType: "x mandatory",
+        }}
+      >
+        {testimonials.map((t) => (
+          <div key={t.name} className="w-full flex-none snap-center">
+            <h3>{t.name}</h3>
+            <small className="text-sm text-gray-400">{t.role}</small>
+            <p
+              dangerouslySetInnerHTML={{ __html: t.text }}
+              className="text-sm my-3"
+            ></p>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function RecentBlogPosts({ posts }) {
+  return (
+    <section className="py-10">
+      <h2 className="text-xl font-extrabold mb-4">
+        <span
+          className="bg-gradient-to-r from-orange-500 to-amber-500 pr-2"
+          style={{
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+          }}
+        >
+          #
+        </span>
+        i write about webdev
+      </h2>
+      <Link href="/blog" passHref>
+        <a className="link text-sm">go to blog →</a>
+      </Link>
+      <div className="mt-4">
+        <PostList posts={posts} />
+      </div>
+    </section>
+  );
+}
+
+function Hero() {
+  return (
+    <section className="popout py-10">
+      <div className="rounded-xl from-orange-100 to-amber-50 bg-gradient-to-tr p-10 flex flex-col justify-end">
+        <h1 className="text-2xl md:text-4xl font-extrabold mt-8 mb-4">
+          servus, i&apos;m alex 👋
+        </h1>
+        <p className="text-lg text-gray-500">
+          i&apos;m a frontend developer from the mostviertel area, currently
+          working at{" "}
+          <a href="https://umdaschgroup-ventures.com/" className="link">
+            umdaschgroup-ventures
+          </a>{" "}
+          as a lead developer.
+        </p>
+        <div className="mt-8">
+          <TechIcons />
+        </div>
+      </div>
+    </section>
+  );
 }
 
 function TechIcons() {

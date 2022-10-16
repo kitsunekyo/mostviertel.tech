@@ -5,6 +5,7 @@
 
 :root {
   --shadow-hard: 4px 4px 0 0 rgb(0 0 0 / 89%);
+  --width: 50ch;
 }
 
 ::-webkit-scrollbar {
@@ -45,8 +46,8 @@ body {
   }
 }
 
-.content {
-  @apply overflow-hidden;
+.markdown-content {
+  overflow: hidden;
 
   h1,
   h2,
@@ -58,7 +59,7 @@ body {
   }
 
   h1 {
-    @apply text-4xl font-extrabold;
+    @apply text-4xl font-extrabold mb-2;
   }
 
   h2 {
@@ -105,18 +106,53 @@ body {
     background-color: #f7f7f7;
   }
 
-  p,
-  ul {
-    @apply my-6;
+  :where(p, ul):not(:last-child) {
+    @apply mb-6;
   }
 
   ul {
-    @apply my-6 list-disc pl-4;
+    @apply list-disc pl-4;
   }
 
   li > ul {
     margin: 0;
   }
+}
+
+.grid-layout {
+  --gap: clamp(1rem, 6vw, 3rem);
+  --full: minmax(var(--gap), 1fr);
+  --content: min(50ch, 100% - var(--gap) * 2);
+  --popout: minmax(0, 2rem);
+  --feature: minmax(0, 5rem);
+
+  display: grid;
+  grid-template-columns:
+    [full-start] var(--full)
+    [feature-start] var(--feature)
+    [popout-start] var(--popout)
+    [content-start] var(--content) [content-end]
+    var(--popout) [popout-end]
+    var(--feature) [feature-end]
+    var(--full) [full-end];
+}
+
+.grid-layout > * {
+  grid-column: content;
+}
+
+.remark-highlight {
+  grid-column: popout;
+}
+
+.popout {
+  grid-column: popout;
+}
+.feature {
+  grid-column: feature;
+}
+.full {
+  grid-column: full;
 }
 
 @tailwind utilities;

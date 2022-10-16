@@ -44,55 +44,55 @@ export default function BlogPost({ post }) {
         <title>
           {post.title} - {siteTitle}
         </title>
-        <meta property="og:title" content={`${siteTitle} - ${post.title}`} />
+        <meta property="og:title" content={`${post.title} - ${siteTitle}`} />
         <meta property="og:type" content="website" />
         <meta property="og:description" content={post.excerpt} />
         <meta property="og:image" content={getOGImagePath(post)} />
         <meta name="description" content={post.excerpt} />
-        <meta name="twitter:card" content="summary" />
-        <meta name="twitter:site" content="@HouseOfFoxes" />
-        <meta name="twitter:title" content={`${siteTitle} - ${post.title}`} />
+        <meta name="twitter:title" content={`${post.title} - ${siteTitle}`} />
         <meta name="twitter:image" content={getOGImagePath(post)} />
         <meta name="twitter:description" content={post.excerpt} />
       </Head>
-      <article className="px-6">
-        <div className="mx-auto max-w-[800px]">
-          {post.image && (
-            <Image
-              src={post.image}
-              height={300}
-              width={800}
-              objectFit="cover"
-              alt=""
-            />
-          )}
-          <h1 className="text-2xl font-extrabold mt-8 mb-6">{post.title}</h1>
-          {/* post meta */}
-          <div className="text-sm text-gray-500">
-            <Date dateString={post.date} />
-            {post.tags.length > 0 && (
-              <div className="flex gap-2 items-center">
-                Tags: <Tags tags={post.tags} />
-              </div>
-            )}
-          </div>
+      <article className="grid-layout markdown-content">
+        {post.image && (
+          <Image
+            src={post.image}
+            height={300}
+            width={800}
+            objectFit="cover"
+            alt=""
+          />
+        )}
+        <h1 className="text-2xl font-extrabold mt-8 mb-6">{post.title}</h1>
+        {/* post meta */}
+        <Meta post={post} />
 
-          <div className="content">
-            <MDXRemote {...post.mdxSource} components={components} />
-          </div>
+        <MDXRemote {...post.mdxSource} components={components} />
 
-          <div className="py-12">
-            <Link href="/blog" passHref>
-              <a>
-                <Button>← back to all posts</Button>
-              </a>
-            </Link>
-          </div>
+        <div className="py-12">
+          <Link href="/blog" passHref>
+            <a>
+              <Button>← back to all posts</Button>
+            </a>
+          </Link>
         </div>
       </article>
     </Layout>
   );
 }
+
+const Meta = ({ post }) => {
+  return (
+    <div className="text-sm text-gray-500 mb-8 mt-2">
+      <Date dateString={post.date} />
+      {post.tags.length > 0 && (
+        <div className="flex gap-2 items-center mt-2">
+          Tags: <Tags tags={post.tags} />
+        </div>
+      )}
+    </div>
+  );
+};
 
 export async function getStaticPaths() {
   const posts = await getPosts();
