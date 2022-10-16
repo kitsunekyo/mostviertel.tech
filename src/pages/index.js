@@ -145,9 +145,9 @@ function RecentBlogPosts({ posts }) {
 
 function Hero() {
   return (
-    <section className="popout py-10">
-      <div className="rounded-xl from-orange-100 to-amber-50 bg-gradient-to-tr p-10 flex flex-col justify-end">
-        <h1 className="text-2xl md:text-4xl font-extrabold mt-8 mb-4">
+    <section className="popout py-8">
+      <div className="rounded-xl from-orange-100 to-amber-50 bg-gradient-to-tr p-8 flex flex-col justify-end">
+        <h1 className="text-2xl font-extrabold mt-4 mb-4">
           servus, i&apos;m alex 👋
         </h1>
         <p className="text-lg text-gray-500">

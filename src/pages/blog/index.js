@@ -35,17 +35,15 @@ export default function Blog({ posts }) {
           content="I write about tech and development. Check out my articles."
         />
       </Head>
-      <div className="p-6">
-        <div className="mx-auto max-w-[800px]">
-          <h1 className="text-2xl font-extrabold mt-8 mb-6">
-            Blog{" "}
-            <small className="text-sm font-normal text-gray-400 ml-2">
-              {posts.length} total posts
-            </small>
-          </h1>
-          <PostList posts={pagePosts} />
-          <Pagination pages={pages} />
-        </div>
+      <div className="grid-layout">
+        <h1 className="text-2xl font-extrabold mt-8 mb-6">
+          Blog{" "}
+          <small className="text-sm font-normal text-gray-400 ml-2">
+            {posts.length} total posts
+          </small>
+        </h1>
+        <PostList posts={pagePosts} />
+        <Pagination pages={pages} />
       </div>
     </Layout>
   );
