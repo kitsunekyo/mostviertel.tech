@@ -14,4 +14,20 @@ module.exports = withMDX({
     locales: ["en"],
     defaultLocale: "en",
   },
+  async redirects() {
+    return [
+      {
+        source: "/coderdojo",
+        destination:
+          "https://www.zukunftsakademie.or.at/freetimelearning/coder-dojo/",
+        permanent: true,
+      },
+      {
+        source: "/mentor",
+        destination:
+          "https://www.zukunftsakademie.or.at/freetimelearning/coder-dojo-mentor-innen/",
+        permanent: true,
+      },
+    ];
+  },
 });
