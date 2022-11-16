@@ -50,7 +50,7 @@ export default function Blog({ posts }) {
 }
 
 export const getStaticProps = async () => {
-  const posts = await getPosts();
+  const posts = getPosts();
   return {
     props: {
       posts,
@@ -66,19 +66,19 @@ function Pagination({ pages }) {
       <div className="mr-2">Pages: </div>
       <div className="flex item-center gap-2">
         {Array.from(Array(pages), (_, i) => i + 1).map((p) => (
-          <Link key={p} href={`?page=${p}`}>
-            <a
-              className={classNames(
-                "bg-gray-50 rounded hover:bg-gray-100 flex items-center justify-center h-6 w-6",
-                {
-                  "font-bold text-orange-500":
-                    router.asPath === `/blog?page=${p}` ||
-                    (router.asPath === "/blog" && p === 1),
-                }
-              )}
-            >
-              {p}
-            </a>
+          <Link
+            key={p}
+            href={`?page=${p}`}
+            className={classNames(
+              "bg-gray-50 rounded hover:bg-gray-100 flex items-center justify-center h-6 w-6",
+              {
+                "font-bold text-orange-500":
+                  router.asPath === `/blog?page=${p}` ||
+                  (router.asPath === "/blog" && p === 1),
+              }
+            )}
+          >
+            {p}
           </Link>
         ))}
       </div>

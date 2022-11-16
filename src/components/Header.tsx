@@ -4,31 +4,30 @@ import Image from "next/image";
 export const Header = ({ onMenuClicked }) => (
   <header className="px-6 py-3 sticky top-0 z-10 border-b border-gray-200 bg-white backdrop-blur bg-opacity-90">
     <div className="flex items-center mx-auto max-w-[var(--width)]">
-      <Link href="/">
-        <a className="text-inherit hover:text-inherit hover:no-underline">
-          <div className="flex items-center gap-2 h-[50px]">
-            <div className="font-extrabold text-lg">
-              <span
-                className="bg-gradient-to-br from-orange-500 to-amber-500"
-                style={{
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                }}
-              >
-                mostviertel
-              </span>
-              <span>.tech</span>
-            </div>
+      <Link
+        href="/"
+        className="text-inherit hover:text-inherit hover:no-underline"
+      >
+        <div className="flex items-center gap-2 h-[50px]">
+          <div className="font-extrabold text-lg">
+            <span
+              className="bg-gradient-to-br from-orange-500 to-amber-500"
+              style={{
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+              }}
+            >
+              mostviertel
+            </span>
+            <span>.tech</span>
           </div>
-        </a>
+        </div>
       </Link>
 
       <nav className="ml-auto font-medium items-center gap-8 text-xs hidden md:flex">
-        <Link href="/blog">
-          <a>blog</a>
-        </Link>
+        <Link href="/blog">blog</Link>
         <Link href="mailto:alexander.spieslechner@gmail.com" passHref>
-          <a>contact me</a>
+          contact me
         </Link>
         <a
           href="https://github.com/kitsunekyo"

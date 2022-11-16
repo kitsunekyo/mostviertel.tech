@@ -34,7 +34,7 @@ html {
 body {
   font-family: "PlusJakartaSans", sans-serif;
   line-height: 1.6;
-  color: #333;
+  @apply text-gray-900;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

@@ -45,11 +45,15 @@ export const Drawer = ({ isOpen, onClose }) => (
               </button>
             </div>
             <nav className="items-center gap-2 text-base flex flex-col pt-20 font-medium">
-              <Link href="/blog">
-                <a className="p-4 w-full text-center">blog</a>
+              <Link href="/blog" className="p-4 w-full text-center">
+                blog
               </Link>
-              <Link href="mailto:alexander.spieslechner@gmail.com" passHref>
-                <a className="p-4 w-full text-center">contact me</a>
+              <Link
+                href="mailto:alexander.spieslechner@gmail.com"
+                passHref
+                className="p-4 w-full text-center"
+              >
+                contact me
               </Link>
               <a
                 href="https://github.com/kitsunekyo"
