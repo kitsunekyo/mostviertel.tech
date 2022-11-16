@@ -2,10 +2,11 @@ import React from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import "src/styles/prism-theme-atom-dark.css";
 import "src/styles/global.css";
+import { AppProps } from "next/app";
 
 const queryClient = new QueryClient();
 
-function App({ Component, pageProps }) {
+function App({ Component, pageProps }: AppProps) {
   return (
     <QueryClientProvider client={queryClient}>
       <Component {...pageProps} />

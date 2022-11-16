@@ -3,19 +3,20 @@ import Head from "next/head";
 import Link from "next/link";
 import { serialize } from "next-mdx-remote/serialize";
 import { MDXRemote } from "next-mdx-remote";
+import remarkPrism from "remark-prism";
+import imageSize from "rehype-img-size";
 
-import { mdxOptions } from "src/mdx.config";
 import { getPosts, getPost } from "src/lib/blog";
 import { Date } from "src/components/Date";
 import { Button } from "src/components/Button";
 import { Layout, siteTitle } from "src/components/Layout";
 import { Tags } from "src/components/Tags";
+import { GetStaticPaths, GetStaticProps } from "next";
 
 const components = {
   img: (props) => (
-    // disabled as alt is set automatically through markdown
-    // eslint-disable-next-line jsx-a11y/alt-text
     <Image
+      alt=""
       {...props}
       layout="responsive"
       loading="lazy"
@@ -53,6 +54,7 @@ export default function BlogPost({ post }) {
         <meta name="twitter:image" content={getOGImagePath(post)} />
         <meta name="twitter:description" content={post.excerpt} />
       </Head>
+
       <article className="grid-layout markdown-content">
         {post.image && (
           <Image
@@ -64,16 +66,14 @@ export default function BlogPost({ post }) {
           />
         )}
         <h1 className="text-2xl font-extrabold mt-8 mb-6">{post.title}</h1>
-        {/* post meta */}
+
         <Meta post={post} />
 
         <MDXRemote {...post.mdxSource} components={components} />
 
         <div className="py-12">
           <Link href="/blog" passHref>
-            <a>
-              <Button>← back to all posts</Button>
-            </a>
+            <Button>← back to all posts</Button>
           </Link>
         </div>
       </article>
@@ -94,19 +94,22 @@ const Meta = ({ post }) => {
   );
 };
 
-export async function getStaticPaths() {
+export const getStaticPaths: GetStaticPaths = async () => {
   const posts = await getPosts();
   const paths = posts.map((post) => ({
     params: { slug: post.slug },
   }));
 
   return { paths, fallback: "blocking" };
-}
+};
 
-export async function getStaticProps({ params }) {
+export const getStaticProps: GetStaticProps = async ({ params }) => {
   const post = await getPost(params.slug);
   const mdxSource = await serialize(post.content, {
-    mdxOptions,
+    mdxOptions: {
+      remarkPlugins: [remarkPrism],
+      rehypePlugins: [[imageSize, { dir: "public" }]],
+    },
   });
 
   return {
@@ -117,4 +120,4 @@ export async function getStaticProps({ params }) {
       },
     },
   };
-}
+};

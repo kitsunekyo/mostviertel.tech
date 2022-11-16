@@ -5,8 +5,8 @@ import { getPosts } from "src/lib/blog";
 import { Layout, siteTitle } from "src/components/Layout";
 import { PostList } from "src/components/PostList";
 
-import { useCheatcode } from "src/hooks/useCheatcode";
 import Image from "next/image";
+import { GetStaticProps } from "next";
 
 const testimonials = [
   {
@@ -47,8 +47,6 @@ const testimonials = [
 ];
 
 export default function Home({ recentPosts }) {
-  useCheatcode();
-
   return (
     <Layout>
       <Head>
@@ -72,7 +70,7 @@ export default function Home({ recentPosts }) {
   );
 }
 
-export async function getStaticProps() {
+export const getStaticProps: GetStaticProps = async () => {
   const posts = getPosts();
 
   return {
@@ -80,6 +78,28 @@ export async function getStaticProps() {
       recentPosts: posts.slice(0, 3),
     },
   };
+};
+
+function Hero() {
+  return (
+    <section className="popout py-8">
+      <div className="rounded-xl from-orange-100 to-amber-50 bg-gradient-to-tr p-8 flex flex-col justify-end">
+        <h1 className="text-2xl font-extrabold mt-4 mb-4">
+          servus, i&apos;m alex spieslechner 👋
+        </h1>
+        <p className="text-lg text-gray-500">
+          a frontend dev from the mostviertel area, currently working at{" "}
+          <a href="https://umdaschgroup-ventures.com/" className="link">
+            umdaschgroup-ventures
+          </a>{" "}
+          as lead developer.
+        </p>
+        <div className="mt-8">
+          <TechIcons />
+        </div>
+      </div>
+    </section>
+  );
 }
 
 function Testimonials() {
@@ -133,34 +153,15 @@ function RecentBlogPosts({ posts }) {
         </span>
         i write about webdev
       </h2>
-      <Link href="/blog" passHref>
-        <a className="link text-sm">go to blog →</a>
-      </Link>
+      <p>
+        <Link href="/blog" passHref className="link">
+          check out my blog
+        </Link>
+        , if you want to read about react, typescript or other webdev related
+        topics
+      </p>
       <div className="mt-4">
         <PostList posts={posts} />
-      </div>
-    </section>
-  );
-}
-
-function Hero() {
-  return (
-    <section className="popout py-8">
-      <div className="rounded-xl from-orange-100 to-amber-50 bg-gradient-to-tr p-8 flex flex-col justify-end">
-        <h1 className="text-2xl font-extrabold mt-4 mb-4">
-          servus, i&apos;m alex 👋
-        </h1>
-        <p className="text-lg text-gray-500">
-          i&apos;m a frontend developer from the mostviertel area, currently
-          working at{" "}
-          <a href="https://umdaschgroup-ventures.com/" className="link">
-            umdaschgroup-ventures
-          </a>{" "}
-          as a lead developer.
-        </p>
-        <div className="mt-8">
-          <TechIcons />
-        </div>
       </div>
     </section>
   );
@@ -175,7 +176,7 @@ function TechIcons() {
         rel="noreferrer"
       >
         <Image
-          src="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/skills/typescript-colored.svg"
+          src="/images/home/typescript.svg"
           width="36"
           height="36"
           alt="Typescript"
@@ -183,7 +184,7 @@ function TechIcons() {
       </a>
       <a href="https://reactjs.org/" target="_blank" rel="noreferrer">
         <Image
-          src="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/skills/react-colored.svg"
+          src="/images/home/react.svg"
           width="36"
           height="36"
           alt="React"
@@ -191,7 +192,7 @@ function TechIcons() {
       </a>
       <a href="https://nextjs.org/docs" target="_blank" rel="noreferrer">
         <Image
-          src="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/skills/nextjs-colored.svg"
+          src="/images/home/nextjs.svg"
           width="36"
           height="36"
           alt="NextJs"
@@ -199,7 +200,7 @@ function TechIcons() {
       </a>
       <a href="https://tailwindcss.com/" target="_blank" rel="noreferrer">
         <Image
-          src="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/skills/tailwindcss-colored.svg"
+          src="/images/home/tailwindcss.svg"
           width="36"
           height="36"
           alt="TailwindCSS"
@@ -207,26 +208,26 @@ function TechIcons() {
       </a>
       <a href="https://nodejs.org/en/" target="_blank" rel="noreferrer">
         <Image
-          src="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/skills/nodejs-colored.svg"
+          src="/images/home/nodejs.svg"
           width="36"
           height="36"
           alt="NodeJS"
         />
       </a>
-      <a href="https://www.postgresql.org/" target="_blank" rel="noreferrer">
-        <Image
-          src="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/skills/postgresql-colored.svg"
-          width="36"
-          height="36"
-          alt="PostgreSQL"
-        />
-      </a>
       <a href="https://www.figma.com/" target="_blank" rel="noreferrer">
         <Image
-          src="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/skills/figma-colored.svg"
+          src="/images/home/figma.svg"
           width="36"
           height="36"
           alt="Figma"
+        />
+      </a>
+      <a href="https://www.prisma.io/" target="_blank" rel="noreferrer">
+        <Image
+          src="/images/home/prisma.png"
+          width="30"
+          height="30"
+          alt="Prisma"
         />
       </a>
     </div>

@@ -1,3 +1,5 @@
+// @ts-check
+
 const withMDX = require("@next/mdx")({
   extension: /\.mdx?$/,
   options: {
@@ -5,8 +7,12 @@ const withMDX = require("@next/mdx")({
     rehypePlugins: [],
   },
 });
-module.exports = withMDX({
-  pageExtensions: ["js", "jsx", "md", "mdx"],
+
+/**
+ * @type {import('next').NextConfig}
+ **/
+const nextConfig = withMDX({
+  pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx"],
   images: {
     domains: ["placehold.it", "raw.githubusercontent.com"],
   },
@@ -31,3 +37,5 @@ module.exports = withMDX({
     ];
   },
 });
+
+module.exports = nextConfig;
