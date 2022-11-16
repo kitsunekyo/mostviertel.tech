@@ -50,7 +50,7 @@ export default function Blog({ posts }) {
 }
 
 export const getStaticProps = async () => {
-  const posts = await getPosts();
+  const posts = getPosts();
   return {
     props: {
       posts,

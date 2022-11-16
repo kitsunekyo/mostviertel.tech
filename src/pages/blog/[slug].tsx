@@ -95,7 +95,7 @@ const Meta = ({ post }) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const posts = await getPosts();
+  const posts = getPosts();
   const paths = posts.map((post) => ({
     params: { slug: post.slug },
   }));
@@ -104,7 +104,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const post = await getPost(params.slug);
+  const post = getPost(params.slug);
   const mdxSource = await serialize(post.content, {
     mdxOptions: {
       remarkPlugins: [remarkPrism],
