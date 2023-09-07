@@ -1,4 +1,9 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = {
+  images: {
+    dangerouslyAllowSVG: true,
+    domains: ["github-readme-stats.vercel.app"],
+  },
+};
 
 module.exports = nextConfig;
