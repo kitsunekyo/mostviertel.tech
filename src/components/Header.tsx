@@ -6,8 +6,8 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 
 const navigation = [
-  // { name: "About", href: "#" },
-  // { name: "Blog", href: "#" },
+  { name: "About", href: "#" },
+  { name: "Blog", href: "#" },
   { name: "GitHub", href: "https://github.com/kitsunekyo", external: true },
 ];
 
@@ -31,7 +31,7 @@ export function Header() {
           <Link href="/">
             <Logo />
           </Link>
-          <nav className="hidden gap-4 items-center font-medium lg:flex">
+          {/* <nav className="hidden gap-4 items-center font-medium lg:flex">
             {navigation.map((item) =>
               item.external ? (
                 <a key={item.name} href={item.href}>
@@ -48,7 +48,7 @@ export function Header() {
           <MobileMenu
             isOpen={isMobileMenuOpen}
             onClose={() => setIsMobileMenuOpen(false)}
-          />
+          /> */}
         </div>
       </div>
     </header>

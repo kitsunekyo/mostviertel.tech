@@ -4,6 +4,7 @@ import "./globals.css";
 import Link from "next/link";
 import { cn } from "@/libs/cn";
 import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,11 +24,7 @@ export default function RootLayout({
         <Header />
         <main className="break-words hyphens-auto">{children}</main>
         <div className="mt-12 h-px border-t border-slate-100"></div>
-        <footer className="w-full py-16 md:py-20">
-          <div className="px-6 sm:px-8 flex flex-wrap justify-between">
-            <div>mostviertel.tech</div>
-          </div>
-        </footer>
+        <Footer />
       </body>
     </html>
   );
