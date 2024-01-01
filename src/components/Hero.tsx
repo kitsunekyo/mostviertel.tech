@@ -52,17 +52,29 @@ export function Hero() {
                 Digitalisierung kann auch leistbar sein
               </h1>
               <p className="mt-6 text-lg leading-8 text-gray-600 sm:max-w-md lg:max-w-none">
-                Damit du als Klein- oder Mittelunternehmer:in auch zukünftig
-                wettbewerbsfähig bleibst, bringe ich moderne, Technik in deinen
-                Betrieb für die du keine ganze IT Abteilung einstellen musst.
+                Damit du als <strong>Klein- oder Mittelunternehmer:in</strong>{" "}
+                auch zukünftig wettbewerbsfähig bleibst, bringe ich moderne,
+                Technik in deinen Betrieb für die du keine ganze IT Abteilung
+                einstellen musst.
               </p>
               <div className="mt-10 flex items-center gap-x-6">
-                <a
-                  href="mailto:hi@mostviertel.tech"
-                  className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                >
-                  Angebot anfragen
-                </a>
+                <dl className="divide-y divide-gray-100">
+                  <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                    <dt className="text-sm font-medium leading-6 text-gray-900"></dt>
+                    <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                      Alexander Spieslechner
+                    </dd>
+                  </div>
+
+                  <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                    <dt className="text-sm font-medium leading-6 text-gray-900">
+                      Kontakt
+                    </dt>
+                    <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                      hi(at)mostviertel.tech
+                    </dd>
+                  </div>
+                </dl>
               </div>
             </div>
             <div className="mt-14 flex justify-end gap-8 sm:-mt-44 sm:justify-start sm:pl-20 lg:mt-0 lg:pl-0">
