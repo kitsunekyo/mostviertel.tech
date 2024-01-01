@@ -1,9 +1,10 @@
----
-title: "dont overuse useSelector"
-date: "2022-09-24"
-excerpt: "For some reason react devs are really scared of prop-drilling. They reach for `useSelector` too often and too carelessly, without thinking of the negative impact on their codebase."
-tags: react, redux
----
+export const metadata = {
+  title: "dont overuse useSelector",
+  date: "2022-09-24",
+  excerpt:
+    "For some reason react devs are really scared of prop-drilling. They reach for `useSelector` too often and too carelessly, without thinking of the negative impact on their codebase.",
+  tags: ["react", "redux"],
+};
 
 A fews days ago i found a reddit thread where people posted about "bad habits of react developers".
 "Prop drilling" was mentioned a few times, which reminded me of a problem I just recently came across at work: overusing `useSelector` to avoid prop drilling.
