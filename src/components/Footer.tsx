@@ -68,7 +68,9 @@ export function Footer() {
         ))}
       </div>
       <p className="mt-10 text-center text-xs leading-5 text-gray-500">
-        &copy; 2024 Alexander Spieslechner
+        &copy; 2024 Alexander Spieslechner <br />
+        Fasangartengasse 5, 3251 Purgstall <br />
+        hi(at)mostviertel.tech
       </p>
     </footer>
   );
