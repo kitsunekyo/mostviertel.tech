@@ -20,6 +20,22 @@ const withMDX = nextMDX(mdxOptions);
 const nextConfig = {
   pageExtensions: ["js", "jsx", "mdx", "ts", "tsx"],
   images: { domains: ["images.unsplash.com"] },
+  async redirects() {
+    return [
+      {
+        source: "/coderdojo",
+        destination:
+          "https://www.zukunftsakademie.or.at/freetimelearning/coder-dojo/",
+        permanent: true,
+      },
+      {
+        source: "/mentor",
+        destination:
+          "https://www.zukunftsakademie.or.at/freetimelearning/coder-dojo-mentor-innen/",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default withMDX(nextConfig);
