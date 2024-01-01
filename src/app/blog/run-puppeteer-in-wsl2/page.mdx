@@ -1,0 +1,30 @@
+export const metadata = {
+  title: "How to run puppeteer in wsl2",
+  excerpt:
+    "Having trouble getting puppeteer to run in wsl2? Here's how to get started.",
+  date: "2022-01-06",
+  tags: ["shorts"],
+};
+
+When I was playing around with puppeteer in wsl2 it wouldnt run at all. What was missing were some required dependencies in my ubuntu distribution.
+
+```bash
+sudo apt install libnss3-dev libgdk-pixbuf2.0-dev libgtk-3-dev libxss-dev
+```
+
+after installing these dependencies in wsl2 puppeteer would run just fine.
+
+Here's a demo script i used to check.
+
+```javascript
+const puppeteer = require("puppeteer");
+
+(async () => {
+  const browser = await puppeteer.launch();
+  console.log(await browser.version());
+  const page = await browser.newPage();
+  await page.goto("https://google.com");
+  await page.screenshot({ path: "google.png" });
+  await browser.close();
+})();
+```

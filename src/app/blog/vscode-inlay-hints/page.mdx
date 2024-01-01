@@ -1,0 +1,19 @@
+export const metadata = {
+  title: "VSCode Tips: Inlay Hints",
+  excerpt:
+    "Do you like how WebStorm shows parameter names in function calls? VSCode can do it too.",
+  date: "2022-01-04",
+  tags: ["vscode", "shorts"],
+};
+
+By default this is disabled, so we'll have to enable it first in our settings. <kbd>CTRL</kbd> + <kbd>SHIFT</kbd> + <kbd>P</kbd> -> Settings (UI) and search for `inlay parameter`.
+
+There's settings for javascript and for typescript. To enable both choose the `all` option from the dropdown.
+
+> json settings: `"javascript.inlayHints.parameterNames.enabled": "all",` and `"typescript.inlayHints.parameterNames.enabled": "all",`
+
+![vscode settings for inlay hints](/images/vscode-inlay-hints/01.png)
+
+After activating, you'll get parameter hints displayed for available functions.
+
+![javascript code with inlay hints](/images/vscode-inlay-hints/02.png)

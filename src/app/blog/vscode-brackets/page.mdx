@@ -1,0 +1,40 @@
+export const metadata = {
+  title: "VSCode Tips: Bracket Guides",
+  excerpt:
+    "Do you use an extension to colorize matching brackets? You don't need to.",
+  date: "2022-01-04",
+  tags: ["vscode", "shorts"],
+};
+
+> Do you use an extension to colorize matching brackets? You don't need to. VSCode now has this feature built in.
+
+## Colorized Brackets
+
+By default all our brackets are gray. So its takes some mental overhead to find bracket pairs.
+
+![code without colored brackets](/images/vscode-brackets/01.png)
+
+To enable the setting, open your vscode settings (<kbd>CTRL</kbd> + <kbd>SHIFT</kbd> + <kbd>P</kbd> and type _Preferences: Open Settings (UI)_)
+Search for "Bracket Pair" and enable the setting below.
+
+> json settings: `"editor.bracketPairColorization.enabled": true,`
+
+![vscode settings for bracket pair colorization](/images/vscode-brackets/02.png)
+
+Matching brackets will now be rendered in matching colors.
+
+![code with colored brackets](/images/vscode-brackets/03.png)
+
+## Bracket Guides
+
+But we dont have to stop there. When we're in a deeply nested structure, its not always easy to find in which block you currently are. VCode has a feature for that as well.
+
+Open the same settings page back up again, and set "Show Bracket Guides" to `active`. You can have both vertical and horizontal Guides.
+
+> json settings: `"editor.guides.bracketPairs": "active"`
+
+![vscode settings for Bracket Guides](/images/vscode-brackets/04.png)
+
+In your javascript code, you will now see a colored vertical line, indicating in which block you currently are with your cursor (yellow in the screenshot).
+
+![code with bracket guides enabled](/images/vscode-brackets/05.png)

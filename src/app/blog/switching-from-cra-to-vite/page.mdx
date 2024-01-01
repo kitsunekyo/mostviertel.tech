@@ -1,0 +1,336 @@
+export const metadata = {
+  title: "How we switched from create-react-app to vite",
+  date: "2022-07-29",
+  excerpt:
+    "I'll walk you through how we migrated from create-react-app to vite in a non-trivial project.",
+  tags: ["react"],
+};
+
+In my last article I talked about how create-react-app no longer meets our standards and that we were migrating our product to Vite.
+Since I saw a few articles about this topic already, I thought it would be rather trivial. But turns out that these articles only cover super basic project setups.
+
+In reality, the migration can be a bit trickier than some articles make it out to be.
+
+If you wanna check out Vite for yourself, [checkout the docs](https://vitejs.dev/)
+
+## the start
+
+Our frontend codebase is not massive, but its also no tiny sideproject anymore. We're at around ~80k lines of code at the moment without configs. We also started from a rather interesting starting point, because the project was an ejected create-react-app v4.
+
+Here's some of the complications we faced with the way our old build tooling was set up:
+
+- ejected cra4 -> the `package.json`s `dependencies` were filled with packages from CRA internals
+- incorrect usage of environment variables (not covered)
+- custom 3rd party scripts loaded via webpack html plugin (not covered: just add them to the index.html)
+- quite a lot of 3rd party npm packages like `react-select`, `react-calendar`, and `react-cookie-consent`
+- storybook integration
+
+## the basics
+
+To get started we first have to install the main dependencies for a vite + react project.
+
+```bash
+yarn add vite@latest @vitejs/plugin-react vite-plugin-svgr
+```
+
+Create a `./vite.config.js` file in the project root:
+
+```js
+// ./vite.config.js
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import svgr from "vite-plugin-svgr"; // allows you to import svgs as react components
+
+export default defineConfig(() => {
+  return {
+    plugins: [react(), svgr()],
+    esbuild: {
+      logOverride: { "this-is-undefined-in-esm": "silent" },
+    },
+  };
+});
+```
+
+> i had to use an `esbuild.logOverride`, since we got some linting errors about undefined `this` in esm, due to a third party package. you might not need that section.
+
+Then I moved `./public/index.html` to `./index.html` and replaced the webpack placeholders `%PUBLIC_URL%`. We can now directly reference stuff in our codebase without placeholders.
+
+```html
+<!-- before -->
+<link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+<!-- after -->
+<link rel="manifest" href="/manifest.json" />
+```
+
+In `package.json` I replaced our existing `npm` scripts
+
+```json
+// ./package.json
+{
+  "scripts": {
+    "start": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  }
+}
+```
+
+## environment variables
+
+If you use environment variables correctly in create-react-app they will look something like this and live in an `.env` file. Here we just have to replace the `REACT_APP_` prefix with `VITE_`.
+
+```conf
+# ./.env
+# before
+REACT_APP_API_URL=http://localhost:8088
+# after
+VITE_API_URL=http://localhost:8088
+```
+
+These variables are exposed on the special `import.meta.env` object in vite. There are also built in variables available. [https://vitejs.dev/guide/env-and-mode.html](https://vitejs.dev/guide/env-and-mode.html)
+
+We could now do a search and replace to replace `process.env.REACT_APP_` with `import.meta.VITE_`, but for our custom testing setup we need do something else. Jest does not have access to `import.meta` by default. In our case we just replace `REACT_APP_` with `VITE_`.
+To make the env variables available on `process.env` I used the `define` prop in `vite.config.js`
+
+```js
+// ./vite.config.js
+import { defineConfig, loadEnv } from "vite";
+import react from "@vitejs/plugin-react";
+import svgr from "vite-plugin-svgr";
+
+export default defineConfig(({ mode }) => {
+  // expose .env as process.env instead of import.meta.env
+  // Reference: https://github.com/vitejs/vite/issues/1149#issuecomment-857686209
+  const env = loadEnv(mode, process.cwd(), "");
+  env.NODE_ENV = mode;
+
+  const envWithProcessPrefix = {
+    "process.env": `${JSON.stringify(env)}`,
+  };
+
+  return {
+    plugins: [react(), svgr()],
+    esbuild: {
+      logOverride: { "this-is-undefined-in-esm": "silent" },
+    },
+    define: envWithProcessPrefix,
+  };
+});
+```
+
+## typescript path alias
+
+Relative path imports like `../../../some/Component` suck. We have two options for path alias. Either via the `resolve.alias` prop in `defineConfig` or we can just use the path mapping we already have in `tsconfig.json`. I prefer the latter.
+
+`yarn add vite-tsconfig-paths`
+
+```json
+// ./tsconfig.json
+{
+  "compilerOptions": {
+    // rest...
+    "baseUrl": ".",
+    "paths": {
+      "src/*": ["./src/*"]
+    }
+  }
+}
+```
+
+```js
+// ./vite.config.js
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import svgr from "vite-plugin-svgr";
+import tsconfigPaths from "vite-tsconfig-paths";
+
+export default defineConfig(({ mode }) => {
+  const env = loadEnv(mode, process.cwd(), "");
+  env.NODE_ENV = mode;
+
+  const envWithProcessPrefix = {
+    "process.env": `${JSON.stringify(env)}`,
+  };
+
+  return {
+    plugins: [tsconfigPaths(), react(), svgr()],
+    esbuild: {
+      logOverride: { "this-is-undefined-in-esm": "silent" },
+    },
+    define: envWithProcessPrefix,
+  };
+});
+```
+
+## typechecking and eslint
+
+Create react app does a typecheck, and lints our files on every update. while vite works with typescript, it relies solely on the IDE for typechecking. i want feature parity for our migration, so lets get this back. we are also installing `eslint-config-react-app`, since this is built into CRA, but we wanna keep our virtual Dan Abramov telling us we're using hooks wrong.
+
+`yarn add vite-plugin-checker vite-plugin-eslint eslint-config-react-app`
+
+> `vite-plugin-checker` does already have an eslint check built in, but for me it didnt show eslint errors correctly for some reason. I'll most likely revisit this, and try to remove the redundant dependency.
+
+```js
+// ./vite.config.js
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import svgr from "vite-plugin-svgr";
+import tsconfigPaths from "vite-tsconfig-paths";
+import eslint from "vite-plugin-eslint";
+import checker from "vite-plugin-checker";
+
+export default defineConfig(({ mode }) => {
+  const env = loadEnv(mode, process.cwd(), "");
+  env.NODE_ENV = mode;
+
+  const envWithProcessPrefix = {
+    "process.env": `${JSON.stringify(env)}`,
+  };
+
+  return {
+    plugins: [
+      tsconfigPaths(),
+      react(),
+      svgr(),
+      checker({
+        typescript: true,
+      }),
+      eslint(),
+    ],
+    esbuild: {
+      logOverride: { "this-is-undefined-in-esm": "silent" },
+    },
+    define: envWithProcessPrefix,
+  };
+});
+```
+
+When we run `yarn start`, we should now get a running devserver, with fast-refresh, eslintchecks and typechecking.
+
+## the issue with barrels
+
+Barrels are `index.ts` files with the single purpose of re-exporting modules from folders. they are usually used when creating component libraries, or modules that should have "importable" parts.
+
+```ts
+// example barrel: ./common/index.ts
+export { Spinner } from "./components/Spinner";
+export { Header } from "./components/Header";
+export { formatDate } from "./utils/formatDate";
+// ...20 more exports
+```
+
+This allows us to group import from a single module
+
+```ts
+// without barrel
+import { Spinner } from "src/common/components/Spinner";
+import { Header } from "src/common/components/Header";
+import { formatDate } from "src/common/utils/formatDate";
+
+// with barrel
+import { Spinner, Header, formatDate } from "src/common";
+```
+
+That looks pretty clean, but lets think about what actually gets loaded and processed. If we import from a barrel, javascript will process the full `src/common/index.ts` file, which means it will import and process all 23 imports. Not just the 3 we have imported.
+
+If your app is full of barrels (like ours), this will be too much for the browser to load at once. With CRA webpack will resolve those imports for you and the browser only loads the full bundle. But Vite uses esbuild, which means the browser itself loads all invididual `.ts` and `.tsx` files invidually. There is a limit to how many files can be loaded at once, so your startup time will be super slow, and also on every code update the fast-refresh will reload a massive file graph, instead of just the changed file. For us this meant that a simple text change took up to 8 seconds to refresh. After removing all barrels, it only milliseconds for a fast-refresh.
+
+I've talked to the vitejs devs in the community discord, and unfortunately there isnt a good solution (yet). Your best bet is to get rid of all barrels.
+
+## production build
+
+If you're lucky `yarn build` and `yarn preview` (or `npx serve dist -p 8080`) will work out of the box. We ran into an [error](https://reactjs.org/docs/error-decoder.html/?args%5B%5D=object&args%5B%5D=&invariant=130) which only surfaced on a production build. Unfortunately there is no stacktrace in the minified production build, so we had to run a build with development mode.
+
+I ran `yarn vite-build --mode development` to get a build that showed the full stacktrace.
+
+Our culprit was a third party package called `react-cookie-consent`. I made sure we were on `vite@^3` and updated the third party package with `yarn upgrade-interactive`. After I did that it worked.
+
+## testing: vitest vs jest
+
+Our application was using `@testing-library/react`, `msw` and `jest` (comes with CRA) before. And to keep things consistent, I wanted to migrate to [vitest.dev](https://vitest.dev/). But I hit a multitude of issues in the migration, like `msw` not intercepting any requests and the tests being super slow. To the point where I wasnt sure if my tests will ever finish. I'm talking minutes for all component and unit tests and some tests failing occasionally for some reason. I wasn't too happy with vitest.
+
+My second attempt was based on [this article by Hung Nguyen](https://hung.dev/posts/jest-vite), that showed a jest setup with swc.
+
+I tested the speeds of both `vitest` and `jest+swc` and IF `vitest` worked, it took about 25 seconds to run all our tests. The `jest+swc` setup always ran stable, and took about 5 seconds. Thats 5 times faster, and it was enough for me to ditch vitest for now. Again, I would have preferred to keep the tooling consistent and stay withing the vite/vitest ecosystem, but 5 times longer test runs and unstable tests made that pretty frustrating for now.
+
+If you want to setup testing, follow the article. I will only outline some things I found and added or changed:
+
+- i added a path alias to my `jest.config.js`:
+
+```js
+// ./jest.config.js
+module.exports = {
+  // ...
+  moduleNameMapper: {
+    // ...
+    "^src/(.*)": "<rootDir>/src/$1",
+  },
+};
+```
+
+- to get `msw` to work, i had to polyfill fetch. create react app did that for us apparently, so i just installed `whatwg-fetch` and added it to the `jest.config.js`
+
+```js
+// ./jest.config.js
+module.exports = {
+  // ...
+  setupFilesAfterEnv: ["whatwg-fetch", "<rootDir>/src/setupTests.ts"],
+};
+```
+
+- to access environment variables (like api url) I had to import and configure `dotenv` in `setupTests.ts`
+- i had to polyfill `window.URL.createObjectURL`, since this thing is apparently being weird in jsdom
+
+```ts
+// ./src/setupTests.ts
+if (typeof window.URL.createObjectURL === "undefined") {
+  Object.defineProperty(window.URL, "createObjectURL", { value: jest.fn() });
+}
+```
+
+## storybook
+
+Storybook was a bit weird. while it provides `@storybook/builder-vite`, npm kept screaming for `webpack` as unmet peer dependency for its addons. It works without installing it, but I will have to dive deeper on this topic to see if these are just broken warnings, or if webpack is actually needed.
+
+I installed `@storybook/builder-vite`, and updated our `./.storybook/main.js` file.
+
+> Note that the builder will NOT read your `vite.config.js` file, so we have to add a path alias here.
+
+```js
+// ./.storybook/main.js
+const path = require("path");
+const { mergeConfig } = require("vite");
+
+module.exports = {
+  stories: ["../src/**/*.stories.@(js|jsx|ts|tsx|mdx)"],
+  addons: [
+    // ... all addons
+  ],
+  framework: "@storybook/react",
+  core: {
+    builder: "@storybook/builder-vite",
+  },
+  features: {
+    storyStoreV7: true,
+  },
+  async viteFinal(config, { configType }) {
+    return mergeConfig(config, {
+      resolve: {
+        alias: {
+          src: path.resolve("src/"),
+        },
+      },
+    });
+  },
+};
+```
+
+## react cleanup
+
+This will most likely be easy for you, if you havent ejected your create-react-app. All you have to do is remove the references to `react-scripts` in your `package.json`. If you have ejected, its time to search and remove all create-react-app related dependencies, you no longer need. I'm not gonna lie, this is a painful, mostly trial and error process.
+
+## conclusion
+
+As you can see, there were quite a few "hickups" we faced, to get our ejected create react app migrated to vite. Its also not perfect yet. One unsolved mystery is, why, whenever we change and fast-refresh a component, the root `index.css` file + all fonts reload. According to the dependency graph, this should not be possible.
+
+We will evaluate how stable this setup is in the coming month and then decide if we go with the migration, or keep working on it.
