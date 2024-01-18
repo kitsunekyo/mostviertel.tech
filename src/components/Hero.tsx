@@ -53,9 +53,9 @@ export function Hero() {
               </h1>
               <p className="mt-6 text-lg leading-8 text-gray-600 sm:max-w-md lg:max-w-none">
                 Damit du als <strong>Klein- oder Mittelunternehmer:in</strong>{" "}
-                auch zukünftig wettbewerbsfähig bleibst, bringe ich moderne,
-                Technik in deinen Betrieb für die du keine ganze IT Abteilung
-                einstellen musst.
+                auch zukünftig wettbewerbsfähig bleibst, bringe ich moderne
+                Technik in deinen Betrieb, ohne gleich eine ganze IT Abteilung
+                einstellen zu müssen.
               </p>
             </div>
             <div className="mt-14 flex justify-end gap-8 sm:-mt-44 sm:justify-start sm:pl-20 lg:mt-0 lg:pl-0">
