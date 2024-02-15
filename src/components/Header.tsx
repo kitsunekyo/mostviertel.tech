@@ -13,10 +13,10 @@ const navigation = [
 
 function Logo() {
   return (
-    <div className="flex items-center gap-1 font-bold">
-      <span className="italic">mo</span>
+    <div className="flex items-center gap-1 font-decoration">
+      <span>mo</span>
       <span className="text-slate-300">&#47;&#47;</span>
-      <span className="italic">te</span>
+      <span>te</span>
     </div>
   );
 }
