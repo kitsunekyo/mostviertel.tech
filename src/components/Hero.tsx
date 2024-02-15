@@ -13,7 +13,7 @@ export function Hero() {
               <br />
               <span className="-translate-x-8 inline-block">build.</span>
               <br />
-              <span className="translate-x-8 inline-block">teach.</span>
+              <span className="translate-x-12 inline-block">teach.</span>
               <br />
             </h1>
             <div>

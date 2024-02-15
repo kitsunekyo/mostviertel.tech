@@ -1,6 +1,6 @@
 const items = [
   "typescript",
-  "react",
+  "reactjs",
   "tailwindcss",
   "nextjs",
   "express",
@@ -20,7 +20,7 @@ const items = [
 export function Marquee() {
   return (
     <div
-      className="flex overflow-hidden select-none"
+      className="flex overflow-hidden select-none gap-[var(--gap)]"
       style={{
         "--gap": "6rem",
         maskImage: `

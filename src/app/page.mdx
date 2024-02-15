@@ -2,39 +2,48 @@ import { BlogSection } from "@/components/BlogSection";
 import { Hero } from "@/components/Hero";
 import { Contact } from "@/components/Contact";
 import { TextSection } from "@/components/TextSection";
+import { VisuallyHidden } from "@/components/VisuallyHidden";
+import { Youtube, Instagram, Github, Linkedin } from "lucide-react";
 
 <Hero />
 
 <TextSection title="Who Am I?">
   <p>
-    Imagine - A software engineer with a solid decade of experience bringing his
-    strong foundation in communications, design and usability to not just the
-    frontend, but also to API design and developer relations.
+    Imagine - A <strong>software engineer</strong> with a solid decade of
+    experience, bringing his strong foundation in communications, design and
+    usability to not just the frontend, but also to APIs, cloud infrastructure,
+    tooling and developer experience.
   </p>
   <p>
-    While my focus over the last ten years has been frontend, I have applied my
-    skills to api design, cloud infrastructure, tooling and more.
-  </p>
-</TextSection>
-
-<TextSection title="How Do I Work?">
-  <p>
-    The last ten years in the industry have shown me, that dev teams build
-    better products if they love what they do. Exceptional performance and
-    growth is only possible when we find joy and purpose in our work. So I'm
-    bringing my curiosity and joy for web technologies into all my teams.
-  </p>
-  <p>
-    Building bridges to other teams and establishing common goals helps us get
-    stuff done as a collective.
+    I'm a mostviertel (Austria 🗻) native, but I mostly work, learn, publish and
+    consume content in english.
   </p>
 </TextSection>
 
-<TextSection title="What Else?">
+<TextSection
+  title="How Do I Work?"
+  className="bg-neutral-50 text-neutral-700 relative overflow-hidden"
+>
+  <div className="absolute bg-[url('/images/noise.png')] opacity-5 h-[400%] w-[400%] -inset-[200%] block -z-10" />
   <p>
-    Since 2023, I train to become a certified wholistic dog trainer, so that I
-    can improve life with our canine companions. For that reason I'm working
-    part-time until the education is completed in May 2025.
+    The last ten years in the industry have tought me that dev teams build
+    better products if they <strong>love what they do</strong>. Exceptional
+    performance and growth is only possible when we find joy and purpose in our
+    work. So I'm bringing my curiosity and joy for web technologies into all my
+    teams.
+  </p>
+  <p>
+    <strong>Building bridges</strong> to other teams and establishing common
+    goals helps us get stuff done as a collective.
+  </p>
+</TextSection>
+
+<TextSection title="Any Hidden Talents?">
+  <p>
+    Since 2023, I train to become a certified wholistic{" "}
+    <strong>dog trainer</strong>, so that I can improve life with our canine
+    companions. For that reason I'm working part-time until I graduate in May
+    2025.
   </p>
   <p>
     The rest of my day is spent shooting arrows, making music and endulging in
@@ -42,6 +51,30 @@ import { TextSection } from "@/components/TextSection";
   </p>
 </TextSection>
 
-<Contact />
+<div className="px-6 py-24 sm:py-48 lg:px-8 isolate text-center">
+  <div className="">
+    <h2 className="font-decoration text-6xl mb-6 -skew-y-2 text-balance">
+      Other Places You Might Find Me
+    </h2>
+    <div className="text-lg text-neutral-500 leading-relaxed max-w-xl mx-auto space-y-4">
+      <p>
+        Find my code on <Github className="inline-block" alt="github" />, music
+        videos on <Youtube className="inline-block" alt="youtube" />, pictures
+        of my dog on <Instagram className="inline-block" alt="instagram" /> and
+        my work history on <Linkedin className="inline-block" alt="linkedin" />.
+      </p>
+      <p>
+        If you want to get in touch, send me a mail via hi(at)mostviertel.tech
+      </p>
+    </div>
+  </div>
+</div>
 
-<BlogSection />
+<div className="max-w-3xl mx-auto">
+  <hr className="border-gray-100" />
+</div>
+
+<div className="bg-neutral-50 text-neutral-700 relative overflow-hidden isolate">
+  <div className="absolute bg-[url('/images/noise.png')] opacity-5 h-[400%] w-[400%] -inset-[200%] block -z-10" />
+  <BlogSection />
+</div>

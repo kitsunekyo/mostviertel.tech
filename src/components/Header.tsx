@@ -13,10 +13,9 @@ const navigation = [
 
 function Logo() {
   return (
-    <div className="flex items-center gap-1 font-decoration">
-      <span>mo</span>
-      <span className="text-slate-300">&#47;&#47;</span>
-      <span>te</span>
+    <div className="flex items-center font-decoration gap-1 -skew-y-2">
+      <span className="-translate-y-[2px] translate-x-[2px]">mo</span>
+      <span className="translate-y-[2px] -translate-x-[2px]">te</span>
     </div>
   );
 }
