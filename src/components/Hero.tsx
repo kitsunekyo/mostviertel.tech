@@ -1,12 +1,13 @@
 import Image from "next/image";
+import { Marquee } from "./Marquee";
 
 export function Hero() {
   return (
     <div className="relative isolate">
       <GridBg />
-      <div className="overflow-hidden">
-        <div className="mx-auto max-w-7xl px-6 pb-32 pt-36 sm:pt-60 lg:px-8 lg:pt-32">
-          <div className="mx-auto max-w-2xl flex flex-col lg:flex-row lg:max-w-none gap-12 items-center justify-center">
+      <div className="px-6 pb-20 pt-20 sm:pt-60 lg:px-8 lg:pt-32">
+        <div className="mx-auto max-w-2xl overflow-hidden">
+          <div className="flex flex-col lg:flex-row lg:max-w-none gap-12 items-center justify-center">
             <h1 className="font-decoration uppercase -skew-y-6 text-8xl px-8">
               learn.
               <br />
@@ -18,6 +19,9 @@ export function Hero() {
             <div>
               <Avatar />
             </div>
+          </div>
+          <div className="pt-20 lg:pt-28">
+            <Marquee />
           </div>
         </div>
       </div>
