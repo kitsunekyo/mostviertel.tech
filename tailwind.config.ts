@@ -1,5 +1,6 @@
 import type { Config } from "tailwindcss";
 import twTypograhpy from "@tailwindcss/typography";
+import defaultTheme from 'tailwindcss/defaultTheme'
 
 const config: Config = {
   content: [
@@ -8,7 +9,11 @@ const config: Config = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        sans: ['var(--font-body)',...defaultTheme.fontFamily.sans],
+      },
+    },
   },
   plugins: [twTypograhpy],
 };
