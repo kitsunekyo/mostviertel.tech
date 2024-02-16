@@ -5,6 +5,7 @@ const items = [
   "nextjs",
   "express",
   "mongodb",
+  "vscode",
   "aws",
   "azure cloud",
   "vite",
@@ -22,7 +23,7 @@ export function Marquee() {
     <div
       className="flex overflow-hidden select-none gap-[var(--gap)]"
       style={{
-        "--gap": "6rem",
+        "--gap": "3rem",
         maskImage: `
           linear-gradient(
             to right,

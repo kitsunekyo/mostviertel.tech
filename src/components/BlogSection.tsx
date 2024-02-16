@@ -60,7 +60,7 @@ export async function BlogSection() {
   return (
     <div className="py-24 sm:py-32 px-6 lg:px-8">
       <div className="mx-auto max-w-2xl">
-        <h2 className="text-3xl font-decoration tracking-tight sm:text-6xl mb-8 -skew-y-2 text-balance">
+        <h2 className="md:text-6xl font-decoration tracking-tight mb-8 -skew-y-2 text-balance">
           <span className="line-through">Sometimes</span> I publish what I learn
         </h2>
         <div className="space-y-4 text-lg">
