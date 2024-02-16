@@ -2,22 +2,43 @@ import { BlogSection } from "@/components/BlogSection";
 import { Hero } from "@/components/Hero";
 import { Contact } from "@/components/Contact";
 import { TextSection } from "@/components/TextSection";
-import { VisuallyHidden } from "@/components/VisuallyHidden";
+import { ContactCard } from "@/components/ContactCard";
 import { Youtube, Instagram, Github, Linkedin } from "lucide-react";
 
 <Hero />
 
 <TextSection title="Who Am I?">
-  <p>
-    Imagine - A <strong>software engineer</strong> with a solid decade of
-    experience, bringing his strong foundation in communications, design and
-    usability to not just the frontend, but also to APIs, cloud infrastructure,
-    tooling and developer experience.
-  </p>
-  <p>
-    I'm a mostviertel (Austria 🗻) native, but I mostly work, learn, publish and
-    consume content in english.
-  </p>
+  <div className="grid md:grid-cols-2 gap-16 items-center">
+    <div className="space-y-4">
+      <p>
+        A <strong>software engineer</strong> with a solid decade of experience,
+        bringing his strong foundation in communications, design and usability
+        to not just the frontend, but also to APIs, cloud infrastructure,
+        tooling and developer experience.
+      </p>
+      <p className="italic text-gray-400">
+        I'm a Mostviertel, Austria 🗻 native but I mostly work, learn, publish
+        and consume content in english.
+      </p>
+      <div>
+        <a
+          href="mailto:hi@mostviertel.tech"
+          className="font-semibold text-indigo-600 group inline-flex gap-2 items-center group"
+        >
+          <span>Get in touch</span>
+          <span
+            aria-hidden="true"
+            className="group-hover:translate-x-1 transition-transform"
+          >
+            &rarr;
+          </span>
+        </a>
+      </div>
+    </div>
+    <div className="flex justify-center">
+      <ContactCard />
+    </div>
+  </div>
 </TextSection>
 
 <TextSection

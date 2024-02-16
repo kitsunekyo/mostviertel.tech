@@ -12,7 +12,7 @@ export function TextSection({
 }) {
   return (
     <div className={cn("px-6 py-24 sm:py-48 lg:px-8 isolate", className)}>
-      <div className="max-w-2xl mx-auto">
+      <div className="max-w-3xl mx-auto">
         <h2 className="font-decoration text-6xl mb-6 -skew-y-2 text-balance">
           {title}
         </h2>
