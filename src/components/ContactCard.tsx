@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export function ContactCard() {
   return (
-    <div className="shadow rounded-lg bg-white p-4 rotate-3">
+    <div className="shadow rounded-lg bg-white p-4 pb-16 rotate-3">
       <div className="relative w-64 h-64 overflow-hidden rounded-lg">
         <Image
           src="/images/alex-face.jpg"
@@ -12,10 +12,6 @@ export function ContactCard() {
           className="object-cover"
         />
       </div>
-      <dl className="px-2 pt-4 text-right">
-        <dt className="hidden">Name</dt>
-        <dd className="font-decoration">Alex Spieslechner</dd>
-      </dl>
     </div>
   );
 }

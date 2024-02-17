@@ -16,7 +16,7 @@ export function TextSection({
         <h2 className="font-decoration text-6xl mb-6 -skew-y-2 text-balance">
           {title}
         </h2>
-        <div className="text-xl space-y-4 leading-relaxed">{children}</div>
+        <div className="text-lg space-y-4 leading-relaxed">{children}</div>
       </div>
     </div>
   );

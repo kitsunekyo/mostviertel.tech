@@ -2,96 +2,18 @@ import { BlogSection } from "@/components/BlogSection";
 import { Hero } from "@/components/Hero";
 import { Contact } from "@/components/Contact";
 import { TextSection } from "@/components/TextSection";
+import { About } from "@/components/About";
+import { Socials } from "@/components/Socials";
+import { HiddenTalents } from "@/components/HiddenTalents";
+import { HowDoIWork } from "@/components/HowDoIWork";
 import { ContactCard } from "@/components/ContactCard";
-import { Youtube, Instagram, Github, Linkedin } from "lucide-react";
 
 <Hero />
 
-<TextSection title="Who Am I?">
-  <div className="grid md:grid-cols-2 gap-16 items-center">
-    <div className="space-y-4">
-      <p>
-        A <strong>software engineer</strong> with a solid decade of experience,
-        bringing his strong foundation in communications, design and usability
-        to not just the frontend, but also to APIs, cloud infrastructure,
-        tooling and developer experience.
-      </p>
-      <p className="italic text-gray-400">
-        I'm a Mostviertel, Austria 🗻 native but I mostly work, learn, publish
-        and consume content in english.
-      </p>
-      <div>
-        <a
-          href="mailto:hi@mostviertel.tech"
-          className="font-semibold text-indigo-600 group inline-flex gap-2 items-center group"
-        >
-          <span>Get in touch</span>
-          <span
-            aria-hidden="true"
-            className="group-hover:translate-x-1 transition-transform"
-          >
-            &rarr;
-          </span>
-        </a>
-      </div>
-    </div>
-    <div className="flex justify-center">
-      <ContactCard />
-    </div>
-  </div>
-</TextSection>
-
-<TextSection
-  title="How Do I Work?"
-  className="bg-neutral-50 text-neutral-700 relative overflow-hidden"
->
-  <div className="absolute bg-[url('/images/noise.png')] opacity-5 h-[400%] w-[400%] -inset-[200%] block -z-10" />
-  <div className="space-y-4">
-    <p>
-      Dev teams build better products if they <strong>love and find purpose in what they do</strong>. I try to approach every new problem with a splash of juvenille curiosity ✨.
-    </p>
-    <p className="prose">
-      <ul>
-        <li><strong>Building bridges</strong> over working in isolation.</li>
-        <li><strong>Strong opinions weekly held</strong> over apathy or religiosly defending conventions.</li>
-        <li><strong>Collective autonomy</strong> over micromanaging.</li>
-        <li><strong>Embracing diversity</strong> over one-size-fits-all solutions.</li>
-      </ul>
-      <blockquote>Failure doesn't guarantee success, but the <strong>absence of failure guarantees the absence of success</strong>.</blockquote>
-    </p>
-  </div>
-</TextSection>
-
-<TextSection title="Any Hidden Talents?">
-  <p>
-    At the moment I'm studying to become a certified wholistic{" "}
-    <strong>dog trainer</strong>, so that I can improve life with our canine
-    companions. For that reason I'm working part-time until I graduate in May
-    2025.
-  </p>
-  <p>
-    The rest of my day is spent hanging out with my dog Sam, shooting arrows, making music and endulging in pc gaming.
-  </p>
-</TextSection>
-
-<div className="px-6 py-24 sm:py-48 lg:px-8 isolate text-center">
-  <div className="">
-    <h2 className="font-decoration text-6xl mb-6 -skew-y-2 text-balance">
-      Other Places You Might Find Me
-    </h2>
-    <div className="text-lg text-neutral-500 leading-relaxed max-w-xl mx-auto space-y-4">
-      <p>
-        Find my code on <a href="https://github.com/kitsunekyo" rel="noopener noreferrer"><Github className="inline-block" alt="github" /></a>, music
-        videos on <a href="https://www.youtube.com/@alexspieslechner" rel="noopener noreferrer"><Youtube className="inline-block" alt="youtube" /></a>, pictures
-        of my dog on <a href="https://www.instagram.com/wayward.fox" rel="noopener noreferrer"><Instagram className="inline-block" alt="instagram" /></a> and
-        my work history on <a href="https://www.linkedin.com/in/aspieslechner/" rel="noopener noreferrer"><Linkedin className="inline-block" alt="linkedin" /></a>.
-      </p>
-      <p>
-        If you want to get in touch, send me a mail via hi(at)mostviertel.tech
-      </p>
-    </div>
-  </div>
-</div>
+<About />
+<HowDoIWork />
+<HiddenTalents />
+<Socials />
 
 <div className="max-w-3xl mx-auto">
   <hr className="border-gray-100" />
