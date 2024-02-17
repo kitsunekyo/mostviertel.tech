@@ -77,21 +77,21 @@ export async function BlogSection() {
         {posts.map((post) => (
           <article
             key={post.href}
-            className="flex max-w-xl flex-col items-start border border-gray-100 rounded-xl p-8 bg-white"
+            className="flex max-w-lg mx-auto flex-col items-start shadow rounded-xl p-8 bg-white"
           >
-            <div className="flex items-center gap-x-4 text-xs">
+            <div className="text-xs">
               <time dateTime={post.metadata.date} className="text-gray-500">
                 {post.metadata.date}
               </time>
             </div>
-            <div className="group relative">
-              <h3 className="mt-3 text-lg font-bold leading-6 text-gray-900 group-hover:text-gray-600">
+            <div className="mt-1 group relative">
+              <h3 className="text-lg font-bold leading-6 text-gray-900 group-hover:text-gray-600">
                 <a href={post.href}>
                   <span className="absolute inset-0" />
                   {post.metadata.title}
                 </a>
               </h3>
-              <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-600">
+              <p className="mt-2 line-clamp-3 text-sm leading-6 text-gray-600">
                 {post.metadata.excerpt}
               </p>
             </div>

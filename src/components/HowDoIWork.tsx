@@ -19,11 +19,11 @@ export function HowDoIWork() {
               <strong>Building bridges</strong> over working in isolation.
             </li>
             <li>
-              <strong>Strong opinions weekly held</strong> over apathy or
-              religiosly defending conventions.
+              <strong>Self-responsibility</strong> over micromanaging.
             </li>
             <li>
-              <strong>Collective autonomy</strong> over micromanaging.
+              <strong>Strong opinions weekly held</strong> over apathy or
+              religiosly defending conventions.
             </li>
             <li>
               <strong>Embracing diversity</strong> over one-size-fits-all
@@ -31,11 +31,8 @@ export function HowDoIWork() {
             </li>
           </ul>
           <blockquote>
-            Failure doesn&apos;t guarantee success, but the{" "}
-            <strong>
-              absence of failure guarantees the absence of success
-            </strong>
-            .
+            Failure doesn&apos;t guarantee success, but the absence of failure
+            guarantees the absence of success .
           </blockquote>
         </div>
       </div>

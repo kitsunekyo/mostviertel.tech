@@ -13,7 +13,7 @@ const tankerRegular = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "learn. build. teach. - mostviertel.tech",
+  title: "learn. build. share. - mostviertel.tech",
   description: "Alex Spieslechner - A mostviertel native software engineer",
 };
 
@@ -31,7 +31,6 @@ export default function RootLayout({
       <body>
         <Header />
         <main className="break-words hyphens-auto">{children}</main>
-        <div className="mt-12 h-px border-t border-slate-100"></div>
         <Footer />
       </body>
     </html>
