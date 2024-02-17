@@ -4,7 +4,16 @@ import { TextSection } from "./TextSection";
 export function WorkHistory() {
   return (
     <TextSection title="Work History" className="relative overflow-hidden">
-      <ul role="list" className="space-y-6 my-12">
+      <p>
+        According to my parents, child-me was running around, saying{" "}
+        <span className="italic">
+          &quot;I want to be a &apos;Computer Man&apos;&quot;
+        </span>
+        . Building my own gaming rigs, customizing myspace and tumblr sites with
+        css, to building websites for family friends.
+      </p>
+      <p>I was always drawn to technology and building things.</p>
+      <ul role="list" className="space-y-6 py-8">
         {activity.map((activityItem, activityItemIdx) => (
           <li key={activityItem.id} className="relative flex gap-x-4">
             <div
