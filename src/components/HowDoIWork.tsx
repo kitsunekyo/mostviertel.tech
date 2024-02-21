@@ -22,7 +22,7 @@ export function HowDoIWork() {
               <strong>Self-responsibility</strong> over micromanaging.
             </li>
             <li>
-              <strong>Strong opinions weekly held</strong> over apathy or
+              <strong>Strong opinions, weakly held</strong> over apathy or
               religiosly defending conventions.
             </li>
             <li>
