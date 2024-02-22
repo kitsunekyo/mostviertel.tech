@@ -1,0 +1,114 @@
+export const metadata = {
+  title: "Simplifying state management by using react-query with context",
+  date: "2024-02-22",
+  excerpt:
+    "I will show you how I attempted to simplify state management in our react app by using react-query with context.",
+  tags: ["react", "typescript"],
+};
+
+# Simplifying state management by using react-query with context
+
+A large subsection of our application depends on `project`, which is data we load from our api. Moving server state from redux to react-query solved our caching and invalidation problems, but it introduced a new problem: how do we share the data between components?
+
+Here's a simplified version of our ProjectView component, that fetches a project from the api and then renders a Project component.
+
+```tsx
+function useProjectQuery(projectId: string) {
+  return useQuery({
+    queryKey: ["projects", projectId],
+    queryFn: () => getProject(projectId),
+  });
+}
+
+export const ProjectView = () => {
+  const { projectId = "" } = useParams();
+  const query = useProjectQuery(projectId);
+
+  if (query.isError) {
+    return <Error />;
+  }
+  if (query.isPending) {
+    return <Spinner />;
+  }
+
+  return <ProjectDashboard project={query.data} />;
+};
+```
+
+`query.data` is the project we fetched from the api. We want to share this data with the ProjectDashboard component, but we don't want to pass it down as a prop through all the components in between.
+
+react-query would allow us to use `useProjectQuery()` in any component, and it would automatically share the data between them, and dedupe the requests. But thats only the case if all components with the query render at the same time - so as soon as we have a loading spinner somewhere inbetween, the deduping would fail, unless we bump up the stale-time of the query.
+
+We could work around that, but looking at the type signature of `query.data` reveals my gripe with that solution. It is currently typed as `Project | undefined`. My team has to handle the fact that `query.data` could be `undefined` in every single component that depends on it. While we know it will always be truthy, since we only render the ProjectDashboard component if the query is successful, typescript rightfully doesn't care. Our sub-components can't know that we handled loading and error states in the parent component.
+
+A possible solution I've explored is to use context and a custom hook to narrow the type.
+
+In the below example we create a context, and a provider for it. We also provide a `useProject` hook that will throw an Error if `project` is falsy. By throwing, we narrow the type of `project` from `Project | undefined` to `Project` in the consuming component.
+
+```tsx
+const projectContext = createContext<Project | null>(null);
+
+export const useProject = () => {
+  const project = useContext(projectContext);
+  if (!project) {
+    throw new Error("useProject must be used within a ProjectProvider");
+  }
+  return project;
+};
+
+export const ProjectProvider = ({
+  children,
+  project,
+}: {
+  children: React.ReactNode;
+  project: Project;
+}) => {
+  return (
+    <projectContext.Provider value={project}>
+      {children}
+    </projectContext.Provider>
+  );
+};
+```
+
+In our ProjectView component, we wrap the ProjectDashboard component in a ProjectProvider, and pass the project we fetched from the api to it.
+
+```tsx
+export const ProjectView = () => {
+  const { projectId = "" } = useParams();
+  const query = useProjectQuery(projectId);
+
+  if (query.isError) {
+    return <Error />;
+  }
+  if (query.isPending) {
+    return <Spinner />;
+  }
+
+  return (
+    <ProjectProvider value={query.data}>
+      <ProjectDashboard />
+    </ProjectProvider>
+  );
+};
+```
+
+The caveat is that we now have to make sure any component that uses the `useProject` hook will only render when `project` is defined. Forgetting to handle the loading or error states as we do in `ProjectView` would result in an runtime error being thrown.
+
+What we get in return is that we no longer have to handle a possible `undefined` value in every single component that uses our `useProject` hook.
+
+```tsx
+export const ProjectDashboard = () => {
+  const project = useProject();
+  //      ^? Project
+
+  return (
+    <div>
+      <h1>{project.name}</h1>
+      <p>{project.description}</p>
+    </div>
+  );
+};
+```
+
+In our case, the tradeof was worth it. Our `ProjectView` component doesn't really change much, and our solution took some complexity out of all the components that depend on `project`.
