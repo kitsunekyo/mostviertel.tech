@@ -1,0 +1,43 @@
+export const metadata = {
+  title: "How to allow style to take css custom properties in react",
+  excerpt:
+    "Prevent typescript errors when using css custom properties in react style prop without compromising type-safety.",
+  date: "2024-02-22",
+  tags: ["react", "typescript"],
+};
+
+# How to allow `style` to take css custom properties in react
+
+You will get an error trying to define css custom properties (css variables) inline.
+
+```
+TS2326: Types of property 'style' are incompatible.
+  Type '{ '--color': string; }' is not assignable to type 'CSSProperties'.
+    Object literal may only specify known properties, and '--color' does not exist in type 'CSSProperties'.
+```
+
+To allow any custom property create a new type definition file `@types/css.d.ts` and extend `react.CSSProperties` to allow custom properties.
+
+```ts
+import "react";
+
+declare module "react" {
+  interface CSSProperties {
+    [key: `--${string}`]: string | number;
+  }
+}
+```
+
+This will allow any css custom property to be used in the `style` prop.
+
+If you want to restrict the custom properties to a specific set of properties, you can use specific property names instead.
+
+```ts
+import "react";
+
+declare module "react" {
+  interface CSSProperties {
+    "--color": string;
+  }
+}
+```
