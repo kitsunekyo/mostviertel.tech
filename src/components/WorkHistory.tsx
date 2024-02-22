@@ -5,9 +5,9 @@ export function WorkHistory() {
   return (
     <TextSection title="Work History" className="relative overflow-hidden">
       <p>
-        According to my parents, child-me was running around, saying{" "}
+        According to my parents, child-me proudly stated{" "}
         <span className="italic">
-          &quot;I want to be a &apos;Computer Man&apos;&quot;
+          &quot;I&apos;m gonna be a &apos;Computer Expert&apos;&quot;
         </span>
         . Building my own gaming rigs, customizing myspace and tumblr sites with
         css, to building websites for family friends.
