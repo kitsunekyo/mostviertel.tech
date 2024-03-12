@@ -1,0 +1,131 @@
+export const metadata = {
+  title: "Migrating from PlanetScale to Neon.tech",
+  date: "2024-03-12",
+  excerpt:
+    "My experience migrating from PlanetScale to Neon.tech for my non profit projects.",
+  tags: ["cloud", "db"],
+};
+
+# Migrating from PlanetScale to Neon.tech
+
+Following PlanetScale's [recent announcement](https://planetscale.com/blog/planetscale-forever) about discontinuing their free plan, like many others, I found myself reevaluating other options. As a developer who heavily relied on PlanetScale's services for my hobby projects, this news initially left me disheartened. However, after exploring alternative platforms, I stumbled upon Neon, which offers a nice free tier for their postgres hosting. In this blog post, I'll walk you through my personal experience of transitioning from PlanetScale to Neon.tech.
+
+> I've picked [neon.tech](https://neon.tech/pricing), because they have a free tier, and their "Launch" plan currently starts at $19, which is a bit more reasonable for hobby projects that need to scale up. Another option is [CockroachDb](https://www.cockroachlabs.com/pricing/#).
+
+## Connection strings
+
+Get your planetscale connection strings either from your apps .env or create a new password in the planetscale dashboard.
+
+**Planetscale**
+
+```
+mysql://<USER>:<PASSWORD>@aws.connect.psdb.cloud/mydb?sslaccept=strict
+```
+
+**Neon**
+
+If you dont have an account yet, sign up on neon.tech and create your database. If possible, use the same database name that you used on planetscale.
+
+```
+postgresql://<USER>:<PASSWORD>@ep-super-paper-12345.eu-central-1.aws.neon.tech/mydb?sslmode=require
+```
+
+## Install pgloader
+
+[GitHub - dimitri/pgloader: Migrate to PostgreSQL in a single command!](https://github.com/dimitri/pgloader)
+
+Both Installing pgloader via `brew` on my m1 mac and `apt install` did not work for me on Ubuntu 22.04.4 LTS. So I had to build `pgloader` from source.
+
+```bash
+git clone https://github.com/dimitri/pgloader.git
+apt-get install sbcl unzip libsqlite3-dev make curl gawk freetds-dev libzip-dev
+cd pgloader
+make pgloader
+./build/bin/pgloader --version
+```
+
+## Create a pgloader config file
+
+**Prepare neon connectionstring for pgloader**
+
+For pgloader we have to use a slightly changed connection string for our target database on neon.  
+Instead of `user:password@...` we should use `user:endpoint=<ENDPOINT>;password@...`
+
+```
+postgresql://<USER>:endpoint=ep-super-paper-12345;<PASSWORD>@ep-super-paper-12345.eu-central-1.aws.neon.tech/mydb?sslmode=require
+```
+
+**Prepare planetscale connectionstring for pgloader**
+
+pgloader also has different query params for the connection string. Change `?sslmode=require`, to `?sslaccept=strict` in your planetscale connection string.
+
+```
+mysql://<USER>:<PASSWORD>@aws.connect.psdb.cloud/mydb?sslmode=require
+```
+
+I have two branches on planetscale, main and dev. For my main branch I created a file `config-main.load` with the following content.
+
+```load
+load database
+	from mysql://<USER>:<PASSWORD>@aws.connect.psdb.cloud/mydb?sslmode=require
+	into postgresql://<USER>:endpoint=ep-super-paper-12345;<PASSWORD>@ep-super-paper-12345.eu-central-1.aws.neon.tech/mydb?sslmode=require
+	with quote identifiers, include drop, create tables, create indexes
+	alter schema 'mydb' rename to 'public'
+;
+```
+
+> make sure your file ends with a semicolon `;`
+
+Repeat this for your other branches. For my dev branch I created a file `config-dev.load` with the connection strings for my dev branches.
+
+**Note**
+
+`with quote identifiers, include drop, create tables, create indexes` makes our migration a lot easier. `quote identifiers` preservers the case of the original column and table names. One of my tables is for example named `PasswordResetToken` in prisma. It is also named like that in planetscale, and the columns on it are for example named in camelCase like `userId`. The other flags are optional.
+
+Not using `with quote identifiers` will change all table and column names to lowercase, which would require changes in our prisma schema.
+
+## Migrate the data
+
+Now we can migrate the data from planetscale to neon, by using `pgloader` with our config file.
+
+Watch out! This drops all existing data in your target tables. So make sure your target is correct and back up any existing data on your neon db.
+
+```bash
+~/code/pgloader/build/bin/pgloader config-main.load
+```
+
+## Check data after migration
+
+Go to the [Neon Console](https://console.neon.tech/), select the branch we migrated, and look through the data.
+
+## Update `prisma.schema`
+
+Thanks to our `with quote identifiers` migration, we dont have to set any `@@map` mappings for the table names. The only thing we have to change is the `provider`
+
+```prisma
+datasource db {
+	provider = "postgressql"
+	url = env("DATABASE_URL")
+	relationMode = "prisma"
+}
+```
+
+## Update the connection string in your app
+
+Update your `.env.local` or `.env` with the new connection string from neon.
+
+```.env
+DATABASE_URL='postgresql://<USER>:endpoint=ep-super-paper-12345;<PASSWORD>@ep-super-paper-12345.eu-central-1.aws.neon.tech/mydb?sslmode=require'
+```
+
+Don't forget to update your connection string in your CI pipelines (github secrets or similar) too, once you've migrated the data.
+
+## Final words
+
+For my commercial projects I will continue to use planetscale, as I really like their services. But the pricetag of $39 per months for their cheapest hobby plan just does not work for my non profit and hobby projects.
+
+## References
+
+- [Converting from MySQL to Postgres with pgloader, for Heroku | by Nathan Willson | Medium](https://medium.com/@nathanwillson/converting-from-mysql-to-postgres-with-pgloader-for-heroku-b1212c6ad932)
+- [Migrate your MySQL database to Neon Postgres - Neon Docs](https://neon.tech/docs/import/migrate-mysql)
+- [Neon Console](https://console.neon.tech/app/projects)
