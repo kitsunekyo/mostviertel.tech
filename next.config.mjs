@@ -2,19 +2,14 @@ import nextMDX from "@next/mdx";
 import rehypePrettyCode from "rehype-pretty-code";
 import { mdxAnnotations } from "mdx-annotations";
 
-/** @type {import('rehype-pretty-code').Options} */
-const prettyCodeOptions = {};
-
-const mdxOptions = {
+const withMDX = nextMDX({
   extension: /\.mdx?$/,
   options: {
     remarkPlugins: [mdxAnnotations.recma],
-    rehypePlugins: [[rehypePrettyCode, prettyCodeOptions]],
+    rehypePlugins: [[rehypePrettyCode, {}]],
     recmaPlugins: [],
   },
-};
-
-const withMDX = nextMDX(mdxOptions);
+});
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
