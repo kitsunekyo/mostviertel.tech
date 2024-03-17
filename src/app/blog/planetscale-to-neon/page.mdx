@@ -120,12 +120,91 @@ DATABASE_URL='postgresql://<USER>:endpoint=ep-super-paper-12345;<PASSWORD>@ep-su
 
 Don't forget to update your connection string in your CI pipelines (github secrets or similar) too, once you've migrated the data.
 
-## Final words
+## Baseline your schema
 
-For my commercial projects I will continue to use planetscale, as I really like their services. But the pricetag of $39 per months for their cheapest hobby plan just does not work for my non profit and hobby projects.
+Planetscale uses some custom handling for the prisma migrations and I didnt find a way to export those. For neon.tech, prisma will create a `_prisma_migrations` table, where all migrations and their hashes are stored, so prisma knows which migrations have been run.
+
+If you dont supply explicit types in your prisma schema, prisma will infer the types from the database. So we have to baseline our schema to make sure prisma uses the correct types.
+
+```bash
+pnpm prisma db pull
+```
+
+This will update your `prisma.schema` with the "real" types currently used in your database. For example an `id` column was `varchar(191)` on planetscale, as this is the default db type for mysql when using prisma's `String` type. The default for postgres would be `text`.
+
+We can now step by step remove the custom mappings and types from our schema, and run migrations to make sure everything still works, without losing any data.
+
+Create a `baseline` migration folder. This will hold the `create table` statements for all our tables.
+
+```bash
+mkdir -p prisma/migrations/0_init
+```
+
+Then generate an sql script from our pulled `prisma.schema`.
+
+```bash
+pnpm prisma migrate diff \
+--from-empty \
+--to-schema-datamodel prisma/schema.prisma \
+--script > prisma/migrations/0_init/migration.sql
+```
+
+For whatever reason my `migration.sql` file had these two lines at the top. Since these aren't valid sql they would break our migration, so I removed them.
+
+```sql
+> prakta@0.0.0 prisma /home/aspieslechner/code/prakta
+> dotenv -c -- prisma "migrate" "diff" "--from-empty" "--to-schema-datamodel" "prisma/schema.prisma" "--script"
+...
+```
+
+Thats the state our db is in already, so we dont have to run this migration. But we have to tell prisma that our db already is in this state.
+
+```bash
+prisma migrate resolve --applied 0_init
+```
+
+Removing all the custom `map: ...` and `@db...` annotations from our schema, and running `pnpm prisma migrate dev` resulted in prisma wanting to drop all tables, which would mean losing all data. Instead i split the changes into smaller migrations.
+
+First I removed all `@db.VarChar(191)` and then created a new migration with this small change.
+
+```bash
+prisma migrate dev --name remove-varchar
+```
+
+Then I removed `db.Timestampz(6)` and created another migration.
+
+I repeated this for the custom `map` annotations until I ended up with the `schema.prisma` I had before moving the data from planetscale to neon. This should leave you with a database that has the recommended types, without any lost data.
+
+Since this is the real "baseline" of our schema, I opted to delete all migrations again, and create another baseline from the state of our migrated database.
+
+I deleted all rows from my db's `_prisma_migrations` table.
+
+```sql
+DELETE FROM _prisma_migrations;
+```
+
+Then I removed the migrations folder locally.
+
+```bash
+rm -rf prisma/migrations
+```
+
+And created a new baseline migration, just like we did before
+
+```bash
+mkdir -p prisma/migrations/0_init
+pnpm prisma migrate diff \
+--from-empty \
+--to-schema-datamodel prisma/schema.prisma \
+--script > prisma/migrations/0_init/migration.sql
+pnpm prisma migrate resolve --applied 0_init
+```
+
+It's a bit hacky and you might be better off just creating a new db and migrating your data there, but this worked for me.
 
 ## References
 
 - [Converting from MySQL to Postgres with pgloader, for Heroku | by Nathan Willson | Medium](https://medium.com/@nathanwillson/converting-from-mysql-to-postgres-with-pgloader-for-heroku-b1212c6ad932)
 - [Migrate your MySQL database to Neon Postgres - Neon Docs](https://neon.tech/docs/import/migrate-mysql)
 - [Neon Console](https://console.neon.tech/app/projects)
+- [Baseline your DB - Prisma](https://www.prisma.io/docs/orm/prisma-migrate/workflows/baselining)
