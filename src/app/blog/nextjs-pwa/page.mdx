@@ -1,0 +1,191 @@
+export const metadata = {
+  title: "NextJS App Router PWA Guide",
+  date: "2024-05-11",
+  excerpt:
+    "A collection of learnings and pitfalls I encountered while building a PWA with NextJS App Router.",
+  tags: ["pwa", "nextjs"],
+};
+
+# NextJS App Router PWA Guide
+
+For my non-profit project I've been building a pwa with nextjs app router. The journey so far has been full of frustration and banging my head against the wall. I hope this collection of learnings will help you avoid some of the pitfalls I encountered.
+
+I'll try to update this page, whenever I stumble upon something new. So make sure to come back periodically.
+
+> Last updated: 2024-05-11
+
+## Getting `apple-touch-startup-image` to work on iOS
+
+This one was a real pain. Not only do you have to supply the exact dimensions of images for EVERY SINGLE iOS device, but you also have to make sure the `metadata` config is correct. Apple seems to ignore the `metadata.json` file for the most part. Because #apple.
+
+Here's what worked for me:
+
+I've generated the images automatically with [https://progressier.com/pwa-icons-and-ios-splash-screen-generator](https://progressier.com/pwa-icons-and-ios-splash-screen-generator)
+
+Extract the resulting files to `public/pwa/ios/splash_screens/`. The tool generates a `txt` file with the meta tags, but nextjs wants the metatags as `metadata` config in your root layout.
+
+I've done this with some vscode multicursor magic.
+
+```tsx
+export const metadata: Metadata = {
+  title: "THL Praktika",
+  description:
+    "Vereinfachte Pratika Planung für Trainer:innen und Stundent:innen.",
+  metadataBase: new URL(process.env.NEXTAUTH_URL || "http://localhost:3000"),
+  applicationName: "THL Praktika",
+  manifest: "/manifest.json",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "THL Praktika",
+    startupImage: [
+      "/pwa/ios/splash_screens/iPhone_8__iPhone_7__iPhone_6s__iPhone_6__4.7__iPhone_SE_portrait.png",
+      {
+        media:
+          "screen and (device-width: 430px) and (device-height: 932px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 3)",
+        url: "/pwa/ios/splash_screens/iPhone_15_Pro_Max__iPhone_15_Plus__iPhone_14_Pro_Max_portrait.png",
+      },
+      {
+        media:
+          "screen and (device-width: 393px) and (device-height: 852px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 3)",
+        url: "/pwa/ios/splash_screens/iPhone_15_Pro__iPhone_15__iPhone_14_Pro_portrait.png",
+      },
+      {
+        media:
+          "screen and (device-width: 428px) and (device-height: 926px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 3)",
+        url: "/pwa/ios/splash_screens/iPhone_14_Plus__iPhone_13_Pro_Max__iPhone_12_Pro_Max_portrait.png",
+      },
+      {
+        media:
+          "screen and (device-width: 390px) and (device-height: 844px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 3)",
+        url: "/pwa/ios/splash_screens/iPhone_14__iPhone_13_Pro__iPhone_13__iPhone_12_Pro__iPhone_12_portrait.png",
+      },
+      {
+        media:
+          "screen and (device-width: 375px) and (device-height: 812px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 3)",
+        url: "/pwa/ios/splash_screens/iPhone_13_mini__iPhone_12_mini__iPhone_11_Pro__iPhone_XS__iPhone_X_portrait.png",
+      },
+      {
+        media:
+          "screen and (device-width: 414px) and (device-height: 896px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 3)",
+        url: "/pwa/ios/splash_screens/iPhone_11_Pro_Max__iPhone_XS_Max_portrait.png",
+      },
+      {
+        media:
+          "screen and (device-width: 414px) and (device-height: 896px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 2)",
+        url: "/pwa/ios/splash_screens/iPhone_11__iPhone_XR_portrait.png",
+      },
+      {
+        media:
+          "screen and (device-width: 414px) and (device-height: 736px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 3)",
+        url: "/pwa/ios/splash_screens/iPhone_8_Plus__iPhone_7_Plus__iPhone_6s_Plus__iPhone_6_Plus_portrait.png",
+      },
+      {
+        media:
+          "screen and (device-width: 375px) and (device-height: 667px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 2)",
+        url: "/pwa/ios/splash_screens/iPhone_8__iPhone_7__iPhone_6s__iPhone_6__4.7__iPhone_SE_portrait.png",
+      },
+      {
+        media:
+          "screen and (device-width: 1032px) and (device-height: 1376px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 2)",
+        url: "/pwa/ios/splash_screens/13__iPad_Pro_M4_portrait.png",
+      },
+      {
+        media:
+          "screen and (device-width: 1024px) and (device-height: 1366px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 2)",
+        url: "/pwa/ios/splash_screens/12.9__iPad_Pro_portrait.png",
+      },
+      {
+        media:
+          "screen and (device-width: 834px) and (device-height: 1210px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 2)",
+        url: "/pwa/ios/splash_screens/11__iPad_Pro_M4_portrait.png",
+      },
+      {
+        media:
+          "screen and (device-width: 834px) and (device-height: 1194px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 2)",
+        url: "/pwa/ios/splash_screens/11__iPad_Pro__10.5__iPad_Pro_portrait.png",
+      },
+      {
+        media:
+          "screen and (device-width: 820px) and (device-height: 1180px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 2)",
+        url: "/pwa/ios/splash_screens/10.9__iPad_Air_portrait.png",
+      },
+      {
+        media:
+          "screen and (device-width: 834px) and (device-height: 1112px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 2)",
+        url: "/pwa/ios/splash_screens/10.5__iPad_Air_portrait.png",
+      },
+      {
+        media:
+          "screen and (device-width: 810px) and (device-height: 1080px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 2)",
+        url: "/pwa/ios/splash_screens/10.2__iPad_portrait.png",
+      },
+      {
+        media:
+          "screen and (device-width: 768px) and (device-height: 1024px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 2)",
+        url: "/pwa/ios/splash_screens/9.7__iPad_Pro__7.9__iPad_mini__9.7__iPad_Air__9.7__iPad_portrait.png",
+      },
+      {
+        media:
+          "screen and (device-width: 744px) and (device-height: 1133px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 2)",
+        url: "/pwa/ios/splash_screens/8.3__iPad_Mini_portrait.png",
+      },
+    ],
+  },
+  other: {
+    "mobile-web-app-capable": "yes",
+  },
+};
+```
+
+**Important**
+
+The thing that almost broke me was the fact that none of this will work unless you add the `"mobile-web-app-capable": "yes"` to the `other` field.
+
+## Service Worker with `serwist`
+
+Last time i checked, `next-pwa` did not support app router. So I had to use `@serwist/next` and `serwist` instead.
+
+Following the getting started guide on [https://serwist.pages.dev/docs/next/getting-started](https://serwist.pages.dev/docs/next/getting-started) worked for me out of the box.
+
+Here's my `app/sw.ts` file for reference.
+
+```ts
+import { defaultCache } from "@serwist/next/worker";
+import type { PrecacheEntry, SerwistGlobalConfig } from "serwist";
+import { Serwist } from "serwist";
+
+declare global {
+  interface WorkerGlobalScope extends SerwistGlobalConfig {
+    __SW_MANIFEST: (PrecacheEntry | string)[] | undefined;
+  }
+}
+
+declare const self: ServiceWorkerGlobalScope;
+
+const serwist = new Serwist({
+  precacheEntries: self.__SW_MANIFEST,
+  skipWaiting: true,
+  clientsClaim: true,
+  navigationPreload: true,
+  runtimeCaching: defaultCache,
+});
+
+serwist.addEventListeners();
+```
+
+And here's an excerpt of my `next.config.mjs` for reference.
+
+```ts
+import withSerwistInit from "@serwist/next";
+
+// ... other stuff like sentry, mdx, ...
+
+const withPWA = withSerwistInit({
+  swSrc: "src/app/sw.ts",
+  swDest: "public/sw.js",
+  disable: process.env.NODE_ENV === "development",
+});
+
+export default withPWA(nextConfig);
+```
