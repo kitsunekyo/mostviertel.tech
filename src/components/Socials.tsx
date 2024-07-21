@@ -10,7 +10,7 @@ export function Socials() {
   return (
     <div className="px-6 py-24 sm:py-48 lg:px-8 isolate text-center">
       <div className="">
-        <h2 className="font-decoration text-6xl mb-6 -skew-y-2 text-balance">
+        <h2 className="font-decoration text-5xl mb-6 -skew-y-2 text-balance">
           Other Places You Might Find Me
         </h2>
         <div className="text-lg text-neutral-500 leading-relaxed max-w-xl mx-auto space-y-4">

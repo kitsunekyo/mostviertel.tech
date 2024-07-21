@@ -13,8 +13,8 @@ const tankerRegular = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "learn. build. share. - mostviertel.tech",
-  description: "Alex Spieslechner - A mostviertel native software engineer",
+  title: "mostviertel.tech - Alex Spieslechner",
+  description: "A mostviertel native software engineer",
 };
 
 export default function RootLayout({

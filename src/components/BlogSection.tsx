@@ -1,26 +1,4 @@
 import glob from "fast-glob";
-import { remark } from "remark";
-import remarkMdx from "remark-mdx";
-
-const posts = [
-  {
-    id: 1,
-    title: "Boost your conversion rate",
-    href: "#",
-    description:
-      "Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.",
-    date: "Mar 16, 2020",
-    datetime: "2020-03-16",
-    category: { title: "Marketing", href: "#" },
-    author: {
-      name: "Michael Foster",
-      role: "Co-Founder / CTO",
-      href: "#",
-      imageUrl:
-        "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-    },
-  },
-];
 
 async function getPostsMeta() {
   let pages = await glob("**/*.mdx", { cwd: "src/app/blog" });
@@ -60,7 +38,7 @@ export async function BlogSection() {
   return (
     <div className="py-24 sm:py-32 px-6 lg:px-8">
       <div className="mx-auto max-w-2xl">
-        <h2 className="text-6xl font-decoration tracking-tight mb-8 -skew-y-2 text-balance">
+        <h2 className="text-5xl font-decoration tracking-tight mb-8 -skew-y-2 text-balance">
           <span className="line-through">Sometimes</span> I publish what I learn
         </h2>
         <div className="space-y-4 text-lg">
@@ -73,40 +51,21 @@ export async function BlogSection() {
           <p>Here are some of the things I&apos;ve written about.</p>
         </div>
       </div>
-      <div className="mx-auto mt-10 grid max-w-6xl grid-cols-1 gap-x-8 gap-y-16 border-t border-gray-100 pt-10 sm:mt-16 sm:pt-16 lg:grid-cols-3">
+      <div className="mx-auto mt-10 grid max-w-6xl grid-cols-1 gap-8 pt-10 sm:mt-16 sm:pt-16 lg:grid-cols-3">
         {posts.map((post) => (
           <article
             key={post.href}
-            className="flex max-w-lg mx-auto flex-col items-start shadow rounded-xl p-8 bg-white"
+            className="shadow rounded-xl p-8 bg-white gap-2"
           >
-            <div className="text-xs">
-              <time dateTime={post.metadata.date} className="text-gray-500">
-                {post.metadata.date}
-              </time>
-            </div>
-            <div className="mt-1 group relative">
-              <h3 className="text-lg font-bold leading-6 text-gray-900 group-hover:text-gray-600">
-                <a href={post.href}>
-                  <span className="absolute inset-0" />
-                  {post.metadata.title}
-                </a>
-              </h3>
-              <p className="mt-2 line-clamp-3 text-sm leading-6 text-gray-600">
-                {post.metadata.excerpt}
-              </p>
-            </div>
-            {post.metadata.tags?.length ? (
-              <div className="flex flex-wrap gap-2 text-xs mt-5">
-                {post.metadata.tags?.map((tag) => (
-                  <span
-                    key={tag}
-                    className="relative z-10 rounded-full font-medium"
-                  >
-                    #{tag}
-                  </span>
-                ))}
-              </div>
-            ) : null}
+            <h3 className="font-bold text-gray-900 group-hover:text-gray-600 text-balance">
+              <a href={post.href}>{post.metadata.title}</a>
+            </h3>
+            <time
+              dateTime={post.metadata.date}
+              className="text-gray-400 text-sm font-medium"
+            >
+              {post.metadata.date}
+            </time>
           </article>
         ))}
       </div>
