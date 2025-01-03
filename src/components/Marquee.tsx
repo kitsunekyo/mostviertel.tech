@@ -16,6 +16,8 @@ const items = [
   "figma",
   "javascript",
   "html",
+  "windows",
+  "gaming",
 ];
 
 export function Marquee() {

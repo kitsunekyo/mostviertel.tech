@@ -39,16 +39,20 @@ export async function BlogSection() {
     <div className="py-24 sm:py-32 px-6 lg:px-8">
       <div className="mx-auto max-w-2xl">
         <h2 className="text-5xl font-decoration tracking-tight mb-8 -skew-y-2 text-balance">
-          <span className="line-through">Sometimes</span> I publish what I learn
+          Software und Tech-Support Nachschlagewerk
         </h2>
         <div className="space-y-4 text-lg">
           <p>
-            Gotta be honest - I&apos;m not the most consistent when it comes to
-            publishing on my personal website. But I&apos;m a big advocate of
-            active externalism, so I try to write down what I learn in obsidian,
-            and sometimes transform my notes into articles.
+            Um nicht zu vergessen was ich so lerne und um dir ein
+            Nachschlagewerk für Themen zu Software, Computer und co. zu bieten,
+            veröffentliche ich ab und zu Beiträge.
           </p>
-          <p>Here are some of the things I&apos;ve written about.</p>
+          <p className="text-sm">
+            <em>
+              Ältere Beiträge findest du eventuell noch in englischer Sprache.
+              Neue Artikel werden in deutscher Sprache veröffentlicht.
+            </em>
+          </p>
         </div>
       </div>
       <div className="mx-auto mt-10 grid max-w-6xl grid-cols-1 gap-8 pt-10 sm:mt-16 sm:pt-16 lg:grid-cols-3">
