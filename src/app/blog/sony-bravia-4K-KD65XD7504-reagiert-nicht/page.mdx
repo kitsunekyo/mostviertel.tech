@@ -1,0 +1,143 @@
+export const metadata = {
+  title: "Sony Bravia 4K KD-65XD7504 reagiert nicht",
+  date: "2025-01-03",
+  excerpt:
+    "Reparatur von meinem 2015 Sony Bravia 4K Android TV, der nach Software-Updates nicht mehr reagierte.",
+  tags: ["android", "tv", "troubleshooting"],
+};
+
+# Sony Bravia 4K KD-65XD7504 wiederbeleben
+
+Mein Android-TV von 2015 reagierte nach einem automatischen Software-Update von Sony überhaupt nicht mehr. Neustarts, Abstürze und andere Probleme machten den Fernseher unbenutzbar. Selbst ein Zurücksetzen auf Werkseinstellungen brachte keine Lösung. Einen neuen TV kaufen? Keine Option! Hier erkläre ich, wie ich das Problem behoben habe.
+
+## Problemzusammenfassung
+
+Das Update von Sony hat den Android-TV mit Bloatware überladen. Die alte Hardware konnte das nicht mehr bewältigen. Um das Problem zu lösen, müssen wir mit einem PC direkt in die Software eingreifen und unnötige Apps entfernen.
+
+**Was du brauchst:**
+
+- Einen Windows-PC
+
+## Schritt-für-Schritt-Anleitung
+
+### 1. Android TV Tools v3 herunterladen
+
+Lade das **Android TV Tools v3**-Tool von [dieser Seite](https://xdaforums.com/t/tool-all-in-one-tool-for-windows-android-tv-tools-v3.4648239/) herunter. Entpacke die ZIP-Datei und starte die Datei `Android TV Tools v3_EN.exe`.
+
+### 2. ADB-Zugriff am TV aktivieren
+
+1. Gehe zu den **Einstellungen** deines Fernsehers:
+   `Einstellungen > Geräte-Einstellungen > Über das Gerät/Info`.
+2. Drücke mehrmals auf "Build-Nummer", bis eine Meldung erscheint, dass du Entwickler bist.
+3. Navigiere zu: `Einstellungen > Geräte-Einstellungen > Entwickleroptionen` und aktiviere **USB-Debugging**.
+4. Unter `Einstellungen > Netzwerk > Netzwerkstatus` findest du die **IP-Adresse** deines Fernsehers (z. B. 192.168.1.72). Notiere sie dir.
+
+### 3. Verbindung zum TV herstellen
+
+1. Starte das Android TV Tools v3-Programm.
+2. Gib die IP-Adresse deines Fernsehers ein, wenn das Eingabefeld erscheint.
+3. Am Fernseher erscheint eine Meldung "USB-Debugging erlauben". Aktiviere "Immer erlauben" und bestätige.
+4. Falls notwendig, gib die IP-Adresse erneut ein, um die Verbindung herzustellen.
+
+### 4. ADB-Befehle ausführen
+
+1. Im Android TV Tools Hauptmenü wähle:
+   - **7. [Menu] Other Tools**
+   - **1. [Menu] Enter ADB commands**
+   - **1. ADB CLI** (öffnet ein Konsolenfenster).
+2. Führe die folgenden Befehle aus, um unnötige Apps zu entfernen. Kopiere den gesamten Block und füge ihn in das Konsolenfenster ein:
+
+```bash
+adb shell pm uninstall -k --user 0 com.google.android.inputmethod.japanese
+adb shell pm uninstall -k --user 0 com.google.android.play.games
+adb shell pm uninstall -k --user 0 com.sony.dtv.sonyshelf
+adb shell pm uninstall -k --user 0 com.sony.dtv.sonyselect
+adb shell pm uninstall -k --user 0 com.sony.dtv.networkrecommendation
+adb shell pm uninstall -k --user 0 tv.samba.ssm
+adb shell pm uninstall -k --user 0 com.sony.dtv.bleadvertiseservice
+adb shell pm uninstall -k --user 0 com.sony.dtv.b2b.hotellanguage
+adb shell pm uninstall -k --user 0 com.sony.dtv.b2b.hotelmenu
+adb shell pm uninstall -k --user 0 com.sony.dtv.photosharingplus
+adb shell pm uninstall -k --user 0 com.gameloft.android.HEP.GloftANHP
+adb shell pm uninstall -k --user 0 com.opera.sdk.example
+adb shell pm uninstall -k --user 0 com.android.providers.calendar
+adb shell pm uninstall -k --user 0 com.android.providers.contacts
+adb shell pm uninstall -k --user 0 com.sony.snei.video.hhvu
+adb shell pm uninstall -k --user 0 com.sony.snei.np.android.account
+adb shell pm uninstall -k --user 0 com.sony.dtv.demomode
+adb shell pm uninstall -k --user 0 com.google.android.syncadapters.calendar
+adb shell pm uninstall -k --user 0 com.google.android.syncadapters.contacts
+adb shell pm uninstall -k --user 0 com.sony.dtv.tvx.search.s501.psv
+adb shell pm uninstall -k --user 0 com.sony.dtv.browser.ceb
+adb shell pm uninstall -k --user 0 com.sony.dtv.browser.webappruntime
+adb shell pm uninstall -k --user 0 com.sony.dtv.browser.webappservice
+adb shell pm uninstall -k --user 0 com.sony.dtv.browser.webappinstaller
+adb shell pm uninstall -k --user 0 com.android.printspooler
+adb shell pm uninstall -k --user 0 com.google.android.partnersetup
+adb shell pm uninstall -k --user 0 com.google.android.videos
+adb shell pm uninstall -k --user 0 com.sony.dtv.ime.chww
+adb shell pm uninstall -k --user 0 com.sony.dtv.woprecommendation
+adb shell pm uninstall -k --user 0 com.sony.dtv.irbrecommendation
+adb shell pm uninstall -k --user 0 com.android.providers.userdictionary
+adb shell pm uninstall -k --user 0 com.sony.dtv.watchtvrecommendation
+adb shell pm uninstall -k --user 0 com.google.android.tv.bugreportsender
+adb shell pm uninstall -k --user 0 com.google.android.feedback
+adb shell pm uninstall -k --user 0 com.sony.dtv.customersupport
+adb shell pm uninstall -k --user 0 com.sony.dtv.search.s101.tvprograms.vt
+adb shell pm uninstall -k --user 0 com.sony.dtv.tvx.search.s101.tvprograms.prefsat
+adb shell pm uninstall -k --user 0 com.sony.dtv.tvx.search.s101.tvprograms.gensat
+adb shell pm uninstall -k --user 0 com.sony.dtv.tvx.search.s101.tvprograms.cam
+```
+
+3. Führe anschließend diesen Block aus:
+
+```bash
+adb uninstall com.google.android.inputmethod.japanese
+adb uninstall com.google.android.play.games
+adb uninstall com.sony.dtv.sonyshelf
+adb uninstall com.sony.dtv.sonyselect
+adb uninstall com.sony.dtv.networkrecommendation
+adb uninstall tv.samba.ssm
+adb uninstall com.sony.dtv.bleadvertiseservice
+adb uninstall com.sony.dtv.b2b.hotellanguage
+adb uninstall com.sony.dtv.b2b.hotelmenu
+adb uninstall com.sony.dtv.photosharingplus
+adb uninstall com.gameloft.android.HEP.GloftANHP
+adb uninstall com.opera.sdk.example
+adb uninstall com.android.providers.calendar
+adb uninstall com.android.providers.contacts
+adb uninstall com.sony.snei.video.hhvu
+adb uninstall com.sony.snei.np.android.account
+adb uninstall com.sony.dtv.demomode
+adb uninstall com.google.android.syncadapters.calendar
+adb uninstall com.google.android.syncadapters.contacts
+adb uninstall com.sony.dtv.tvx.search.s501.psv
+adb uninstall com.sony.dtv.browser.ceb
+adb uninstall com.sony.dtv.browser.webappruntime
+adb uninstall com.sony.dtv.browser.webappservice
+adb uninstall com.sony.dtv.browser.webappinstaller
+adb uninstall com.android.printspooler
+adb uninstall com.google.android.partnersetup
+adb uninstall com.google.android.videos
+adb uninstall com.sony.dtv.ime.chww
+adb uninstall com.sony.dtv.woprecommendation
+adb uninstall com.sony.dtv.irbrecommendation
+adb uninstall com.android.providers.userdictionary
+adb uninstall com.sony.dtv.watchtvrecommendation
+adb uninstall com.google.android.tv.bugreportsender
+adb uninstall com.google.android.feedback
+adb uninstall com.sony.dtv.customersupport
+adb uninstall com.sony.dtv.search.s101.tvprograms.vt
+adb uninstall com.sony.dtv.tvx.search.s101.tvprograms.prefsat
+adb uninstall com.sony.dtv.tvx.search.s101.tvprograms.gensat
+adb uninstall com.sony.dtv.tvx.search.s101.tvprograms.cam
+```
+
+### 5. Neustart und Test
+
+Schließe alle Fenster, starte den Fernseher neu und prüfe, ob er schneller reagiert.
+
+## Quellen
+
+- [Android TV Tools v3](https://xdaforums.com/t/tool-all-in-one-tool-for-windows-android-tv-tools-v3.4648239/)
+- [Reddit: Sony Bravia Troubleshooting](https://www.reddit.com/r/Troubleshooting/comments/ejhrnb/sony_bravia_tv_stuck_on_boot_up_screen_anyone/)
