@@ -68,7 +68,7 @@ export function Footer() {
         ))}
       </div>
       <p className="mt-10 text-center text-xs leading-5 text-gray-500">
-        &copy; 2024 Alexander Spieslechner <br />
+        &copy; 2025 Alexander Spieslechner <br />
         hi(at)mostviertel.tech
       </p>
     </footer>
