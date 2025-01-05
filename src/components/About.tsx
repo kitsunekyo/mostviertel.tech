@@ -10,7 +10,6 @@ export function About() {
           <p>
             Senior Software Engineer bei dynatrace, mit über zehn Jahren
             Erfahrung im Bereich Software, Web-Entwicklung und Marketing.
-            Tech-Support vom Dienst für Familie und Freunde.
           </p>
           <div>
             <a
