@@ -9,11 +9,11 @@ export function Hero() {
         <div className="mx-auto max-w-2xl overflow-hidden">
           <div className="flex flex-col lg:flex-row lg:max-w-none gap-12 items-center justify-center">
             <h1 className="font-decoration uppercase -skew-y-6 text-8xl px-8">
-              lernen.
+              learn.
               <br />
-              <span className="-translate-x-8 inline-block">bauen.</span>
+              <span className="-translate-x-8 inline-block">build.</span>
               <br />
-              <span className="translate-x-12 inline-block">teilen.</span>
+              <span className="translate-x-12 inline-block">share.</span>
               <br />
             </h1>
             <div>

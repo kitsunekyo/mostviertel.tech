@@ -4,19 +4,20 @@ import { ArrowUpRight } from "lucide-react";
 
 export function About() {
   return (
-    <TextSection title="Alex Spieslechner">
+    <TextSection title="Who Am I?">
       <div className="grid md:grid-cols-2 gap-16 items-start">
         <div className="space-y-4">
           <p>
-            Senior Software Engineer bei dynatrace, mit über zehn Jahren
-            Erfahrung im Bereich Software, Web-Entwicklung und Marketing.
+            <strong>Alex Spieslechner</strong>, Senior Software Engineer with a
+            solid decade of experience, with a strong background in design,
+            communications and usability.
           </p>
           <div>
             <a
               href="mailto:hi@mostviertel.tech"
               className="font-semibold text-indigo-500 inline-flex gap-1 items-center"
             >
-              <span>Schreib mir per Mail</span>
+              <span>Get in touch</span>
               <ArrowUpRight />
             </a>
           </div>
