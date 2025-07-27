@@ -8,7 +8,7 @@ import {
 
 export function Socials() {
   return (
-    <div className="px-6 py-24 sm:py-48 lg:px-8 isolate text-center">
+    <div className="px-6 py-24 lg:px-8 isolate text-center">
       <div className="">
         <h2 className="font-decoration text-5xl mb-6 -skew-y-2 text-balance">
           Other Places You Might Find Me

@@ -9,7 +9,7 @@ export function About() {
         <div className="space-y-4">
           <p>
             <strong>Alex Spieslechner</strong>, Senior Software Engineer with a
-            solid decade of experience, with a strong background in design,
+            solid decade of experience and with a strong background in design,
             communications and usability.
           </p>
           <div>
