@@ -1,0 +1,90 @@
+export const metadata = {
+  title: "How to upgrade Ubuntu on WSL2",
+  date: "2025-07-27",
+  excerpt:
+    "How to upgrade Ubuntu on Windows Subsystem for Linux 2 without losing your data.",
+  tags: ["linux", "windows"],
+};
+
+On my windows machine I exclusively code within a Ubuntu LTS installalation in WSL2. It is an amazing tool and makes working as a software engineer on Windows machines less of a pain.
+By default, Ubuntu installed through WSL2 will not allow you to upgrade from one major version to another. Depending on your installation, you might have to make small adjustments.
+
+## Find out which distribution you have installed
+
+Open a powershell terminal and run `wsl -l` to find out which distribution you have installed in wsl2. 
+
+If you have installed Ubuntu through the windows store, you might either get a full distro name with version like `Ubuntu-22.04` or just `Ubuntu`. Alternatively you can open a terminal in wsl2 and type `lsb_release -a`, which should give you a more detailed info about your distribution including the version.
+
+## Optional: Create backup
+
+The upgrade process can corrupt your Ubuntu installation. To save yourself from losing any data, make sure you backup what you must not lose. Wsl has an `wsl --export` command, that generates a backup file for you.
+
+```bash
+# replace Ubuntu-22.04 with the name that `wsl -l` spit out
+wsl --export Ubuntu-22.04 C:\backups\Ubuntu_22_04.tar
+```
+
+## Update and upgrade packages in Ubuntu
+
+Upgrade your `apt` packages prior to bumping your Ubuntu major version.
+
+```bash
+sudo apt update
+sudo apt upgrade -y
+```
+
+## Ensure Ubuntu can be upgraded
+
+You might not need this step, but confirm your Ubuntu installation is allowed up self-upgrade.
+
+```bash
+cat /etc/update-manager/release-upgrades
+```
+
+This file should contain the setting `Prompt=lts`. If it contains `Prompt=never` or anything else, edit it with `sudo vim /etc/update-manager/release-upgrades`, save your changes and close the file.
+
+## Optional: Check and remove apt sources
+
+Custom apt sources could potentially lead to issues during the upgrade. I had to delete a few custom sources like ngrok or 1password so I wouldnt get an error during the upgrade process.
+
+
+```bash
+# go into the sources directory
+cd /etc/apt/sources.list.d
+# print all sources
+ls -la
+# remove the ones you might not need. you can add them back in later (take notes).
+rm -rf neovim-ppa-*
+```
+
+## Optional: Install ubuntu-release-upgrader-core
+
+The upgrader package was missing on my wsl2 Ubuntu installation, so I had to install it manually.
+
+```bash
+sudo apt install ubuntu-release-upgrader-core -y
+```
+
+## Upgrade Ubuntu
+
+Now we can start the upgrade to the newest LTS release of Ubuntu.
+
+```bash
+sudo do-release-upgrade
+```
+
+Follow AND READ the prompts to continue the upgrade until it is complete.
+
+## Restart
+
+Once the upgrade is completed, you will need to restart Ubuntu. Close the Ubuntu terminal and open a PowerShell terminal to shut down all wsl processes.
+
+```powershell
+wsl --shutdown
+```
+
+You can now open an Ubuntu terminal again and confirm that you upgraded successfully by running:
+
+```bash
+lsb_release -a
+```
