@@ -1,11 +1,17 @@
 import nextMDX from "@next/mdx";
 import rehypePrettyCode from "rehype-pretty-code";
 import { mdxAnnotations } from "mdx-annotations";
+import remarkFrontmatter from "remark-frontmatter";
+import remarkMdxFrontmatter from "remark-mdx-frontmatter";
 
 const withMDX = nextMDX({
   extension: /\.mdx?$/,
   options: {
-    remarkPlugins: [mdxAnnotations.recma],
+    remarkPlugins: [
+      mdxAnnotations.recma,
+      remarkFrontmatter,
+      remarkMdxFrontmatter,
+    ],
     rehypePlugins: [[rehypePrettyCode, {}]],
     recmaPlugins: [],
   },

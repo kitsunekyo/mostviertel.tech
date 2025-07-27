@@ -1,34 +1,30 @@
 import glob from "fast-glob";
 
 async function getPostsMeta() {
-  let pages = await glob("**/*.mdx", { cwd: "src/app/blog" });
+  const pages = await glob("**/*.mdx", { cwd: "src/app/blog" });
+
   const pagesWithData = await Promise.all(
     pages.map(async (page) => {
-      let metadata: {
-        title: string;
-        excerpt?: string;
-        tags?: string[];
-        date?: string;
-      } = {
-        title: "no title",
-        excerpt: "",
-      };
-      const { metadata: pageMetadata } = await import(`@/app/blog/${page}`);
-      if (pageMetadata) {
-        metadata = pageMetadata;
-      }
+      const { frontmatter } = await import(`@/app/blog/${page}`);
+
       return {
-        metadata: metadata,
+        frontmatter,
         href: `/blog/${page.replace(/page\.mdx$/, "")}`,
       };
     }),
   );
+
   const sorted = pagesWithData.sort((a, b) => {
-    if (!a.metadata.date || !b.metadata.date) return 0;
+    if (!a.frontmatter?.date || !b.frontmatter?.date) {
+      return 0;
+    }
+
     return (
-      new Date(b.metadata.date).getTime() - new Date(a.metadata.date).getTime()
+      new Date(b.frontmatter.date).getTime() -
+      new Date(a.frontmatter.date).getTime()
     );
   });
+
   return sorted;
 }
 
@@ -57,15 +53,32 @@ export async function BlogSection() {
             key={post.href}
             className="shadow rounded-xl p-8 bg-white gap-2"
           >
-            <h3 className="font-bold text-gray-900 group-hover:text-gray-600 text-balance">
-              <a href={post.href}>{post.metadata.title}</a>
-            </h3>
-            <time
-              dateTime={post.metadata.date}
-              className="text-gray-400 text-sm font-medium"
-            >
-              {post.metadata.date}
-            </time>
+            <a href={post.href}>
+              <h3 className="font-bold text-gray-900 group-hover:text-gray-600 text-balance hover:text-indigo-500">
+                {post.frontmatter?.title}
+              </h3>
+            </a>
+            <div className="space-y-2">
+              <time
+                dateTime={post.frontmatter?.date}
+                className="text-gray-400 text-sm font-medium"
+              >
+                {post.frontmatter?.date}
+              </time>
+              {post.frontmatter?.tags &&
+              Array.isArray(post.frontmatter.tags) ? (
+                <div className="flex gap-1">
+                  {post.frontmatter.tags.map((tag) => (
+                    <div
+                      key={tag}
+                      className="text-xs bg-gray-600 rounded px-1 text-white"
+                    >
+                      {tag}
+                    </div>
+                  ))}
+                </div>
+              ) : null}
+            </div>
           </article>
         ))}
       </div>
