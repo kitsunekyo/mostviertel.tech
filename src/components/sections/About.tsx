@@ -1,5 +1,5 @@
 import { ContactCard } from "./ContactCard";
-import { TextSection } from "./TextSection";
+import { TextSection } from "./../TextSection";
 import { ArrowUpRight } from "lucide-react";
 
 export function About() {

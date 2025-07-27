@@ -1,4 +1,4 @@
-import { TextSection } from "./TextSection";
+import { TextSection } from "./../TextSection";
 
 export function HowDoIWork() {
   return (

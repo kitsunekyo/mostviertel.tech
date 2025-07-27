@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Marquee } from "./Marquee";
+import { Marquee } from "./../Marquee";
 
 export function Hero() {
   return (
