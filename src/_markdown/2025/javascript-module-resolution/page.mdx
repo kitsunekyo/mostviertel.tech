@@ -22,21 +22,24 @@ Before we talk tooling, let’s revisit the fundamentals.
 
 ### In the Browser
 
-In the browser, module resolution is extremely **explicit**:
+In the browser, module resolution is extremely **explicit** and only possible in the context of ecmascript modules (using `<script type="module">`).
 
 ```js
 import { something } from './utils/helpers.js';
 ```
 
-There’s no resolution logic, no file extension guessing, no index files unless you explicitly import them. You have to write full paths (unless you're using a bundler or [import maps](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script/type/importmap)).
+There’s no convoluted resolution logic, no file extension guessing, no index files unless you explicitly import them. You have to write full paths, unless you're using a bundler or [import maps](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script/type/importmap).
 
-> ESModules are a pretty new thing in browsers. In the years before ESM landed, we had to bundle / concatenate all javascript into a single file. Splitting (or "chunking") was extremely hard to get right.
-
-> That’s why tools like Vite, Webpack, and Rollup exist - they allowed us to author our code as modules long before browsers supported it. Today they *simulate* a smarter and more lenient resolution system than the actual ESM spec for the browser. (eg. some allow you to omit file extensions, or allow importing from `index.js` files)
+> ESModules are a pretty new thing in browsers. In the years before ESM landed, we had to bundle / concatenate all javascript into a single file. Splitting (or "chunking") was extremely hard to get right. That’s why tools like Vite, Webpack, and Rollup exist - they allowed us to author our code as modules long before browsers supported it. Today they *simulate* a smarter and more lenient resolution system than the actual ESM spec for the browser. (eg. some allow you to omit file extensions, or allow importing from `index.js` files)
 
 ### In Node.js
 
-Node.js, as of 2025 (v20+ is standard), supports both CommonJS and ESM, and it resolves modules using a well-defined algorithm.
+Node.js (`v22.18.0` is the current LTS version as of writing this) supports both CommonJS and ESM and it resolves modules using a well-defined algorithm. ESM support has landed in node with `v12.20`.
+
+- commonjs (default): https://nodejs.org/api/modules.html
+- esm: https://nodejs.org/api/esm.html
+
+Which module system is used by default (i.e. for `.js` files) **is influenced by the [`type` field](https://nodejs.org/api/packages.html#type)** in your `package.json`. If it’s `"module"`, `.js` files are treated as ESM. Otherwise, they’re CJS. You can also use explicit extensions that describe which module type the file is authored in: `.cjs` for commonjs and `.mjs` for esm.
 
 Here’s a simplified version:
 
@@ -48,9 +51,7 @@ Here’s a simplified version:
    * `.node`
 4. It respects `package.json` fields (`exports`, `main`, `type`, etc.)
 
-Also, ESM behavior is **influenced by the `type` field** in your `package.json`. If it’s `"module"`, `.js` files are treated as ESM. Otherwise, they’re CJS.
-
-> Modules in nodejs `<12` were a whole mess. You might have stumbled over the terms `requirejs`, `amd`, `systemjs` etc. Today I would recommend you get familiar with `commonjs` (the most common legacy module system for nodejs) and `esm` (the new, standardized module system for both node and browsers). Talking about the other systems is best saved for a full-on history lesson.
+> The industry has seen some 💩 when it comes to nodejs module approaches. You might have stumbled over the terms `requirejs`, `amd`, `systemjs`, and more. While more and more packages migrate away from `commonjs` to `esm`, `commonjs` is still heavily used, so it's probably still a good idea to know about it. Talking about the other systems is best saved for a full-on history lesson, or trauma therapy.
 
 ## TypeScript Module Resolution
 
