@@ -1,0 +1,233 @@
+---
+title: Understanding JavaScript Module Resolution in 2025
+date: 2025-08-03
+excerpt:
+  You ever stare at a `tsconfig.json` file, then look at your `vite.config.ts`, then glance at your `pnpm-workspace.yaml`, and think, *“Why is this import not resolving?! It worked yesterday!”*
+tags:
+  - javascript
+  - tooling
+---
+
+You ever stare at a `tsconfig.json` file, then look at your `vite.config.ts`, then glance at your `pnpm-workspace.yaml`, and think, *“Why is this import not resolving?! It worked yesterday!”*
+
+You’re not alone. Module resolution in JavaScript has gotten more powerful - and more complex - in recent years. Between Node.js, TypeScript, Vite, esbuild, and modern package managers like pnpm, it’s easy to get lost in the sauce.
+
+But understanding how modules are resolved is one of those “you level up and never look back” skills. Once you get it, you’ll debug faster, architect better, and stop feeling like you’re at the mercy of invisible config magic.
+
+---
+
+## The Foundation: JavaScript Module Resolution in the Browser and Node
+
+Before we talk tooling, let’s revisit the fundamentals.
+
+### In the Browser
+
+In the browser, module resolution is extremely **explicit**:
+
+```js
+import { something } from './utils/helpers.js';
+```
+
+There’s no resolution logic, no file extension guessing, no index files unless you explicitly import them. You have to write full paths (unless you're using a bundler or [import maps](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script/type/importmap)).
+
+> ESModules are a pretty new thing in browsers. In the years before ESM landed, we had to bundle / concatenate all javascript into a single file. Splitting (or "chunking") was extremely hard to get right.
+
+> That’s why tools like Vite, Webpack, and Rollup exist - they allowed us to author our code as modules long before browsers supported it. Today they *simulate* a smarter and more lenient resolution system than the actual ESM spec for the browser. (eg. some allow you to omit file extensions, or allow importing from `index.js` files)
+
+### In Node.js
+
+Node.js, as of 2025 (v20+ is standard), supports both CommonJS and ESM, and it resolves modules using a well-defined algorithm.
+
+Here’s a simplified version:
+
+1. **Relative imports** (`./thing`) are resolved relative to the importing file.
+2. **Bare imports** (`lodash`) are resolved by looking in `node_modules`.
+3. If the path lacks an extension, Node tries:
+   * `.js`
+   * `.json`
+   * `.node`
+4. It respects `package.json` fields (`exports`, `main`, `type`, etc.)
+
+Also, ESM behavior is **influenced by the `type` field** in your `package.json`. If it’s `"module"`, `.js` files are treated as ESM. Otherwise, they’re CJS.
+
+> Modules in nodejs `<12` were a whole mess. You might have stumbled over the terms `requirejs`, `amd`, `systemjs` etc. Today I would recommend you get familiar with `commonjs` (the most common legacy module system for nodejs) and `esm` (the new, standardized module system for both node and browsers). Talking about the other systems is best saved for a full-on history lesson.
+
+## TypeScript Module Resolution
+
+TypeScript builds on top of Node.js module resolution, but adds some **developer-facing sugar** - namely:
+
+### `baseUrl` ([which is discouraged](https://www.typescriptlang.org/tsconfig/#baseUrl)) and `paths` in `tsconfig.json`
+
+```json
+{
+  "compilerOptions": {
+    // "baseUrl": ".",
+    "paths": {
+      "@utils/*": ["src/utils/*"]
+    }
+  }
+}
+```
+
+This tells the TypeScript compiler:
+
+> When I see `@utils/foo`, I want you to look in `src/utils/foo`. In there look for either (left to right) `foo.d.ts`, `foo.ts`, ...
+
+But - **this only affects the typescript compiler**. It helps with autocompletion, diagnostics, and emitting correct paths in `.js` files - *not runtime behavior*.
+
+If your build system (e.g., Node, Vite, esbuild) doesn’t understand this too, it’ll fail at runtime unless you bridge the gap.
+
+Another interesting bit is that typescript imports (by default) always require you to import from `.js` files. Typescript module imports must always reflect the reality of what happens at runtime to the output files. You can read more about typescripts module resolution algorithms [in their handbook](https://www.typescriptlang.org/docs/handbook/modules/theory.html#module-resolution).
+
+```typescript
+// ❌ illegal import
+// only allowed in some bundlers or when enabling [allowImportingTsExtensions](https://www.typescriptlang.org/tsconfig/#allowImportingTsExtensions)
+import { myFunction } from './my-function.ts'
+
+// ✅
+import { myFunction } from './my-function.js'
+```
+
+## Vite
+
+Vite is amazing. It’s fast, elegant, and DX-first. But module resolution in Vite deserves some unpacking.
+
+### How Vite Resolves Modules
+
+Vite uses [esbuild](https://esbuild.github.io) under the hood for dev-time transformation, and [Rollup](https://rollupjs.org) for production builds.
+
+By default, Vite uses **Node-style resolution** with ESM in mind. That means:
+
+* It understands `node_modules`
+* It respects `exports`/`main` in `package.json`
+* It expects **explicit extensions** in ESM-style imports when outside the source root
+
+### The Gotcha with `tsconfig.json` Paths
+
+Vite does **not** natively support `tsconfig.json` path aliases.
+
+So if you write
+
+```ts
+import { thing } from '@utils/thing';
+```
+
+but don’t tell Vite what `@utils` means, it will crash at runtime - even if TypeScript is perfectly happy.
+
+### Solution: `vite-tsconfig-paths`
+
+This plugin is your friend:
+
+```ts
+import tsconfigPaths from 'vite-tsconfig-paths';
+
+export default defineConfig({
+  plugins: [tsconfigPaths()]
+});
+```
+
+What it does:
+
+* Reads your `tsconfig.json`
+* Adds matching alias definitions to Vite's internal resolver
+* Makes sure Vite dev server and build can *follow the same logic* as TypeScript
+
+**Result**: You don’t duplicate path aliases between `tsconfig.json` and `vite.config.ts`.
+
+### Also: `resolve.alias` in Vite
+
+You can also define aliases directly:
+
+```ts
+resolve: {
+  alias: {
+    '@utils': path.resolve(__dirname, './src/utils'),
+  }
+}
+```
+
+…but now you have to maintain this alias *and* the one in `tsconfig.json`, which can drift.
+
+---
+
+## esbuild Module Resolution
+
+esbuild is blazingly fast, and its resolution behavior is mostly:
+
+* Node-style
+* Using `tsconfig.json` `paths` requires bundling to be enabled, as esbuild's path resolution only happens during bundling.
+* Supports custom aliasing via [`alias` option](https://esbuild.github.io/api/#alias)
+
+So if you’re using esbuild directly (without Vite), and want to use `tsconfig.json` paths, you’ll need to either `bundle` your code with esbuild or reach for a plugin like [`esbuild-ts-paths`](https://github.com/aleclarson/esbuild-ts-paths).
+
+```ts
+alias: {
+  '@components': './src/components'
+}
+```
+
+Esbuild has some good documentation on how it handles [path resolution](https://esbuild.github.io/api/#path-resolution).
+
+---
+
+## And Then There's pnpm…
+
+Using `pnpm` workspaces? Welcome to the world of [hoisting](https://pnpm.io/9.x/npmrc#dependency-hoisting-settings) and `.pnpm` folders.
+
+### How it affects resolution:
+
+* pnpm uses **symlinks** and a **virtual store** (`node_modules/.pnpm`) which is different from npm/yarn’s flat `node\_modules`
+* If you’re referencing another workspace package via its name, like:
+
+```ts
+import { doThing } from '@my-scope/shared';
+```
+
+…this works *if and only if*:
+
+1. Your project depends on `@my-scope/shared`
+2. `@my-scope/shared` has an `exports` field (or a proper `main`)
+3. Your tooling (Vite, TypeScript, Node) resolves it properly through the symlink
+
+**pnpm doesn’t change the resolution algorithm**, but it **exposes issues** in projects that accidentally rely on [flat hoisting](https://pnpm.io/symlinked-node-modules-structure).
+
+## Let's Trace a Module Import (Step-by-Step)
+
+Say you have this in a file:
+
+```ts
+import { add } from '@lib/math';
+```
+
+What happens?
+
+### 1. TypeScript
+
+* Reads `tsconfig.json`
+* Sees `paths: { "@lib/*": ["packages/lib/src/*"] }`
+* Resolves `@lib/math` to `packages/lib/src/math.js`
+
+Great! The compiler emits correct JavaScript.
+
+### 2. Vite
+
+* Unless `vite-tsconfig-paths` is installed, it says “What’s `@lib/math`?”
+* If the plugin is installed, it applies the alias
+* It then uses esbuild/Rollup to bundle the resolved file
+
+### 3. Node (e.g., for tooling, or in a test-runner like jest)
+
+* Has no idea what `@lib/math` is unless you use [Node `--experimental-resolver` hooks](https://nodejs.org/api/esm.html#loaders), a bundler, or a transformer (eg. babel).
+
+
+## Final Thoughts
+
+Understanding module resolution isn’t just a flex - it’s a foundation. You’ll debug faster, collaborate more effectively in monorepos, and architect cleaner boundaries between code.
+
+If you're ever unsure where a module is coming from, try:
+
+* `tsc --traceResolution`
+* `vite build --debug`
+* `pnpm why`
+
+Or, just scream into a pillow. That works too, sometimes. 😅
